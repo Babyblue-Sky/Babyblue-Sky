@@ -5,11 +5,15 @@ Reads the Content Layer (Markdown + YAML in mandarin-1.2/) for one Unit and
 renders a family-facing "Unit Overview" HTML page. This is a renderer, not a
 data store: nothing here is canonical, it only reads and projects.
 
-Design notes (v3, per teacher review round 2):
+Design notes (v4, per teacher review round 3):
 - Visual language borrows the "bordered card + solid color header bar"
   structure common to unit-planning templates, not any one template's
-  literal design. Each section gets its own accent-colored header bar;
-  item-level pills reuse the same accent per type.
+  literal design. All five header bars (and the hero) share ONE muted
+  accent color — variety lives at the item level (pills), not the
+  structural level, per feedback that too many distinct hues read as
+  "花哨" (gaudy) and clashed with the page background.
+- Header bar text is deliberately one type-scale step larger than the
+  content inside its section, so headings read as headings.
 - Headings: 学习目标 Learning Objectives / 学习材料 Learning Materials /
   文化 Culture / 单元考核 Unit Assessments / 核心词汇语法 Key Vocabulary
   & Grammar. No "Transfer Goal" section — folded into Unit Assessments,
@@ -186,11 +190,13 @@ def render(unit_dir, course_title="Mandarin 1.2"):
 TEMPLATE = """<title>{course} · {unit_label} Family Overview 家长概览</title>
 <style>
 :root {{
-  --bg: #E7F0EC;
+  --bg: #F3EFE3;
   --surface: #FFFFFF;
-  --ink: #201D19;
-  --muted: #6B6459;
-  --line: #1F1B17;
+  --ink: #221F1A;
+  --muted: #6E6656;
+  --line: #221F1A;
+  --bar: #3E5D66;
+  --bar-ink: #FBF6EA;
   --c-plum: #6A4E9E;
   --c-jade: #2F7A56;
   --c-gold: #B4791C;
@@ -203,16 +209,19 @@ TEMPLATE = """<title>{course} · {unit_label} Family Overview 家长概览</titl
 }}
 @media (prefers-color-scheme: dark) {{
   :root {{
-    --bg: #12201A; --surface: #1C2620; --ink: #EDE7DC; --muted: #A9A28F; --line: #E9E3D4;
+    --bg: #171913; --surface: #1F2219; --ink: #EDE7DC; --muted: #A9A28F; --line: #E9E3D4;
+    --bar: #4C7079; --bar-ink: #FBF6EA;
     --c-plum: #B7A0EC; --c-jade: #7FCBA6; --c-gold: #E5B75E; --c-vermilion: #E38271; --c-teal: #6FC7D6; --c-muted: #B5AC98;
   }}
 }}
 :root[data-theme="dark"] {{
-  --bg: #12201A; --surface: #1C2620; --ink: #EDE7DC; --muted: #A9A28F; --line: #E9E3D4;
+  --bg: #171913; --surface: #1F2219; --ink: #EDE7DC; --muted: #A9A28F; --line: #E9E3D4;
+  --bar: #4C7079; --bar-ink: #FBF6EA;
   --c-plum: #B7A0EC; --c-jade: #7FCBA6; --c-gold: #E5B75E; --c-vermilion: #E38271; --c-teal: #6FC7D6; --c-muted: #B5AC98;
 }}
 :root[data-theme="light"] {{
-  --bg: #E7F0EC; --surface: #FFFFFF; --ink: #201D19; --muted: #6B6459; --line: #1F1B17;
+  --bg: #F3EFE3; --surface: #FFFFFF; --ink: #221F1A; --muted: #6E6656; --line: #221F1A;
+  --bar: #3E5D66; --bar-ink: #FBF6EA;
   --c-plum: #6A4E9E; --c-jade: #2F7A56; --c-gold: #B4791C; --c-vermilion: #B0402F; --c-teal: #1E7A88; --c-muted: #8A8272;
 }}
 * {{ box-sizing: border-box; }}
@@ -228,10 +237,8 @@ body {{
   border-radius: 14px;
   padding: 2.4rem 1.9rem 2rem;
   margin-bottom: 1.6rem;
-  background:
-    linear-gradient(120deg, rgba(20,14,8,0.48) 0%, rgba(20,14,8,0.2) 42%, rgba(20,14,8,0) 68%),
-    linear-gradient(100deg, #F3A46B 0%, #F0C25E 26%, #7FBFA8 55%, #4E6FA8 78%, #2C2560 100%);
-  color: #FBF6EA;
+  background: var(--bar);
+  color: var(--bar-ink);
 }}
 .eyebrow {{
   font-family: var(--font-mono);
@@ -245,7 +252,6 @@ h1 {{
   font-size: clamp(2.1rem, 6vw, 2.9rem);
   font-weight: 400;
   text-wrap: balance;
-  text-shadow: 0 1px 14px rgba(0,0,0,0.22);
 }}
 .hero .en-title {{
   font-family: var(--font-latin);
@@ -269,23 +275,19 @@ section {{
   display: flex;
   align-items: baseline;
   gap: 0.5rem;
-  padding: 0.65rem 1.2rem;
-  color: #FBF6EA;
+  padding: 0.7rem 1.2rem;
+  background: var(--bar);
+  color: var(--bar-ink);
   font-weight: 800;
-  font-size: 1.02rem;
+  font-size: 1.25rem;
 }}
-.bar .en {{ font-family: var(--font-latin); font-weight: 700; font-size: 0.82em; opacity: 0.92; }}
-.bar-ink {{ background: var(--ink); }}
-.bar-plum {{ background: var(--c-plum); }}
-.bar-vermilion {{ background: var(--c-vermilion); }}
-.bar-gold {{ background: var(--c-gold); }}
-.bar-teal {{ background: var(--c-teal); }}
+.bar .en {{ font-family: var(--font-latin); font-weight: 700; font-size: 0.72em; opacity: 0.92; }}
 .sec-body {{ padding: 1.3rem 1.4rem 1.4rem; }}
 
-ul.list {{ list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.7rem; }}
+ul.list {{ list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.7rem; font-size: 0.95rem; }}
 ul.list li {{ display: flex; flex-wrap: wrap; align-items: center; gap: 0.55rem; }}
 .zh {{ font-weight: 700; }}
-.en {{ color: var(--muted); font-size: 0.92rem; font-family: var(--font-latin); }}
+.en {{ color: var(--muted); font-size: 0.92em; font-family: var(--font-latin); }}
 .pill {{
   font-family: var(--font-mono), var(--font-kai);
   font-size: 0.68rem;
@@ -303,11 +305,11 @@ ul.list li {{ display: flex; flex-wrap: wrap; align-items: center; gap: 0.55rem;
 .pill-muted {{ color: var(--c-muted); }}
 .phase {{ font-family: var(--font-latin); font-size: 0.8rem; color: var(--muted); }}
 
-ol.objectives {{ margin: 0; padding-left: 1.2rem; font-family: var(--font-latin); }}
+ol.objectives {{ margin: 0; padding-left: 1.2rem; font-family: var(--font-latin); font-size: 0.95rem; }}
 ol.objectives li {{ margin-bottom: 0.5rem; }}
 
 .grammar-note {{ font-family: var(--font-latin); color: var(--muted); font-size: 0.8rem; margin: 1rem 0 0.4rem; text-transform: uppercase; letter-spacing: 0.05em; }}
-ul.grammar {{ margin: 0; padding-left: 1.2rem; font-family: var(--font-latin); color: var(--ink); }}
+ul.grammar {{ margin: 0; padding-left: 1.2rem; font-family: var(--font-latin); color: var(--ink); font-size: 0.95rem; }}
 ul.grammar li {{ margin-bottom: 0.3rem; }}
 
 table {{ width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }}
@@ -327,7 +329,7 @@ footer {{ font-family: var(--font-latin); color: var(--muted); font-size: 0.78re
   </div>
 
   <section>
-    <div class="bar bar-ink">学习目标 <span class="en">Learning Objectives</span></div>
+    <div class="bar">学习目标 <span class="en">Learning Objectives</span></div>
     <div class="sec-body">
       <ol class="objectives">
         {objectives_html}
@@ -336,7 +338,7 @@ footer {{ font-family: var(--font-latin); color: var(--muted); font-size: 0.78re
   </section>
 
   <section>
-    <div class="bar bar-plum">学习材料 <span class="en">Learning Materials</span></div>
+    <div class="bar">学习材料 <span class="en">Learning Materials</span></div>
     <div class="sec-body">
       <ul class="list">
         {content_html}
@@ -345,7 +347,7 @@ footer {{ font-family: var(--font-latin); color: var(--muted); font-size: 0.78re
   </section>
 
   <section>
-    <div class="bar bar-vermilion">文化 <span class="en">Culture</span></div>
+    <div class="bar">文化 <span class="en">Culture</span></div>
     <div class="sec-body">
       <ul class="list">
         {culture_html}
@@ -354,7 +356,7 @@ footer {{ font-family: var(--font-latin); color: var(--muted); font-size: 0.78re
   </section>
 
   <section>
-    <div class="bar bar-gold">单元考核 <span class="en">Unit Assessments</span></div>
+    <div class="bar">单元考核 <span class="en">Unit Assessments</span></div>
     <div class="sec-body">
       <ul class="list">
         {assessment_html}
@@ -363,7 +365,7 @@ footer {{ font-family: var(--font-latin); color: var(--muted); font-size: 0.78re
   </section>
 
   <section>
-    <div class="bar bar-teal">核心词汇语法 <span class="en">Key Vocabulary &amp; Grammar</span></div>
+    <div class="bar">核心词汇语法 <span class="en">Key Vocabulary &amp; Grammar</span></div>
     <div class="sec-body">
       <div class="vocab-wrap">
         <table>
