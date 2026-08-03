@@ -30,9 +30,9 @@ last_updated: 2026-08-03
 - 今天的报告句型：他晚上（time）（activity）。
 
 ### 10/3（星期五）—— Summative Test
-- 见 [05-assessment/summative-test.md](../05-assessment/summative-test.md)
+- 见 [06-assessment/summative-test.md](../06-assessment/summative-test.md)
 
-### 10/4（Day 8）—— 过渡到《中秋节的故事》
+### 10/4（Day 8）—— 过渡到《中秋节的故事》（Culture 模块内容，见 [04-culture/zhongqiujie-de-gushi.md](../04-culture/zhongqiujie-de-gushi.md)）
 - 暖场文化提问：你知道中秋节是哪天吗？你觉得中秋节的故事有谁？
 - 目标：我会说一说中秋节的故事
 - 活动：听一听 (role play)、说一说 (movie talk)、听一听 (pencil grab 游戏)

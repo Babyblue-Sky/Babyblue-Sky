@@ -4,7 +4,7 @@ status: active
 last_updated: 2026-08-03
 ---
 
-# 07 Curriculum Intelligence — Unit 1
+# 08 Curriculum Intelligence — Unit 1
 
 这个文件记录课程随时间演化的知识，不是静态内容。每条记录带日期，说明是谁发现的、
 针对哪个学年/哪次教学。
@@ -61,6 +61,30 @@ Assessment 的前置输入，逻辑上应该先出现。
 **当前完整模块顺序**：01 Overview / 02 Teaching / 03 Content / 04 Resources /
 05 Assessment / 06 AI Workspace / 07 Curriculum Intelligence（共 7 个模块，
 比最初 v0.1 设计的 8 个少一个，因为 Projects 并入了 Assessment）。
+
+## 2026-08-03 — 新增独立的 Culture 模块
+**发现**：教师指出「文化」板块还是缺失的——之前只是 01 Overview 里的一个字段
+（`cultural_focus`），而「中秋节的故事」被当成 03 Content 的一个 story 条目处理，
+这样处理没有单独体现文化板块的重要性。文化对应两条独立的 Course Standard
+（WL.4 关系文化实践与视角、WL.5 文化比较），且每个 Unit 都固定有一个文化模块位，
+值得单独成为一个模块，而不是附属在别处。
+
+重新梳理已上传的材料后，还发现 Cycle 1（9/18）的**笔画/书法**教学，其实也是一次
+「其他文化活动」（教师提到的手工/技艺类），此前被当成普通教学内容记录在
+02 Teaching 里，没有被识别为 Culture 内容。
+
+**调整为**：新增 **04 Culture** 模块，插在 03 Content 之后：
+01 Overview / 02 Teaching / 03 Content / **04 Culture** / 05 Resources /
+06 Assessment / 07 AI Workspace / 08 Curriculum Intelligence（共 8 个模块）。
+- 「中秋节的故事」从 03 Content 移到 04 Culture（`culture_type: reading`）
+- 新增「笔画与书法」条目于 04 Culture（`culture_type: craft`），内容从
+  02-teaching/cycle-1.md 中已记录的 9/18 教学内容提炼而来
+- 一个 Unit 的 Culture 模块下可以有不止一个条目，用 `culture_type` 字段
+  （reading / project / craft / field-trip / other）区分类型
+
+**建议**：以后从 SMART slides 里做 Import 时，凡是涉及节日、书法、饮食体验、
+field trip 这类内容，应该主动往 04 Culture 归类检查，而不是默认归进 02 Teaching
+或 03 Content——这是这次漏掉笔画/书法的根本原因。
 
 ## 待补充的观察类型（模板，供未来使用）
 - 哪些活动最成功

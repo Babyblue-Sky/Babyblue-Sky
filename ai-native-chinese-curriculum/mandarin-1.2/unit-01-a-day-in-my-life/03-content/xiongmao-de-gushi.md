@@ -48,4 +48,4 @@ last_updated: 2026-08-03
 
 ## Teacher Notes
 > TODO：哪些词学生最容易错、哪个环节最有效——待积累后填入
-> [07 Curriculum Intelligence](../07-curriculum-intelligence.md)
+> [08 Curriculum Intelligence](../08-curriculum-intelligence.md)

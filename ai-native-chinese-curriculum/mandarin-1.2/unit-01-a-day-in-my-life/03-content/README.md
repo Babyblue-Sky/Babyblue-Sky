@@ -12,5 +12,8 @@ last_updated: 2026-08-03
 Text or Media / Activities / Extensions / Teacher Notes）保持不变，"Reading" 一节
 也相应改名为通用的 "Text / Media"，可以放故事正文、新闻链接、歌词、视频链接等任意形式。
 
-目前本 Unit 下的三份内容都是 `content_type: story`：
-`wo-de-yitian-tai-lei-le.md`、`xiongmao-de-gushi.md`、`zhongqiujie-de-gushi.md`。
+目前本 Unit 下的两份内容都是 `content_type: story`：
+`wo-de-yitian-tai-lei-le.md`、`xiongmao-de-gushi.md`。
+
+（原本放在这里的「中秋节的故事」已移到 [04-culture](../04-culture/)，因为它承担的是
+Unit 的 Culture 模块位，不只是语言输入素材——见该模块的 README 说明。）

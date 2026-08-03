@@ -42,13 +42,13 @@ Cycle 1 主要是**开学破冰 + 课堂常规建立 + 摸底测试**，还未�
 ### 9/16（Day B）
 - 复习 Super 8 用语
 - 今天的报告句型：她叫___，她是___。她会___。她很___。
-- **Diagnostic Test** 当天进行（见 [05-assessment/diagnostic-test.md](../05-assessment/diagnostic-test.md)）
+- **Diagnostic Test** 当天进行（见 [06-assessment/diagnostic-test.md](../06-assessment/diagnostic-test.md)）
 - 游戏：这个 还是 那个
 
 ### 9/18（Day D）
 - 写一写：你的中文名字
 - 今天的报告：介绍同学（阿根廷等国籍词汇拓展）
-- **笔画 / 书法 (bǐ huà / shū fǎ)** 教学：毛笔书法概念，配 YouTube 教学视频
+- **笔画 / 书法 (bǐ huà / shū fǎ)** 教学：毛笔书法概念，配 YouTube 教学视频（Culture 模块内容，见 [04-culture/shufa-calligraphy.md](../04-culture/shufa-calligraphy.md)）
 - 说时间入门：我很好 / 我还好 / 我非常好 / 你好吗？（问候句型，为后续时间表达做铺垫）
 - 课堂请求用语：我可以...吗？（去卫生间 / 去看护士 / 喝水）
 - 分享评论句型：我喜欢你的___。我也有___。我很想要知道___。
@@ -61,4 +61,4 @@ Cycle 1 主要是**开学破冰 + 课堂常规建立 + 摸底测试**，还未�
 
 ## 备注
 - 本 Cycle 尚未出现「我的一天」核心作息词汇（起床、刷牙、吃饭等），这些预计在后续 Cycle（或未上传的 Cycle）中出现。
-- Student Survey 问卷推测在本 Cycle 早期（9/10 前后）发放，内容见 [04-resources/student-survey.md](../04-resources/student-survey.md)。
+- Student Survey 问卷推测在本 Cycle 早期（9/10 前后）发放，内容见 [05-resources/student-survey.md](../05-resources/student-survey.md)。

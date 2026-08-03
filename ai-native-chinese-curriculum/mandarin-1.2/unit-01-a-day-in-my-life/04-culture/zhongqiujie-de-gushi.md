@@ -1,11 +1,11 @@
 ---
-story: 中秋节的故事
-content_type: story
+title: 中秋节的故事
+culture_type: reading
 pinyin: zhōng qiū jié de gù shì
 english: "The Mid-Autumn Festival Story"
 unit: Unit 1
 status: draft
-module_role: "本年度 Unit 1 的 Culture 模块内容实例（见 01-overview.md 的 cultural_focus）"
+module_role: "本年度 Unit 1 的 Culture 模块内容实例之一（见 01-overview.md 的 cultural_focus）"
 source: "Unit 1 Cycle 2 slides 20-24 (10/4 起)"
 last_updated: 2026-08-03
 ---
@@ -13,9 +13,10 @@ last_updated: 2026-08-03
 # 中秋节的故事 (The Mid-Autumn Festival Story)
 
 ## 定位说明
-这个 Story 承担的是 Unit 1 的「Culture」模块位——因为本学年开学时间与中秋节临近，
+这是 Unit 1「Culture」模块的其中一个内容——因为本学年开学时间与中秋节临近，
 所以今年 Unit 1 的文化内容选择了中秋节的故事（对应 Syllabus 中泛称的 "The Rabbit Story"）。
 不是每年 Unit 1 都固定教这个故事，规则见 [01-overview.md](../01-overview.md#cultural_focus)。
+本 Unit 的 Culture 模块下还有另一个内容：[书法 (Calligraphy)](./shufa-calligraphy.md)。
 
 ## Overview
 在 Cycle 2 末尾（10/4 起）开始铺垫，正式故事内容预计在后续 Cycle（尚未上传）中展开。
