@@ -61,6 +61,10 @@ Anchor Standard 2 = Culture（WL.4-5）。
 - Learning Objective: 通过成语和古代智慧故事，建立频率副词的概念，创作自己的故事
 - > TODO：尚未整理为独立 Unit 文件，需要该 Unit 的 SMART Notebook / 资料上传后建立
 
+## Shared Resources（跨 5 个 Unit 共用，本 Course 独立于任何单一 Unit 的内容）
+> TODO(教师补充)：例如 Resources at Home（家长/家庭配合材料）等跨 Unit 共享的资源，
+> 待补充后在此列出，避免在每个 Unit 里重复维护。
+
 ## 课堂运营信息（Course 层级，非 Unit 内容）
 - Homework：每节课开始前交，未交作业记 ticket
 - Extra Help：下午 3:30–4:00（预约）、周一/三/四放学后

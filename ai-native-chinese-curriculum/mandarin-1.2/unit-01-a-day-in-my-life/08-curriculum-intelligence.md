@@ -33,6 +33,18 @@ last_updated: 2026-08-03
 而不是只记录当年选了什么——这样明年即使日历变化、选了不同节日，规则本身不用重写，
 只需要更新"今年的实例"。（`01-overview.md` 里的 `cultural_focus` 已经按这个思路起草。）
 
+## 2026-08-03 — Module 顺序调整：Resources 应前置于 Projects / Assessment
+**发现**：最初起草时把顺序定为 01 Overview / 02 Teaching / 03 Stories / 04 Projects /
+05 Assessment / 06 Resources / 07 AI Workspace / 08 Curriculum Intelligence，教师指出
+06 Resources 应该前置——因为 Resources（图片、视频、生词表等素材）是 Projects 和
+Assessment 的前置输入，逻辑上应该先出现。
+
+**调整为**：01 Overview / 02 Teaching / 03 Stories / **04 Resources** /
+**05 Projects** / **06 Assessment** / 07 AI Workspace / 08 Curriculum Intelligence。
+
+**建议**：这个顺序目前只在 Pilot Unit 里生效，等确认在其他 Unit 上也适用后，
+再回头把它写进正式的 Unit Template 文档（见项目 README 路线图第 2 项）。
+
 ## 待补充的观察类型（模板，供未来使用）
 - 哪些活动最成功
 - 学生最容易犯的错误 / Vocabulary 难点

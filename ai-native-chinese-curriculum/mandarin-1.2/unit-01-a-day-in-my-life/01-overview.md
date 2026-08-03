@@ -63,7 +63,7 @@ describing one's daily routine in school and at home
 
 ## Transfer Goal / Final Project
 创作一个关于「我的一天」的 infographic 或视频。
-（对应资料夹里的 `Daily Routine Final Project`，具体内容待补充 —— 见 [04-projects](./04-projects/daily-routine-final-project.md)）
+（对应资料夹里的 `Daily Routine Final Project`，具体内容待补充 —— 见 [05-projects](./05-projects/daily-routine-final-project.md)）
 
 ## Unit 内的 Story 序列（草拟，待确认顺序）
 1. **我的一天太累了** —— 引入本 Unit 核心生词（作息时间表达），见 [03-stories](./03-stories/wo-de-yitian-tai-lei-le.md)
