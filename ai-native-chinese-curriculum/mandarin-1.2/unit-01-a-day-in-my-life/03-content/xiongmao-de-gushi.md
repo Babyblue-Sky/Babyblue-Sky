@@ -1,5 +1,6 @@
 ---
 story: 熊猫的故事
+content_type: story
 pinyin: xióng māo de gù shì
 english: The Panda's Story
 unit: Unit 1
@@ -32,7 +33,7 @@ last_updated: 2026-08-03
 | 问题 | wèn tí | problem/question |
 | 怎么办 | zěn me bàn | what to do |
 
-## Reading
+## Text / Media（正文或媒体内容：故事、新闻、音频、歌曲、视频均可）
 > TODO：故事正文文本目前只在 slides 里以图片/手写形式呈现（见 Cycle 2 slide 3–4、9、12、19），
 > 尚未整理成独立的可复用文字版本。建议后续补充故事全文（中文 + 拼音标注）。
 
@@ -47,4 +48,4 @@ last_updated: 2026-08-03
 
 ## Teacher Notes
 > TODO：哪些词学生最容易错、哪个环节最有效——待积累后填入
-> [08 Curriculum Intelligence](../08-curriculum-intelligence.md)
+> [07 Curriculum Intelligence](../07-curriculum-intelligence.md)

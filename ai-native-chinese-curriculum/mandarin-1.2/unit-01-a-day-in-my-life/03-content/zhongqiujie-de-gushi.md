@@ -1,5 +1,6 @@
 ---
 story: 中秋节的故事
+content_type: story
 pinyin: zhōng qiū jié de gù shì
 english: "The Mid-Autumn Festival Story"
 unit: Unit 1
@@ -28,7 +29,7 @@ last_updated: 2026-08-03
 ## Vocabulary
 > TODO：正文词汇尚未出现在已上传的 slides 中，待后续 Cycle 补充。
 
-## Reading
+## Text / Media（正文或媒体内容：故事、新闻、音频、歌曲、视频均可）
 > TODO：故事正文待补充。
 
 ## Activities

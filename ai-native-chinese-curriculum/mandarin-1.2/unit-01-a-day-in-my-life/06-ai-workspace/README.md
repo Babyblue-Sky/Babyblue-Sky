@@ -4,7 +4,7 @@ status: empty
 last_updated: 2026-08-03
 ---
 
-# 07 AI Workspace — Unit 1
+# 06 AI Workspace — Unit 1
 
 这个模块目前是空的。Import Pipeline 只负责把已有的 SMART Notebook / 文档内容迁移进
 01–06、08 模块；AI Workspace 里的内容（Prompt Library、Generate Activities、Differentiate、

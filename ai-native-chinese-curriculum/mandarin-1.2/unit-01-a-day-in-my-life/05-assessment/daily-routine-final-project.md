@@ -1,5 +1,6 @@
 ---
-project: Daily Routine Final Project
+assessment_type: "Summative — Performance Task / Project"
+title: Daily Routine Final Project
 unit: Unit 1
 status: stub
 source: "资料夹截图确认存在 'Daily Routine Final Project' 文件夹，内容文件尚未上传"

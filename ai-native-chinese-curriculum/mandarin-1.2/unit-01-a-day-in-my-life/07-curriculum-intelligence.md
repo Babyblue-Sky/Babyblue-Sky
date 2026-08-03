@@ -4,7 +4,7 @@ status: active
 last_updated: 2026-08-03
 ---
 
-# 08 Curriculum Intelligence — Unit 1
+# 07 Curriculum Intelligence — Unit 1
 
 这个文件记录课程随时间演化的知识，不是静态内容。每条记录带日期，说明是谁发现的、
 针对哪个学年/哪次教学。
@@ -17,7 +17,7 @@ last_updated: 2026-08-03
 
 **建议**：
 1. Unit Template 需要区分「正式课程内容」和「机动/加课活动」两类，后者不应出现在
-   05 Assessment 或 03 Stories 里，避免误导未来备课或生成教学资源时把它当成必修内容。
+   05 Assessment 或 03 Content（当时称 03 Stories）里，避免误导未来备课或生成教学资源时把它当成必修内容。
 2. Syllabus 作为「计划层」文档，容易随年份漂移而不更新；Curriculum Database 应该是
    「实际教学」的权威记录，Syllabus 之后可以从 Database 反向生成，而不是让两者各自
    维护、逐渐失去同步。
@@ -44,6 +44,23 @@ Assessment 的前置输入，逻辑上应该先出现。
 
 **建议**：这个顺序目前只在 Pilot Unit 里生效，等确认在其他 Unit 上也适用后，
 再回头把它写进正式的 Unit Template 文档（见项目 README 路线图第 2 项）。
+
+## 2026-08-03 — 再次调整：合并 Projects 与 Assessment；Stories 改名 Content
+**发现**：教师进一步指出两点：
+1. Project 和 Assessment 本质是同一件事——都是对 Unit 的**总结性评量**，只是呈现形式
+   不同（测验 vs 项目/表现性任务），不该分成两个模块。
+2. "Stories" 这个名字太局限——介绍新内容时，除了故事，也常用新闻、音频、歌曲、视频。
+
+**调整为**：
+- 04 Resources / **05 Assessment**（合并了原 Projects，用 `assessment_type` 区分
+  Diagnostic / Summative / Summative — Performance Task 等类型）/ **06 AI Workspace** /
+  **07 Curriculum Intelligence**（原 06/07/08 依次前移一位）
+- 03 Stories → **03 Content**，用 `content_type` 字段（story / news / song / video / audio）
+  标注具体类型，"Reading" 一节改名为通用的 "Text / Media"
+
+**当前完整模块顺序**：01 Overview / 02 Teaching / 03 Content / 04 Resources /
+05 Assessment / 06 AI Workspace / 07 Curriculum Intelligence（共 7 个模块，
+比最初 v0.1 设计的 8 个少一个，因为 Projects 并入了 Assessment）。
 
 ## 待补充的观察类型（模板，供未来使用）
 - 哪些活动最成功

@@ -7,7 +7,7 @@ source: "1.2 我的一天 新词表.docx"
 last_updated: 2026-08-03
 note: >
   这是 Unit 1「我的一天」的核心生词表，很可能是「我的一天太累了」这个 Story 的生词来源
-  （见 03-stories/wo-de-yitian-tai-lei-le.md），但尚未和教师最终确认归属，
+  （见 03-content/wo-de-yitian-tai-lei-le.md），但尚未和教师最终确认归属，
   暂放在 Resources 供全 Unit 引用。
 ---
 

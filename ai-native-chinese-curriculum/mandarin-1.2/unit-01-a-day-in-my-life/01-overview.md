@@ -63,12 +63,12 @@ describing one's daily routine in school and at home
 
 ## Transfer Goal / Final Project
 创作一个关于「我的一天」的 infographic 或视频。
-（对应资料夹里的 `Daily Routine Final Project`，具体内容待补充 —— 见 [05-projects](./05-projects/daily-routine-final-project.md)）
+（对应资料夹里的 `Daily Routine Final Project`，具体内容待补充 —— 见 [05-assessment](./05-assessment/daily-routine-final-project.md)）
 
 ## Unit 内的 Story 序列（草拟，待确认顺序）
-1. **我的一天太累了** —— 引入本 Unit 核心生词（作息时间表达），见 [03-stories](./03-stories/wo-de-yitian-tai-lei-le.md)
-2. **熊猫的故事** —— 复用/延伸日常作息词汇，加入新情节词汇，见 [03-stories](./03-stories/xiongmao-de-gushi.md)
-3. **中秋节的故事**（本年度 Culture 模块内容）—— 见 [03-stories](./03-stories/zhongqiujie-de-gushi.md)
+1. **我的一天太累了** —— 引入本 Unit 核心生词（作息时间表达），见 [03-content](./03-content/wo-de-yitian-tai-lei-le.md)
+2. **熊猫的故事** —— 复用/延伸日常作息词汇，加入新情节词汇，见 [03-content](./03-content/xiongmao-de-gushi.md)
+3. **中秋节的故事**（本年度 Culture 模块内容）—— 见 [03-content](./03-content/zhongqiujie-de-gushi.md)
 
 > TODO(教师确认)：以上三个故事在实际教学中的先后顺序、以及「我的一天太累了」是否确实是 Cycle 1/2 之前或之间教授的内容——目前只从资料夹结构推断，尚未看到该故事的实际 slides。
 
@@ -76,4 +76,4 @@ describing one's daily routine in school and at home
 Syllabus 中记录的 Unit 1 评量故事为 "The Rabbit Story"（对应中秋节）和 **"A Scary Story"**，
 但 "A Scary Story" 并非本 Unit 的正式课程内容，而是万圣节应景的**机动/加课活动**
 （进度超前时才会安排，让学生看万圣节短片、用中文 retell），**不计入正式 Assessment**。
-Syllabus 本身已过时，未反映这一实际情况——详见 [08 Curriculum Intelligence](./08-curriculum-intelligence.md)。
+Syllabus 本身已过时，未反映这一实际情况——详见 [07 Curriculum Intelligence](./07-curriculum-intelligence.md)。

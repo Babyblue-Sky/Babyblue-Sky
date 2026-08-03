@@ -42,7 +42,7 @@ Cycle 1 主要是**开学破冰 + 课堂常规建立 + 摸底测试**，还未�
 ### 9/16（Day B）
 - 复习 Super 8 用语
 - 今天的报告句型：她叫___，她是___。她会___。她很___。
-- **Diagnostic Test** 当天进行（见 [06-assessment/diagnostic-test.md](../06-assessment/diagnostic-test.md)）
+- **Diagnostic Test** 当天进行（见 [05-assessment/diagnostic-test.md](../05-assessment/diagnostic-test.md)）
 - 游戏：这个 还是 那个
 
 ### 9/18（Day D）

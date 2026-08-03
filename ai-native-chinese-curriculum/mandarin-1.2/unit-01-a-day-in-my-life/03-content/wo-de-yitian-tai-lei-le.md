@@ -1,5 +1,6 @@
 ---
 story: 我的一天太累了
+content_type: story
 pinyin: wǒ de yì tiān tài lèi le
 english: "My Day Is So Tiring"
 unit: Unit 1
@@ -44,7 +45,7 @@ last_updated: 2026-08-03
 > 原始 docx 中「意思」一栏为空白（可能是留给学生填写的练习表格，而非教师参考答案），
 > 待教师确认后补齐英文释义。
 
-## Reading
+## Text / Media（正文或媒体内容：故事、新闻、音频、歌曲、视频均可）
 > 待补充
 
 ## Activities
