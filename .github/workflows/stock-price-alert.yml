@@ -1,0 +1,40 @@
+name: Stock Price Dip Alert
+
+on:
+  schedule:
+    # Hourly, 13:00-21:00 UTC, Mon-Fri. This window is wide enough to cover
+    # US market hours (9:30am-4pm ET) across both EDT and EST; the script
+    # itself checks the real market clock and no-ops outside it.
+    - cron: "0 13-21 * * 1-5"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  check-prices:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r stock-price-alert-agent/requirements.txt
+
+      - name: Check prices and send alert if needed
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          ALERT_TO_EMAIL: ${{ secrets.ALERT_TO_EMAIL }}
+        run: python stock-price-alert-agent/check_prices.py
+
+      - name: Commit updated alert state
+        run: |
+          git config user.name "stock-price-alert-bot"
+          git config user.email "actions@github.com"
+          git add stock-price-alert-agent/state.json
+          git diff --cached --quiet || git commit -m "Update alert state [skip ci]"
+          git push
