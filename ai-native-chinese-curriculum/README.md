@@ -4,6 +4,7 @@
 
 ## 文档
 
+- **[`PROJECT_STATUS.md`](./PROJECT_STATUS.md) — 新开对话/新的 Claude 接手时，先读这个文件。** 这个仓库是唯一的记忆载体，跨对话不会自动保留上下文。
 - [`blueprint-v1.0.md`](./blueprint-v1.0.md) — 架构层设计：九条设计公理、四层架构模型（Structural / Content / Generation / Intelligence）、Department 级泛化设计、Import Pipeline、治理与版本管理。
 - [`mandarin-1.2/`](./mandarin-1.2/) — Pilot：Mandarin 1.2 课程数据，Markdown + YAML frontmatter 存储，Course 层共享内容（Standards、Syllabus 大纲）在 `00-course-overview.md`，各 Unit 单独建目录。
 
