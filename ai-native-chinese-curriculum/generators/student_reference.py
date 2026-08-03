@@ -10,6 +10,22 @@ full vocabulary (searchable), full story/content text where the source data
 has it, the real Cycle-by-cycle teaching flow, and any Quizlet/YouTube/
 worksheet links exactly as captured in the source Markdown.
 
+Not live: this script renders a snapshot of whatever is currently in the
+Content Layer. It does NOT watch or sync from the teacher's SMART Notebook
+slides — a new day's slides only show up here after going through the
+Import Pipeline (Extractor -> AI Classifier -> Human Review, see
+blueprint-v1.0.md's Import Pipeline section) into the canonical Markdown, and then re-running this
+script. Re-run it any time after the database changes to refresh the page.
+
+There's no standalone "master vocabulary table" section — per teacher
+feedback (2026-08-03) it duplicated the per-story/per-culture-item
+vocabulary tables inside the Content and Culture cards and made the page
+too long. Search still finds any vocabulary word: each card's own word list
+is folded into that card's `data-search` key, so searching a word surfaces
+the story/culture item that teaches it (with full context), not an
+isolated row. A compact search box also lives in the sticky nav bar so it
+stays reachable while scrolled down, in sync with the hero search box.
+
 This renderer never invents a link, a translation, or filler content for a
 stub. If the Content Layer doesn't have something yet (e.g. a story's Text /
 Media section is still "> 待补充"), the page says so plainly instead of
@@ -201,20 +217,6 @@ def status_pill(status):
     return "" if status in ("canonical", "draft") else pill("编写中 In Progress", "muted")
 
 
-def vocab_table_html(rows, with_source=True):
-    if not rows:
-        return ""
-    head = "<tr><th>中文</th><th>拼音</th><th>English</th>" + ("<th>来源 Source</th>" if with_source else "") + "</tr>"
-    body_rows = []
-    for r in rows:
-        search_key = esc(f"{r['zh']} {r['py']} {r['en']} {r['source']}".lower())
-        cells = f"<td class='zh'>{esc(r['zh'])}</td><td>{esc(r['py']) or '—'}</td><td>{esc(r['en']) or '—'}</td>"
-        if with_source:
-            cells += f"<td class='src'>{esc(r['source'])}</td>"
-        body_rows.append(f'<tr data-search="{search_key}">{cells}</tr>')
-    return f"<table>{head}{''.join(body_rows)}</table>"
-
-
 def content_card(fm, body, type_map, type_key, extra_sections=()):
     label, color = type_map.get(fm.get(type_key), (fm.get(type_key) or "", "plum"))
     own_vocab = vocab_rows_from_text(body_section(body, "Vocabulary"), None)
@@ -228,7 +230,12 @@ def content_card(fm, body, type_map, type_key, extra_sections=()):
             "<h4>生词 Vocabulary</h4>"
             f"<div class='vocab-wrap'><table><tr><th>中文</th><th>拼音</th><th>English</th></tr>{rows_html}</table></div>"
         )
-    search_key = esc(f"{fm.get('title')} {fm.get('english')} {fm.get('pinyin')} {label}".lower())
+    # Fold this item's own vocabulary into its search key (there's no
+    # standalone vocab table anymore — see 08-curriculum-intelligence.md,
+    # so searching a word needs to surface the story/culture card that
+    # teaches it, with full context, rather than an isolated row).
+    vocab_terms = " ".join(f"{r['zh']} {r['py']} {r['en']}" for r in own_vocab)
+    search_key = esc(f"{fm.get('title')} {fm.get('english')} {fm.get('pinyin')} {label} {vocab_terms}".lower())
     extra_html = "".join(
         f"<h4>{esc(h)}</h4>{section_html(body, key)}" for h, key in extra_sections
     )
@@ -326,11 +333,6 @@ def render(unit_dir, course_title="Mandarin 1.2"):
     assessment_entries = entries(f"{unit_dir}/06-assessment/*.md")
     cycle_entries = entries(f"{unit_dir}/02-teaching/cycle-*.md")
 
-    vocab_fm, vocab_body = load_frontmatter(f"{unit_dir}/05-resources/vocabulary-my-day.md")
-    master_vocab = vocab_rows_from_text(vocab_body, vocab_fm.get("title") or "生词表 Vocabulary List")
-    for fm, body in content_entries + culture_entries:
-        master_vocab += vocab_rows_from_text(body_section(body, "Vocabulary"), fm.get("title"))
-
     content_html = "\n".join(content_card(fm, body, CONTENT_TYPE, "content_type") for fm, body in content_entries)
     culture_html = "\n".join(content_card(fm, body, CULTURE_TYPE, "culture_type") for fm, body in culture_entries)
     cycle_html = "\n".join(cycle_card(fm, body) for fm, body in cycle_entries)
@@ -351,7 +353,6 @@ def render(unit_dir, course_title="Mandarin 1.2"):
         big_idea_en=esc(overview_fm.get("big_idea", "").split("(", 1)[-1].rstrip(")")),
         objectives_html=objectives_html,
         grammar_html=grammar_html,
-        vocab_html=vocab_table_html(master_vocab, with_source=True),
         content_html=content_html,
         culture_html=culture_html,
         cycle_html=cycle_html,
@@ -364,7 +365,7 @@ TEMPLATE = """<title>{course} · {unit_label} Student Reference 学生检索页�
 <style>
 :root {{
   --bg: #F3EFE3; --surface: #FFFFFF; --ink: #221F1A; --muted: #6E6656; --line: #221F1A;
-  --bar: #3E5D66; --bar-ink: #FBF6EA;
+  --bar: #8A5A3B; --bar-ink: #FBF6EA;
   --c-plum: #6A4E9E; --c-jade: #2F7A56; --c-gold: #B4791C; --c-vermilion: #B0402F; --c-teal: #1E7A88; --c-muted: #8A8272;
   --font-latin: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --font-kai: "Kaiti SC", "STKaiti", "KaiTi", "AR PL KaitiM GB", "BiauKai", serif;
@@ -373,18 +374,18 @@ TEMPLATE = """<title>{course} · {unit_label} Student Reference 学生检索页�
 @media (prefers-color-scheme: dark) {{
   :root {{
     --bg: #171913; --surface: #1F2219; --ink: #EDE7DC; --muted: #A9A28F; --line: #E9E3D4;
-    --bar: #4C7079; --bar-ink: #FBF6EA;
+    --bar: #C08A57; --bar-ink: #2A1B10;
     --c-plum: #B7A0EC; --c-jade: #7FCBA6; --c-gold: #E5B75E; --c-vermilion: #E38271; --c-teal: #6FC7D6; --c-muted: #B5AC98;
   }}
 }}
 :root[data-theme="dark"] {{
   --bg: #171913; --surface: #1F2219; --ink: #EDE7DC; --muted: #A9A28F; --line: #E9E3D4;
-  --bar: #4C7079; --bar-ink: #FBF6EA;
+  --bar: #C08A57; --bar-ink: #2A1B10;
   --c-plum: #B7A0EC; --c-jade: #7FCBA6; --c-gold: #E5B75E; --c-vermilion: #E38271; --c-teal: #6FC7D6; --c-muted: #B5AC98;
 }}
 :root[data-theme="light"] {{
   --bg: #F3EFE3; --surface: #FFFFFF; --ink: #221F1A; --muted: #6E6656; --line: #221F1A;
-  --bar: #3E5D66; --bar-ink: #FBF6EA;
+  --bar: #8A5A3B; --bar-ink: #FBF6EA;
   --c-plum: #6A4E9E; --c-jade: #2F7A56; --c-gold: #B4791C; --c-vermilion: #B0402F; --c-teal: #1E7A88; --c-muted: #8A8272;
 }}
 * {{ box-sizing: border-box; }}
@@ -401,10 +402,19 @@ h1 {{ margin: 0.5rem 0 0.1rem; font-size: clamp(2rem, 5.5vw, 2.7rem); font-weigh
   font-family: var(--font-latin), var(--font-kai); background: var(--surface); color: var(--ink);
 }}
 .search-hint {{ font-family: var(--font-latin); font-size: 0.75rem; opacity: 0.85; margin: 0.4rem 0 0; }}
-nav.jump {{ display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0 0 1.6rem; }}
+nav.jump {{
+  position: sticky; top: 0; z-index: 10;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;
+  margin: 0 -1.4rem 1.6rem; padding: 0.7rem 1.4rem;
+  background: var(--bg); border-bottom: 2px solid var(--line);
+}}
 nav.jump a {{
   font-family: var(--font-latin); font-size: 0.82rem; font-weight: 700; text-decoration: none; color: var(--ink);
-  border: 1.5px solid var(--line); border-radius: 999px; padding: 0.3rem 0.85rem;
+  border: 1.5px solid var(--line); border-radius: 999px; padding: 0.3rem 0.85rem; white-space: nowrap;
+}}
+#search-sticky {{
+  flex: 1 1 160px; min-width: 120px; padding: 0.4rem 0.8rem; border-radius: 999px; border: 1.5px solid var(--line);
+  font-size: 0.85rem; font-family: var(--font-latin), var(--font-kai); background: var(--surface); color: var(--ink);
 }}
 section {{ margin-bottom: 2rem; }}
 section > h2 {{ font-size: 1.3rem; margin: 0 0 0.9rem; display: flex; align-items: baseline; gap: 0.5rem; }}
@@ -444,7 +454,7 @@ footer {{ font-family: var(--font-latin); color: var(--muted); font-size: 0.78re
 </style>
 
 <div class="page">
-  <div class="hero">
+  <div class="hero" id="top">
     <div class="eyebrow">{course} · {unit_label} · Student Reference 学生检索页面</div>
     <h1>{big_idea_zh}</h1>
     <p class="en-title">{big_idea_en}</p>
@@ -458,25 +468,21 @@ footer {{ font-family: var(--font-latin); color: var(--muted); font-size: 0.78re
   </div>
 
   <nav class="jump">
-    <a href="#vocabulary">生词表 Vocabulary</a>
+    <input id="search-sticky" type="text" placeholder="搜索… Search…" autocomplete="off">
+    <a href="#top">↑ 顶部 Top</a>
     <a href="#content">学习内容 Content</a>
     <a href="#culture">文化 Culture</a>
     <a href="#teaching-flow">课堂进度 Teaching Flow</a>
     <a href="#assessments">单元考核 Assessments</a>
   </nav>
 
-  <section id="vocabulary">
-    <h2>生词表 <span class="en">Vocabulary</span></h2>
-    <p class="section-note">All vocabulary introduced in this unit, combined from every story, culture item,
-      and the unit word list. Use the search box above to filter.</p>
-    <div class="vocab-wrap">{vocab_html}</div>
-    <h4 style="font-family: var(--font-latin); text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.78rem; color: var(--muted); margin: 1.2rem 0 0.4rem;">语法 / 语言形式 Grammar &amp; Language Forms</h4>
-    <ul class="grammar">{grammar_html}</ul>
-  </section>
-
   <section id="objectives">
     <h2>学习目标 <span class="en">Learning Objectives</span></h2>
-    <div class="card"><div class="card-body"><ol class="objectives">{objectives_html}</ol></div></div>
+    <div class="card"><div class="card-body">
+      <ol class="objectives">{objectives_html}</ol>
+      <h4 style="font-family: var(--font-latin); text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.78rem; color: var(--muted); margin: 1.2rem 0 0.4rem;">语法 / 语言形式 Grammar &amp; Language Forms</h4>
+      <ul class="grammar">{grammar_html}</ul>
+    </div></div>
   </section>
 
   <section id="content">
@@ -501,20 +507,30 @@ footer {{ font-family: var(--font-latin); color: var(--muted); font-size: 0.78re
     {assessment_html}
   </section>
 
-  <footer>Auto-generated from the curriculum database · {generated_date} · updates automatically as the data changes</footer>
+  <footer>Generated from the curriculum database · {generated_date} · re-run the generator after the database
+    is updated to refresh this page</footer>
 </div>
 
 <script>
 (function() {{
-  var input = document.getElementById('search');
+  var mainInput = document.getElementById('search');
+  var stickyInput = document.getElementById('search-sticky');
   var searchables = Array.prototype.slice.call(document.querySelectorAll('[data-search]'));
-  input.addEventListener('input', function() {{
-    var q = input.value.trim().toLowerCase();
+  function applyFilter(q) {{
+    q = q.trim().toLowerCase();
     searchables.forEach(function(el) {{
       var match = !q || (el.getAttribute('data-search') || '').indexOf(q) !== -1;
       el.classList.toggle('is-hidden', !match);
     }});
-  }});
+  }}
+  function sync(source, other) {{
+    return function() {{
+      other.value = source.value;
+      applyFilter(source.value);
+    }};
+  }}
+  mainInput.addEventListener('input', sync(mainInput, stickyInput));
+  stickyInput.addEventListener('input', sync(stickyInput, mainInput));
 }})();
 </script>
 """

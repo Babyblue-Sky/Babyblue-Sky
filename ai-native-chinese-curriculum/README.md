@@ -23,14 +23,16 @@ python3 generators/family_overview.py mandarin-1.2/unit-01-a-day-in-my-life <输
 Curriculum Intelligence 笔记）不会出现在这份面向家长的输出里，渲染器只挑家长需要看到的字段。
 
 `generators/student_reference.py` 是第二个渲染器：同一份 Content Layer 数据，渲染成一份
-**面向学生的静态检索页面**——不做登录、设备同步、进度追踪，定位是纯参考工具。比家长版
-内容丰富得多：完整生词表（跨 Content/Culture/Resources 汇总，页面内可搜索/筛选）、
-故事/文化正文（数据里有多少就显示多少，缺失的明确标注"内容整理中"而不是留空或瞎编）、
-每个 Cycle 的真实教学时间线。Diagnostic/Summative 这类测验只显示标题和类型，不暴露考题内容
+**面向学生的静态检索页面**——不做登录、设备同步、进度追踪，定位是纯参考工具，**不是实时
+系统**（教师上完新课后要先把内容整理进 Markdown，再重新跑一次脚本，页面才会更新）。
+比家长版内容丰富得多：故事/文化正文（数据里有多少就显示多少，缺失的明确标注"内容整理中"
+而不是留空或瞎编）、每个 Cycle 的真实教学时间线、全页可搜索（含一条滚动时始终可见的
+sticky 导航+搜索条）。Diagnostic/Summative 这类测验只显示标题和类型，不暴露考题内容
 （考题本身不适合公开当复习资料）；Performance Task/Project 类评量则完整显示 Driving
 Question/Instructions/Rubric，因为这些本来就是要给学生看的任务说明。日期类信息（Cycle
 的具体教学日期）保留展示（比家长版更细，因为要体现真实教学顺序），但明确标注"去年参考日期"，
-避免学生把它当成本学年的实际进度。
+避免学生把它当成本学年的实际进度。经教师第一轮反馈后删除了和 Content/Culture 卡片重复的
+顶部整表生词表（生词仍保留在各卡片内，且仍可搜索），并换了区别于家长版的暖棕色配色。
 
 ```
 python3 generators/student_reference.py mandarin-1.2/unit-01-a-day-in-my-life <输出路径>.html
