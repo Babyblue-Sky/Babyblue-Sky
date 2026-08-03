@@ -21,7 +21,22 @@ python3 generators/family_overview.py mandarin-1.2/unit-01-a-day-in-my-life <输
 
 这一步验证了 Blueprint 里"一份数据、多种产出"的承诺：内部字段（TODO、status、教师
 Curriculum Intelligence 笔记）不会出现在这份面向家长的输出里，渲染器只挑家长需要看到的字段。
-后续可以为同一份数据做别的渲染器（学生练习单、Slides 大纲等），不需要重新整理数据。
+
+`generators/student_reference.py` 是第二个渲染器：同一份 Content Layer 数据，渲染成一份
+**面向学生的静态检索页面**——不做登录、设备同步、进度追踪，定位是纯参考工具。比家长版
+内容丰富得多：完整生词表（跨 Content/Culture/Resources 汇总，页面内可搜索/筛选）、
+故事/文化正文（数据里有多少就显示多少，缺失的明确标注"内容整理中"而不是留空或瞎编）、
+每个 Cycle 的真实教学时间线。Diagnostic/Summative 这类测验只显示标题和类型，不暴露考题内容
+（考题本身不适合公开当复习资料）；Performance Task/Project 类评量则完整显示 Driving
+Question/Instructions/Rubric，因为这些本来就是要给学生看的任务说明。日期类信息（Cycle
+的具体教学日期）保留展示（比家长版更细，因为要体现真实教学顺序），但明确标注"去年参考日期"，
+避免学生把它当成本学年的实际进度。
+
+```
+python3 generators/student_reference.py mandarin-1.2/unit-01-a-day-in-my-life <输出路径>.html
+```
+
+后续可以为同一份数据做别的渲染器（Slides 大纲等），不需要重新整理数据。
 
 ## 存储载体
 
@@ -36,3 +51,4 @@ Content Layer 落地为 **git 仓库里的 Markdown + YAML**（不是 Notion/Air
 2. **Unit Template**（进行中，见 `mandarin-1.2/unit-01-a-day-in-my-life/`）— 目前是 01 Overview / 02 Teaching / 03 Content / 04 Culture / 05 Resources / 06 Assessment / 07 AI Workspace / 08 Curriculum Intelligence 八个模块（合并了原本分开的 Projects 和 Assessment；Stories 改名为更广义的 Content，涵盖故事/新闻/音频/歌曲/视频；新增独立的 Culture 模块，不再依附于 Overview 里的一个字段），在 Pilot 中反复验证调整，暂不单独抽出通用模板文档，等 Pilot 稳定后再回头抽象
 3. **SMART Import**（已验证可行）— `.notebook` 文件是 zip 包，内含逐页 SVG（文字可用脚本抓取）+ `imsmanifest.xml`（记录真实页面顺序，不等于文件名数字顺序）；docx 用同样方式解压 `word/document.xml` 抓文字。目前是半自动：AI 抽取 + 人工审核映射到 Module，符合 Blueprint 里"AI 永不直接写入 canonical"的原则
 4. **Pilot Unit**（进行中）— Mandarin 1.2 Unit 1「我的一天」，已完成 Cycle 1/2 内容整理 + Diagnostic Test + Student Survey + 生词表 + Course-level Syllabus 归档；仍缺：「我的一天太累了」「中秋节的故事」正文、Final Project 细节、Cycle 3+
+5. **Generation Layer**（进行中）— 家长概览渲染器（`family_overview.py`）已定稿；学生检索页面渲染器（`student_reference.py`）已完成第一版，等教师review

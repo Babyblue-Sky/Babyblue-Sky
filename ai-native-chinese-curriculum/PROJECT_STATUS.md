@@ -29,12 +29,8 @@ Markdown+YAML 的 **AI Native Curriculum Database**，作为所有教学产出�
    `01-overview / 02-teaching / 03-content / 04-culture / 05-resources / 06-assessment / 07-ai-workspace / 08-curriculum-intelligence`
 5. **Generation Layer（渲染器）**：
    - `generators/family_overview.py` — 面向家长的 Unit 概览页面，**已经做了 4 轮设计迭代，教师确认"目前够用"**。关键设计原则都写在脚本开头的 docstring 里。
-   - **下一个渲染器（刚讨论完，还没开始写）**：面向学生的"Unit 检索页面"——
-     定位是纯静态的检索/参考工具，不做设备同步、不做进度追踪、不做登录。
-     内容要比家长版丰富得多：完整生词表（可搜索/筛选）、故事正文、
-     每个 Cycle 的真实教学流程、Quizlet/YouTube/Worksheet 的真实链接。
-     日期/作业提交这类"事件型"信息不重复，留给学校已经在用的 Schoology，
-     页面上最多提示"请在 Schoology 查看/提交"。
+   - `generators/student_reference.py` — 面向学生的"Unit 检索页面"，**第一版已写完，等教师 review**（还没经过像家长版那样的多轮反馈）。定位是纯静态检索/参考工具，不做设备同步、进度追踪、登录。比家长版丰富：全 Unit 汇总生词表（页面内可搜索/筛选）、故事/文化正文（数据里有多少显示多少，缺失的标注"内容整理中"）、每个 Cycle 的真实教学时间线（标注"去年参考日期"）。测验类 Assessment 不暴露考题内容，Performance Task/Project 类完整显示任务说明。Quizlet/YouTube 等链接目前渲染不出来——不是渲染器的问题，是 Content Layer 里还没有真实 URL，等数据补上会自动出现。设计取舍详见 [08-curriculum-intelligence.md](./mandarin-1.2/unit-01-a-day-in-my-life/08-curriculum-intelligence.md) 最新一条记录。
+   - **下一步**：把 `student_reference.py` 的输出给教师看，收集反馈后迭代（预计和家长版一样需要几轮）。
 
 ## 关键设计决策 + 为什么（不要重新踩一遍坑）
 
