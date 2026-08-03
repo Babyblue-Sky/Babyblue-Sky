@@ -281,7 +281,7 @@ section {{
   font-weight: 800;
   font-size: 1.25rem;
 }}
-.bar .en {{ font-family: var(--font-latin); font-weight: 700; font-size: 0.72em; opacity: 0.92; }}
+.bar .en {{ font-family: var(--font-latin); font-weight: 700; font-size: 0.72em; opacity: 0.92; color: var(--bar-ink); }}
 .sec-body {{ padding: 1.3rem 1.4rem 1.4rem; }}
 
 ul.list {{ list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.7rem; font-size: 0.95rem; }}
