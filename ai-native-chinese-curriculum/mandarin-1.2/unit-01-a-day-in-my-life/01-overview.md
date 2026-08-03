@@ -49,6 +49,12 @@ last_updated: 2026-08-03
 - 用简单和复杂句型，以口语和书面形式介绍自己上学日的日常安排
 - 与中国初中生的作息时间做比较，理解不同文化对教育的不同视角
 
+## Learning Objectives (English)
+原始英文版本（来自 Syllabus，供面向非中文母语受众的输出使用）：
+
+- Use vocabulary words to introduce their school day in simple and complex sentences, through speaking and writing in Mandarin.
+- Compare schedules with a middle school student in China, and learn how other cultures hold different perspectives on education.
+
 ## Language Forms
 routine activities, time and date expressions, school subjects, etc.
 

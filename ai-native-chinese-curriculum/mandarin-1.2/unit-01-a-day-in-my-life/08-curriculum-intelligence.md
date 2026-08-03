@@ -112,6 +112,31 @@ field trip 这类内容，应该主动往 04 Culture 归类检查，而不是默
 **建议**：以后设计任何新的 Generation Layer 渲染器时，先问一句"这份数据里，哪些是
 给这个受众看的、哪些是内部字段"，不要把 Content Layer 的所有字段不加选择地渲染出去。
 
+## 2026-08-03 — 家长概览渲染器第二轮修订
+**发现**：教师给了 Canva 上四个模版截图作参考（"不要照抄设计，但可以参考视觉效果、
+统一色彩和板块"），并提出四点具体修订：
+
+1. 视觉效果沿用"色块 Header Bar + 白底描边卡片"的结构（模版共有的特征），
+   每个板块一个纯色 Header Bar，配色复用 pill 已有的色系（plum/vermilion/gold/teal），
+   让"板块级别的颜色"和"条目级别的 pill 颜色"呼应。
+2. 标题定稿为：学习目标 Learning Objectives / 学习材料 Learning Materials /
+   文化 Culture / 单元考核 Unit Assessments / 核心词汇语法 Key Vocabulary & Grammar，
+   **删除了 Transfer Goal 板块**——期末项目本来就作为一条 Performance Task 出现在
+   单元考核列表里，单独一个板块是冗余的。
+3. 每个标题下的正文内容要用英文——这暴露了一个数据缺口：`01-overview.md` 的
+   Learning Objectives 之前只存了中文改写版，没有保留 Syllabus 原始的英文版本。
+   已经在 `01-overview.md` 里补了一个 "Learning Objectives (English)" 小节存
+   原始英文句子，渲染器面向家长时读这个英文版本，教师内部版本（中文）保留不变——
+   这是"同一份数据，不同受众看不同投影"的又一个真实案例。
+4. 所有中文用楷体（Kaiti）——通过 CSS `font-family` fallback 顺序实现
+   （`Kaiti SC` / `STKaiti` / `KaiTi` 排在西文字体之后、CJK 黑体/苹方之前），
+   不需要给每个中文片段单独加样式，浏览器按字符自动挑字体。
+
+**建议**：以后新渲染器如果同时面向教师和家长，"内容中英双语"不能只在渲染器里做翻译，
+应该在 Content Layer 里就存好对应受众需要的语言版本（就像这次给 Learning Objectives
+补的英文版），渲染器只负责挑选，不负责翻译——翻译应该是人工/教师确认过的数据，
+不是生成时现造的。
+
 ## 待补充的观察类型（模板，供未来使用）
 - 哪些活动最成功
 - 学生最容易犯的错误 / Vocabulary 难点

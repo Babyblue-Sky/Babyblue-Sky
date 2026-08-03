@@ -5,16 +5,21 @@ Reads the Content Layer (Markdown + YAML in mandarin-1.2/) for one Unit and
 renders a family-facing "Unit Overview" HTML page. This is a renderer, not a
 data store: nothing here is canonical, it only reads and projects.
 
-Design notes (v2, per teacher review):
-- Bilingual section headings; one-line explanations are English-only
-  (audience is non-native-Chinese-speaking families/students).
-- Where a Chinese gloss would be inaccurate or ambiguous (e.g. "Transfer
-  Goal" is UbD jargon with no settled Chinese term), the heading stays
-  English-only rather than guessing.
-- No literal per-lesson dates: only a rough phase ("Start of Unit" /
-  "End of Unit"), since day-to-day pacing drifts every year.
-- Colored pill labels per type, reused across Content/Culture/Assessment
-  so the same visual language marks "what kind of thing is this" everywhere.
+Design notes (v3, per teacher review round 2):
+- Visual language borrows the "bordered card + solid color header bar"
+  structure common to unit-planning templates, not any one template's
+  literal design. Each section gets its own accent-colored header bar;
+  item-level pills reuse the same accent per type.
+- Headings: 学习目标 Learning Objectives / 学习材料 Learning Materials /
+  文化 Culture / 单元考核 Unit Assessments / 核心词汇语法 Key Vocabulary
+  & Grammar. No "Transfer Goal" section — folded into Unit Assessments,
+  where the final project already lives as a Performance Task entry.
+- Body content under each heading is English (the audience is non-native
+  Chinese speakers); Chinese titles/vocab stay Chinese+pinyin+English
+  since that IS the content being taught, not explanatory prose.
+- All Chinese text renders in Kaiti (楷体) via font-family fallback: list
+  Kaiti variants before the CJK gothic/sans fallback so browsers pick it
+  for CJK codepoints while Latin text keeps the sans stack untouched.
 
 Usage: python3 family_overview.py <unit_dir> <output_html_path>
 """
@@ -102,14 +107,13 @@ CULTURE_TYPE = {
 
 
 def classify_assessment(assessment_type):
-    """Map a free-text assessment_type onto a (bilingual label, color, phase)."""
     t = (assessment_type or "").lower()
     if "diagnostic" in t:
-        return "摸底测验 Diagnostic", "gold", "单元初 · Start of Unit"
+        return "摸底测验 Diagnostic", "gold", "单元初 Start of Unit"
     if "project" in t or "performance task" in t:
-        return "项目 Project", "jade", "单元末 · End of Unit"
+        return "项目 Project", "jade", "单元末 End of Unit"
     if "summative" in t:
-        return "阶段测验 Summative", "vermilion", "单元末 · End of Unit"
+        return "阶段测验 Summative", "vermilion", "单元末 End of Unit"
     return esc(assessment_type), "plum", ""
 
 
@@ -123,7 +127,8 @@ def status_pill(status):
 
 def render(unit_dir, course_title="Mandarin 1.2"):
     overview_fm, overview_body = load_frontmatter(f"{unit_dir}/01-overview.md")
-    objectives = bullet_list(body_section(overview_body, "Learning Objectives"))
+    objectives_en = bullet_list(body_section(overview_body, "Learning Objectives (English)"))
+    language_forms = overview_fm.get("language_forms") or []
     content_items = load_entries(f"{unit_dir}/03-content/*.md")
     culture_items = load_entries(f"{unit_dir}/04-culture/*.md")
     assessment_items = load_entries(f"{unit_dir}/06-assessment/*.md")
@@ -159,17 +164,20 @@ def render(unit_dir, course_title="Mandarin 1.2"):
         for zh, py, en in vocab
     )
 
+    grammar_html = "\n".join(f"<li>{esc(g)}</li>" for g in language_forms)
+
     today = datetime.date.today().isoformat()
 
     return TEMPLATE.format(
         course=esc(course_title),
         unit_label=esc(overview_fm.get("unit")),
-        big_idea=esc(overview_fm.get("big_idea")),
-        objectives_html="\n".join(f"<li>{esc(o)}</li>" for o in objectives),
-        transfer_goal=esc(overview_fm.get("transfer_goal")),
+        big_idea_zh=esc((overview_fm.get("big_idea") or "").split("(")[0].strip()),
+        big_idea_en=esc(overview_fm.get("big_idea", "").split("(", 1)[-1].rstrip(")")),
+        objectives_html="\n".join(f"<li>{esc(o)}</li>" for o in objectives_en),
         content_html=content_html,
         culture_html=culture_html,
         assessment_html=assessment_html,
+        grammar_html=grammar_html,
         vocab_html=vocab_html,
         generated_date=today,
     )
@@ -178,101 +186,114 @@ def render(unit_dir, course_title="Mandarin 1.2"):
 TEMPLATE = """<title>{course} · {unit_label} Family Overview 家长概览</title>
 <style>
 :root {{
-  --bg: #F7F2E7;
+  --bg: #E7F0EC;
   --surface: #FFFFFF;
-  --ink: #2A241E;
-  --muted: #8A8272;
-  --line: #E8E1D2;
-  --c-plum: #5B4B8A;
-  --c-jade: #3F7A5E;
-  --c-gold: #A97A1F;
+  --ink: #201D19;
+  --muted: #6B6459;
+  --line: #1F1B17;
+  --c-plum: #6A4E9E;
+  --c-jade: #2F7A56;
+  --c-gold: #B4791C;
   --c-vermilion: #B0402F;
-  --c-teal: #2E7F8A;
+  --c-teal: #1E7A88;
   --c-muted: #8A8272;
+  --font-latin: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-kai: "Kaiti SC", "STKaiti", "KaiTi", "AR PL KaitiM GB", "BiauKai", serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Liberation Mono", monospace;
 }}
 @media (prefers-color-scheme: dark) {{
   :root {{
-    --bg: #1B180F;
-    --surface: #242019;
-    --ink: #F1EAD9;
-    --muted: #B5AC98;
-    --line: #3A3428;
-    --c-plum: #A996E8;
-    --c-jade: #7ECBA6;
-    --c-gold: #E0B45C;
-    --c-vermilion: #E38271;
-    --c-teal: #7AC9D6;
-    --c-muted: #B5AC98;
+    --bg: #12201A; --surface: #1C2620; --ink: #EDE7DC; --muted: #A9A28F; --line: #E9E3D4;
+    --c-plum: #B7A0EC; --c-jade: #7FCBA6; --c-gold: #E5B75E; --c-vermilion: #E38271; --c-teal: #6FC7D6; --c-muted: #B5AC98;
   }}
 }}
 :root[data-theme="dark"] {{
-  --bg: #1B180F; --surface: #242019; --ink: #F1EAD9; --muted: #B5AC98; --line: #3A3428;
-  --c-plum: #A996E8; --c-jade: #7ECBA6; --c-gold: #E0B45C; --c-vermilion: #E38271; --c-teal: #7AC9D6; --c-muted: #B5AC98;
+  --bg: #12201A; --surface: #1C2620; --ink: #EDE7DC; --muted: #A9A28F; --line: #E9E3D4;
+  --c-plum: #B7A0EC; --c-jade: #7FCBA6; --c-gold: #E5B75E; --c-vermilion: #E38271; --c-teal: #6FC7D6; --c-muted: #B5AC98;
 }}
 :root[data-theme="light"] {{
-  --bg: #F7F2E7; --surface: #FFFFFF; --ink: #2A241E; --muted: #8A8272; --line: #E8E1D2;
-  --c-plum: #5B4B8A; --c-jade: #3F7A5E; --c-gold: #A97A1F; --c-vermilion: #B0402F; --c-teal: #2E7F8A; --c-muted: #8A8272;
+  --bg: #E7F0EC; --surface: #FFFFFF; --ink: #201D19; --muted: #6B6459; --line: #1F1B17;
+  --c-plum: #6A4E9E; --c-jade: #2F7A56; --c-gold: #B4791C; --c-vermilion: #B0402F; --c-teal: #1E7A88; --c-muted: #8A8272;
 }}
 * {{ box-sizing: border-box; }}
 body {{
   margin: 0;
   background: var(--bg);
   color: var(--ink);
-  font-family: -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", "Helvetica Neue", sans-serif;
+  font-family: var(--font-latin), var(--font-kai);
   line-height: 1.6;
 }}
-.page {{ max-width: 720px; margin: 0 auto; padding: 0 1.5rem 5rem; }}
+.page {{ max-width: 760px; margin: 0 auto; padding: 2.4rem 1.4rem 5rem; }}
 .hero {{
-  margin: 0 -1.5rem 2rem;
-  padding: 2.6rem 1.8rem 2.2rem;
+  border-radius: 14px;
+  padding: 2.4rem 1.9rem 2rem;
+  margin-bottom: 1.6rem;
   background:
-    linear-gradient(120deg, rgba(20,14,8,0.45) 0%, rgba(20,14,8,0.2) 42%, rgba(20,14,8,0) 68%),
+    linear-gradient(120deg, rgba(20,14,8,0.48) 0%, rgba(20,14,8,0.2) 42%, rgba(20,14,8,0) 68%),
     linear-gradient(100deg, #F3A46B 0%, #F0C25E 26%, #7FBFA8 55%, #4E6FA8 78%, #2C2560 100%);
   color: #FBF6EA;
 }}
-@media (min-width: 760px) {{ .hero {{ margin: 0 0 2rem; border-radius: 10px; }} }}
 .eyebrow {{
-  font-family: ui-monospace, "Liberation Mono", monospace;
+  font-family: var(--font-mono);
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   font-size: 0.72rem;
-  opacity: 0.9;
+  opacity: 0.92;
 }}
 h1 {{
-  font-family: Georgia, "Liberation Serif", "Noto Serif SC", serif;
-  font-size: clamp(1.8rem, 4.2vw, 2.5rem);
-  margin: 0.5rem 0 0.3rem;
+  margin: 0.5rem 0 0.1rem;
+  font-size: clamp(2.1rem, 6vw, 2.9rem);
+  font-weight: 400;
   text-wrap: balance;
-  text-shadow: 0 1px 12px rgba(0,0,0,0.18);
+  text-shadow: 0 1px 14px rgba(0,0,0,0.22);
 }}
-.subtitle {{ font-size: 1rem; opacity: 0.95; margin: 0; max-width: 46ch; }}
+.hero .en-title {{
+  font-family: var(--font-latin);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-size: clamp(0.95rem, 2.4vw, 1.15rem);
+  opacity: 0.95;
+  margin: 0 0 0.9rem;
+}}
+.hero .subtitle {{ font-family: var(--font-latin); font-size: 0.98rem; opacity: 0.95; margin: 0; max-width: 48ch; }}
+
 section {{
   background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 1.4rem 1.6rem;
-  margin-bottom: 1.1rem;
+  border: 2px solid var(--line);
+  border-radius: 10px;
+  margin-bottom: 1.3rem;
+  overflow: hidden;
 }}
-section h2 {{
-  font-family: Georgia, "Liberation Serif", "Noto Serif SC", serif;
-  font-size: 1.15rem;
-  margin: 0 0 0.9rem;
-  padding-bottom: 0.6rem;
-  border-bottom: 1px solid var(--line);
+.bar {{
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.65rem 1.2rem;
+  color: #FBF6EA;
+  font-weight: 800;
+  font-size: 1.02rem;
 }}
-section h2 .en {{ color: var(--muted); font-weight: 400; font-size: 0.9em; }}
+.bar .en {{ font-family: var(--font-latin); font-weight: 700; font-size: 0.82em; opacity: 0.92; }}
+.bar-ink {{ background: var(--ink); }}
+.bar-plum {{ background: var(--c-plum); }}
+.bar-vermilion {{ background: var(--c-vermilion); }}
+.bar-gold {{ background: var(--c-gold); }}
+.bar-teal {{ background: var(--c-teal); }}
+.sec-body {{ padding: 1.3rem 1.4rem 1.4rem; }}
+
 ul.list {{ list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.7rem; }}
 ul.list li {{ display: flex; flex-wrap: wrap; align-items: center; gap: 0.55rem; }}
-.zh {{ font-weight: 600; }}
-.en {{ color: var(--muted); font-size: 0.92rem; }}
+.zh {{ font-weight: 700; }}
+.en {{ color: var(--muted); font-size: 0.92rem; font-family: var(--font-latin); }}
 .pill {{
-  font-family: ui-monospace, "Liberation Mono", monospace;
+  font-family: var(--font-mono), var(--font-kai);
   font-size: 0.68rem;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
   border-radius: 4px;
   padding: 0.15rem 0.5rem;
   white-space: nowrap;
-  border: 1px solid currentColor;
+  border: 1.5px solid currentColor;
 }}
 .pill-plum {{ color: var(--c-plum); }}
 .pill-jade {{ color: var(--c-jade); }}
@@ -280,66 +301,80 @@ ul.list li {{ display: flex; flex-wrap: wrap; align-items: center; gap: 0.55rem;
 .pill-vermilion {{ color: var(--c-vermilion); }}
 .pill-teal {{ color: var(--c-teal); }}
 .pill-muted {{ color: var(--c-muted); }}
-.phase {{ font-size: 0.8rem; color: var(--muted); }}
-ol.objectives {{ margin: 0; padding-left: 1.2rem; }}
-ol.objectives li {{ margin-bottom: 0.4rem; }}
-.transfer p {{ margin: 0 0 0.5rem; }}
-.transfer .note {{ color: var(--muted); font-size: 0.88rem; }}
+.phase {{ font-family: var(--font-latin); font-size: 0.8rem; color: var(--muted); }}
+
+ol.objectives {{ margin: 0; padding-left: 1.2rem; font-family: var(--font-latin); }}
+ol.objectives li {{ margin-bottom: 0.5rem; }}
+
+.grammar-note {{ font-family: var(--font-latin); color: var(--muted); font-size: 0.8rem; margin: 1rem 0 0.4rem; text-transform: uppercase; letter-spacing: 0.05em; }}
+ul.grammar {{ margin: 0; padding-left: 1.2rem; font-family: var(--font-latin); color: var(--ink); }}
+ul.grammar li {{ margin-bottom: 0.3rem; }}
+
 table {{ width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }}
-table th, table td {{ text-align: left; padding: 0.35rem 0.5rem; border-bottom: 1px solid var(--line); font-size: 0.92rem; }}
-table th {{ color: var(--muted); font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; }}
+table th, table td {{ text-align: left; padding: 0.35rem 0.5rem; border-bottom: 1px solid var(--bg); font-size: 0.92rem; }}
+table th {{ color: var(--muted); font-weight: 700; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; font-family: var(--font-latin); }}
 .vocab-wrap {{ overflow-x: auto; }}
-footer {{ color: var(--muted); font-size: 0.78rem; text-align: center; margin-top: 2.5rem; }}
+
+footer {{ font-family: var(--font-latin); color: var(--muted); font-size: 0.78rem; text-align: center; margin-top: 2.5rem; }}
 </style>
 
 <div class="page">
   <div class="hero">
     <div class="eyebrow">{course} · {unit_label}</div>
-    <h1>{big_idea}</h1>
+    <h1>{big_idea_zh}</h1>
+    <p class="en-title">{big_idea_en}</p>
     <p class="subtitle">What we're learning this unit, and how we'll check it's landing — for families and anyone following along.</p>
   </div>
 
   <section>
-    <h2>学习目标 <span class="en">Learning Objectives</span></h2>
-    <ol class="objectives">
-      {objectives_html}
-    </ol>
+    <div class="bar bar-ink">学习目标 <span class="en">Learning Objectives</span></div>
+    <div class="sec-body">
+      <ol class="objectives">
+        {objectives_html}
+      </ol>
+    </div>
   </section>
 
   <section>
-    <h2>阅读材料 <span class="en">Stories &amp; Texts</span></h2>
-    <ul class="list">
-      {content_html}
-    </ul>
+    <div class="bar bar-plum">学习材料 <span class="en">Learning Materials</span></div>
+    <div class="sec-body">
+      <ul class="list">
+        {content_html}
+      </ul>
+    </div>
   </section>
 
   <section>
-    <h2>文化 <span class="en">Culture</span></h2>
-    <ul class="list">
-      {culture_html}
-    </ul>
+    <div class="bar bar-vermilion">文化 <span class="en">Culture</span></div>
+    <div class="sec-body">
+      <ul class="list">
+        {culture_html}
+      </ul>
+    </div>
   </section>
 
   <section>
-    <h2>评量 <span class="en">Assessments</span></h2>
-    <ul class="list">
-      {assessment_html}
-    </ul>
-  </section>
-
-  <section class="transfer">
-    <h2>Transfer Goal</h2>
-    <p>{transfer_goal}</p>
-    <p class="note">What students should be able to do with this beyond the unit itself.</p>
+    <div class="bar bar-gold">单元考核 <span class="en">Unit Assessments</span></div>
+    <div class="sec-body">
+      <ul class="list">
+        {assessment_html}
+      </ul>
+    </div>
   </section>
 
   <section>
-    <h2>核心词汇 <span class="en">Key Vocabulary</span></h2>
-    <div class="vocab-wrap">
-      <table>
-        <tr><th>中文</th><th>拼音</th><th>English</th></tr>
-        {vocab_html}
-      </table>
+    <div class="bar bar-teal">核心词汇语法 <span class="en">Key Vocabulary &amp; Grammar</span></div>
+    <div class="sec-body">
+      <div class="vocab-wrap">
+        <table>
+          <tr><th>中文</th><th>拼音</th><th>English</th></tr>
+          {vocab_html}
+        </table>
+      </div>
+      <p class="grammar-note">Grammar &amp; language forms</p>
+      <ul class="grammar">
+        {grammar_html}
+      </ul>
     </div>
   </section>
 
