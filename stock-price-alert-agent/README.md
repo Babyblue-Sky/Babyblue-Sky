@@ -24,7 +24,7 @@ In this repo, go to **Settings → Secrets and variables → Actions → New rep
 
 | Secret name | Value |
 |---|---|
-| `GMAIL_USER` | Your Gmail address, e.g. `tiana.liao74@gmail.com` |
+| `GMAIL_USER` | Your Gmail address, e.g. `your-name@gmail.com` |
 | `GMAIL_APP_PASSWORD` | The 16-character App Password from the previous step |
 | `ALERT_TO_EMAIL` | (Optional) recipient address; defaults to `GMAIL_USER` if omitted |
 
