@@ -1,45 +1,45 @@
 # Stock Price Dip Alert Agent
 
-监控 VOO / QQQM / VXF / VXUS 四支 ETF，当任意一支跌破**52周高点的 10%**时，自动发邮件提醒，方便逢低加仓。
+Watches VOO / QQQM / VXF / VXUS and emails an alert the moment any of them drops **10% below its 52-week high**, so it's easier to buy the dip.
 
-## 工作原理
+## How it works
 
-- 交易时段内（美东 9:30am-4pm，周一到周五）每小时检查一次价格
-- 触发线是**动态的**：每次都用当天实时数据重新计算 52 周高点，不是写死的固定金额，所以不需要每年手动重设
-- 每支股票每天最多提醒一次；如果当天已经提醒过，即使继续下跌也不会重复发信，除非到了新的一天重新触发
-- 数据来源：Yahoo Finance（通过 `yfinance`），免费、不需要 API key
-- 发信方式：用你自己的 Gmail 账号通过 Gmail 官方 SMTP 服务器发送，所以"已发送"里会留记录
+- Checks prices hourly during market hours (9:30am-4pm ET, Monday-Friday)
+- The trigger is **dynamic**: it recomputes the 52-week high from live data on every run instead of using a fixed dollar amount, so it keeps working as the funds trend upward with no yearly manual reset
+- Each ticker is alerted at most once per day; once it has fired, it won't fire again the same day even if the price keeps falling — it resets the next day
+- Data source: Yahoo Finance via `yfinance`, free, no API key required
+- Delivery: sent from your own Gmail account through Gmail's SMTP server, so a copy lands in "Sent"
 
-## 一次性设置
+## One-time setup
 
-### 1. 生成 Gmail 应用专用密码
+### 1. Generate a Gmail App Password
 
-1. 打开 [Google 账号安全设置](https://myaccount.google.com/security)，确认已开启「两步验证」
-2. 搜索「应用专用密码」(App Passwords)，创建一个新的（名称随意，比如 "stock-alert-agent"）
-3. 复制生成的 16 位密码，稍后要用
+1. Open [Google Account security settings](https://myaccount.google.com/security) and make sure 2-Step Verification is turned on
+2. Search for "App Passwords" and create a new one (any name works, e.g. "stock-alert-agent")
+3. Copy the generated 16-character password — you'll need it next
 
-### 2. 添加仓库 Secrets
+### 2. Add repository secrets
 
-在这个仓库的 **Settings → Secrets and variables → Actions → New repository secret**，添加：
+In this repo, go to **Settings → Secrets and variables → Actions → New repository secret** and add:
 
-| Secret 名 | 值 |
+| Secret name | Value |
 |---|---|
-| `GMAIL_USER` | 你的 Gmail 地址，例如 `tiana.liao74@gmail.com` |
-| `GMAIL_APP_PASSWORD` | 上一步生成的 16 位应用专用密码 |
-| `ALERT_TO_EMAIL` | （可选）收件地址，不填则默认发给自己（即 `GMAIL_USER`） |
+| `GMAIL_USER` | Your Gmail address, e.g. `tiana.liao74@gmail.com` |
+| `GMAIL_APP_PASSWORD` | The 16-character App Password from the previous step |
+| `ALERT_TO_EMAIL` | (Optional) recipient address; defaults to `GMAIL_USER` if omitted |
 
-### 3. 确认 Actions 已启用
+### 3. Make sure Actions is enabled
 
-仓库的 **Actions** 标签页里如果显示 workflow 被禁用，点击启用即可。
+If the **Actions** tab shows the workflow as disabled, click to enable it.
 
-## 手动测试
+## Manual testing
 
-在 **Actions → Stock Price Dip Alert → Run workflow** 可以随时手动触发一次，不用等到下一个整点，方便验证邮件能正常收到。
+Go to **Actions → Stock Price Dip Alert → Run workflow** to trigger a run on demand instead of waiting for the next scheduled hour — useful for confirming the email actually arrives.
 
-## 调整触发线
+## Adjusting the trigger
 
-`check_prices.py` 顶部的 `DIP_THRESHOLD_PCT = 0.10` 就是回撤百分比阈值，改这一个数字即可对四支股票统一调整；`TICKERS` 列表可以增删关注的股票。
+`DIP_THRESHOLD_PCT = 0.10` at the top of `check_prices.py` is the drawdown threshold applied to all four tickers — change that one number to adjust it. The `TICKERS` list can be edited to add or remove symbols.
 
-## 状态文件
+## State file
 
-`state.json` 由 workflow 自动提交更新，记录每支股票"最近一次提醒的日期"，用来实现"每天最多提醒一次"。不需要手动编辑。
+`state.json` is committed automatically by the workflow and records the last alert date per ticker, which is how the "at most once per day" rule is enforced. No need to edit it by hand.

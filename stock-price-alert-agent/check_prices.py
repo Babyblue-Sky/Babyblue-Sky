@@ -90,15 +90,15 @@ def main() -> None:
             state[ticker] = today_str
 
     if alerts:
-        lines = [f"以下 ETF 已跌破 52 周高点的 {DIP_THRESHOLD_PCT:.0%}：", ""]
+        lines = [f"The following ETFs have dropped {DIP_THRESHOLD_PCT:.0%} below their 52-week high:", ""]
         for ticker, current, high_52w, drop_pct in alerts:
             lines.append(
-                f"- {ticker}: 现价 ${current:.2f}，52周高点 ${high_52w:.2f}，回撤 {drop_pct:.1%}"
+                f"- {ticker}: current ${current:.2f}, 52-week high ${high_52w:.2f}, down {drop_pct:.1%}"
             )
         lines.append("")
-        lines.append(f"检查时间（美东）：{now_et.strftime('%Y-%m-%d %H:%M %Z')}")
+        lines.append(f"Checked at (ET): {now_et.strftime('%Y-%m-%d %H:%M %Z')}")
         body = "\n".join(lines)
-        subject = f"股价提醒：{', '.join(a[0] for a in alerts)} 跌破 -{DIP_THRESHOLD_PCT:.0%} 触发线"
+        subject = f"Stock alert: {', '.join(a[0] for a in alerts)} dropped below -{DIP_THRESHOLD_PCT:.0%} trigger"
         send_email(subject, body)
         print(f"Sent alert email for: {[a[0] for a in alerts]}")
     else:
