@@ -18,7 +18,7 @@ from zoneinfo import ZoneInfo
 import yfinance as yf
 
 TICKERS = ["VOO", "QQQM", "VXF", "VXUS"]
-DIP_THRESHOLD_PCT = 0.10
+DIP_THRESHOLD_PCT = 0.02  # TEMPORARY: lowered from 0.10 to smoke-test email delivery
 STATE_FILE = Path(__file__).parent / "state.json"
 MARKET_TZ = ZoneInfo("America/New_York")
 
