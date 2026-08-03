@@ -42,9 +42,13 @@ def save_state(state: dict) -> None:
 
 
 def send_email(subject: str, body: str) -> None:
-    user = os.environ["GMAIL_USER"]
-    password = os.environ["GMAIL_APP_PASSWORD"]
-    to_addr = os.environ.get("ALERT_TO_EMAIL", user)
+    user = os.environ["GMAIL_USER"].strip()
+    password = os.environ["GMAIL_APP_PASSWORD"].strip()
+    to_addr = os.environ.get("ALERT_TO_EMAIL", "").strip() or user
+
+    for label, addr in [("GMAIL_USER", user), ("ALERT_TO_EMAIL/recipient", to_addr)]:
+        if "@" not in addr:
+            raise ValueError(f"{label} does not look like a valid email address: {addr!r}")
 
     msg = MIMEText(body)
     msg["Subject"] = subject
