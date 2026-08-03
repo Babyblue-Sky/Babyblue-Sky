@@ -1,5 +1,5 @@
 ---
-story: 熊猫的故事
+title: 熊猫的故事
 content_type: story
 pinyin: xióng māo de gù shì
 english: The Panda's Story

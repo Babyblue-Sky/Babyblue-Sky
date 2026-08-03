@@ -7,6 +7,21 @@
 - [`blueprint-v1.0.md`](./blueprint-v1.0.md) — 架构层设计：九条设计公理、四层架构模型（Structural / Content / Generation / Intelligence）、Department 级泛化设计、Import Pipeline、治理与版本管理。
 - [`mandarin-1.2/`](./mandarin-1.2/) — Pilot：Mandarin 1.2 课程数据，Markdown + YAML frontmatter 存储，Course 层共享内容（Standards、Syllabus 大纲）在 `00-course-overview.md`，各 Unit 单独建目录。
 
+## Generation Layer（原型）
+
+`generators/family_overview.py` 是第一个渲染器原型：读取 `mandarin-1.2/unit-01-a-day-in-my-life/`
+下的 Markdown + YAML（01 Overview、03 Content、04 Culture、05 Resources、06 Assessment），
+自动生成一份**家长可读的 Unit 概览 HTML 页面**——不手写，完全从 Content Layer 数据渲染出来，
+数据改了重新跑一次脚本就会同步更新。
+
+```
+python3 generators/family_overview.py mandarin-1.2/unit-01-a-day-in-my-life <输出路径>.html
+```
+
+这一步验证了 Blueprint 里"一份数据、多种产出"的承诺：内部字段（TODO、status、教师
+Curriculum Intelligence 笔记）不会出现在这份面向家长的输出里，渲染器只挑家长需要看到的字段。
+后续可以为同一份数据做别的渲染器（学生练习单、Slides 大纲等），不需要重新整理数据。
+
 ## 存储载体
 
 Content Layer 落地为 **git 仓库里的 Markdown + YAML**（不是 Notion/Airtable/Google Sheets）：

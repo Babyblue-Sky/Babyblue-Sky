@@ -1,5 +1,5 @@
 ---
-story: 我的一天太累了
+title: 我的一天太累了
 content_type: story
 pinyin: wǒ de yì tiān tài lèi le
 english: "My Day Is So Tiring"
