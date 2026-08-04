@@ -30,9 +30,9 @@ last_updated: 2026-08-03
 - Today's report sentence pattern: describing someone's evening routine with a time and an activity
 
 ### 10/3 — Summative Test
-- See [06-assessment/summative-test.md](../06-assessment/summative-test.md)
+- See [the Summative Test](../06-assessment/summative-test.md)
 
-### 10/4 — transitioning into "The Mid-Autumn Festival Story" (Culture module content, see [04-culture/zhongqiujie-de-gushi.md](../04-culture/zhongqiujie-de-gushi.md))
+### 10/4 — transitioning into "The Mid-Autumn Festival Story" (Culture module content, see [The Mid-Autumn Festival Story](../04-culture/zhongqiujie-de-gushi.md))
 - Cultural warm-up questions: Do you know what day the Mid-Autumn Festival is? Who do you think is in the story of the Mid-Autumn Festival?
 - Goal: I can talk about the story of the Mid-Autumn Festival
 - Activities: listening (role play), speaking (movie talk), listening (pencil-grab game)

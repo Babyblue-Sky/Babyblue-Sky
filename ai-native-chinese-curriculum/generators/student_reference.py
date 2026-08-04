@@ -42,6 +42,7 @@ opens with an explicit disclaimer, and Assessment entries never repeat
 
 Usage: python3 student_reference.py <unit_dir> <output_html_path>
 """
+import os
 import re
 import sys
 import glob
@@ -86,15 +87,39 @@ _LINK = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
 _BOLD = re.compile(r"\*\*(.+?)\*\*")
 _CODE = re.compile(r"`([^`]+)`")
 
+# Cross-references between Content Layer files (e.g. "[...](../06-assessment/
+# diagnostic-test.md)") make sense in the source Markdown, where they're real,
+# clickable GitHub links. They are NOT real links in this page's output: it's
+# a single static HTML file, so a relative path into the git repo's .md
+# source resolves to nothing wherever this page is actually opened from. Since
+# populate_link_targets() below, we know which of those files ended up as a
+# card *on this same page* (every card gets an `id="item-<stem>"`) — for
+# those, rewrite the link into a working same-page anchor. For anything else
+# (e.g. a Resources file this page never renders), drop the link and keep
+# just the text, rather than leave a link that always dead-ends.
+_LINK_TARGETS = {}
+
+
+def populate_link_targets(*entry_groups):
+    for entries in entry_groups:
+        for _, _, stem in entries:
+            _LINK_TARGETS[stem] = f"item-{stem}"
+
 
 def inline_md(text):
     """Minimal inline Markdown -> HTML: links, bold, code. Escapes first,
     so this is safe against raw HTML in source files."""
     text = esc(text)
-    text = _LINK.sub(
-        lambda m: f'<a href="{m.group(2)}" target="_blank" rel="noopener">{m.group(1)}</a>',
-        text,
-    )
+
+    def link(m):
+        label, href = m.group(1), m.group(2)
+        if href.endswith(".md"):
+            stem = os.path.splitext(os.path.basename(href))[0]
+            anchor = _LINK_TARGETS.get(stem)
+            return f'<a href="#{anchor}">{label}</a>' if anchor else label
+        return f'<a href="{href}" target="_blank" rel="noopener">{label}</a>'
+
+    text = _LINK.sub(link, text)
     text = _BOLD.sub(lambda m: f"<strong>{m.group(1)}</strong>", text)
     text = _CODE.sub(lambda m: f"<code>{m.group(1)}</code>", text)
     return text
@@ -217,7 +242,7 @@ def status_pill(status):
     return "" if status in ("canonical", "draft") else pill("编写中 In Progress", "muted")
 
 
-def content_card(fm, body, type_map, type_key, extra_sections=()):
+def content_card(fm, body, stem, type_map, type_key, extra_sections=()):
     label, color = type_map.get(fm.get(type_key), (fm.get(type_key) or "", "plum"))
     own_vocab = vocab_rows_from_text(body_section(body, "Vocabulary"), None)
     vocab_html = ""
@@ -240,7 +265,7 @@ def content_card(fm, body, type_map, type_key, extra_sections=()):
         f"<h4>{esc(h)}</h4>{section_html(body, key)}" for h, key in extra_sections
     )
     return f"""
-    <article class="card" data-type="{esc(fm.get(type_key))}" data-search="{search_key}">
+    <article class="card" id="item-{esc(stem)}" data-type="{esc(fm.get(type_key))}" data-search="{search_key}">
       <div class="bar"><span class="zh">{esc(fm.get('title'))}</span><span class="en">{esc(fm.get('english'))}</span></div>
       <div class="card-body">
         <div class="badges">{pill(label, color)}{status_pill(fm.get('status'))}</div>
@@ -288,7 +313,7 @@ def cycle_card(fm, body):
     </article>"""
 
 
-def assessment_card(fm, body):
+def assessment_card(fm, body, stem):
     label, color, is_project = classify_assessment(fm.get("assessment_type"))
     search_key = esc(f"{fm.get('title')} {label}".lower())
     if is_project:
@@ -303,7 +328,7 @@ def assessment_card(fm, body):
             ]
         )
         return f"""
-        <article class="card" data-search="{search_key}">
+        <article class="card" id="item-{esc(stem)}" data-search="{search_key}">
           <div class="bar"><span class="zh">{esc(fm.get('title'))}</span></div>
           <div class="card-body">
             <div class="badges">{pill(label, color)}{status_pill(fm.get('status'))}</div>
@@ -311,7 +336,7 @@ def assessment_card(fm, body):
           </div>
         </article>"""
     return f"""
-    <article class="card compact" data-search="{search_key}">
+    <article class="card compact" id="item-{esc(stem)}" data-search="{search_key}">
       <div class="bar"><span class="zh">{esc(fm.get('title'))}</span></div>
       <div class="card-body">
         <div class="badges">{pill(label, color)}{status_pill(fm.get('status'))}</div>
@@ -331,7 +356,9 @@ def render(unit_dir, course_title="Mandarin 1.2"):
         for path in sorted(glob.glob(dir_glob)):
             if path.endswith("README.md"):
                 continue
-            out.append(load_frontmatter(path))
+            fm, body = load_frontmatter(path)
+            stem = os.path.splitext(os.path.basename(path))[0]
+            out.append((fm, body, stem))
         return out
 
     content_entries = entries(f"{unit_dir}/03-content/*.md")
@@ -339,10 +366,14 @@ def render(unit_dir, course_title="Mandarin 1.2"):
     assessment_entries = entries(f"{unit_dir}/06-assessment/*.md")
     cycle_entries = entries(f"{unit_dir}/02-teaching/cycle-*.md")
 
-    content_html = "\n".join(content_card(fm, body, CONTENT_TYPE, "content_type") for fm, body in content_entries)
-    culture_html = "\n".join(content_card(fm, body, CULTURE_TYPE, "culture_type") for fm, body in culture_entries)
-    cycle_html = "\n".join(cycle_card(fm, body) for fm, body in cycle_entries)
-    assessment_html = "\n".join(assessment_card(fm, body) for fm, body in assessment_entries)
+    # Populate before rendering any card, so links in Teaching Flow (rendered
+    # last) can resolve to cards that appear earlier on the page too.
+    populate_link_targets(content_entries, culture_entries, assessment_entries)
+
+    content_html = "\n".join(content_card(fm, body, stem, CONTENT_TYPE, "content_type") for fm, body, stem in content_entries)
+    culture_html = "\n".join(content_card(fm, body, stem, CULTURE_TYPE, "culture_type") for fm, body, stem in culture_entries)
+    cycle_html = "\n".join(cycle_card(fm, body) for fm, body, _ in cycle_entries)
+    assessment_html = "\n".join(assessment_card(fm, body, stem) for fm, body, stem in assessment_entries)
 
     objectives_html = "\n".join(
         f"<li><span class='zh'>{esc(zh)}</span>" + (f"<span class='en'>{esc(en)}</span>" if en else "") + "</li>"

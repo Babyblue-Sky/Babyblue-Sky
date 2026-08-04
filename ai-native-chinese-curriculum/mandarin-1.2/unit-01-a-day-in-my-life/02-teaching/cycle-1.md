@@ -42,13 +42,13 @@ Cycle 1 主要是**开学破冰 + 课堂常规建立 + 摸底测试**，还未�
 ### 9/16
 - Review of Super 8 classroom phrases
 - Today's report sentence pattern: same pattern as before, introducing a classmate
-- **Diagnostic Test** given this day (see [06-assessment/diagnostic-test.md](../06-assessment/diagnostic-test.md))
+- **Diagnostic Test** given this day (see [the Diagnostic Test](../06-assessment/diagnostic-test.md))
 - Game: "this one" vs. "that one"
 
 ### 9/18
 - Writing practice: your Chinese name
 - Today's report: introducing a classmate (expanding nationality vocabulary, e.g. Argentina)
-- **Strokes / calligraphy (笔画 / 书法)**: introducing the concept of brush calligraphy, with a YouTube teaching video (Culture module content, see [04-culture/shufa-calligraphy.md](../04-culture/shufa-calligraphy.md))
+- **Strokes / calligraphy (笔画 / 书法)**: introducing the concept of brush calligraphy, with a YouTube teaching video (Culture module content, see [Strokes / Calligraphy](../04-culture/shufa-calligraphy.md))
 - Introduction to telling time: a set of greeting expressions (I'm very good / I'm okay / I'm great / How are you?) that sets up later time expressions
 - Classroom request language: asking permission for something (e.g. to go to the bathroom, see the nurse, get water)
 - Sharing/commenting sentence pattern: saying you like something of a classmate's, that you have one too, or that you'd like to know more about it
@@ -61,4 +61,4 @@ Cycle 1 主要是**开学破冰 + 课堂常规建立 + 摸底测试**，还未�
 
 ## 备注
 - This Cycle does not yet include the core daily-routine vocabulary from "A Day in My Life" (起床 get up, 刷牙 brush teeth, 吃饭 eat, etc.) — those are expected to appear in a later Cycle (or one not yet uploaded).
-- The Student Survey was most likely distributed early in this Cycle; see [05-resources/student-survey.md](../05-resources/student-survey.md).
+- The Student Survey was most likely distributed early in this Cycle.
