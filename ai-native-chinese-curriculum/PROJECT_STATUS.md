@@ -12,8 +12,22 @@ branch: claude/ai-native-chinese-curriculum-vlnr10
 ## 项目是什么
 
 把 Tian（Mandarin 老师）的 Middle School Mandarin 课程从 SMART Notebook 迁移到一套
-Markdown+YAML 的 **AI Native Curriculum Database**，作为所有教学产出（学生检索页面、
-Slides、Assessment 等）的唯一数据源。详见 [`blueprint-v1.0.md`](./blueprint-v1.0.md)。
+Markdown+YAML 的 **AI Native Curriculum Database**，作为所有教学产出（课堂 Slides、
+Assessment、个人作品集网站等）的唯一数据源。架构本身详见
+[`blueprint-v1.0.md`](./blueprint-v1.0.md)，不受下面这条定位调整影响。
+
+**2026-08-04 项目定位调整**：这套系统最初设计成"面向学生/家长的检索工具"，但教师对比
+学校实际在用的 Schoology 后发现，Schoology 本身就能做多格式、可交互的资源分发，这套系统
+再做一个更简陋的静态检索页是重复造轮子。**新定位：教师个人的 curriculum 设计归档 + 求职/
+职业发展作品集**，服务于教师的 EdTech Explorer / leadership 职业路径叙事，受众是教师自己、
+未来的雇主/同行、以及未来可能的学生（不是当前在读学生的日常检索工具）。这个转向不影响
+Content Layer（Markdown+YAML）本身的价值——恰恰相反，教案设计过程中的决策记录
+（`08-curriculum-intelligence.md`）在新定位下从"给下一个 Claude 看的内部笔记"变成了
+**最有含金量的展示内容**。`import-pipeline/notebook_to_pptx.py`（SMART → Google Slides）
+这条线完全不受影响，教师仍在用它准备课堂教学。`generators/student_reference.py` 这个渲染器
+不会被删除（技术上仍然是"从 Content Layer 生成一个静态页面"这个模式的第一个实现，双语、
+锚点链接等设计仍然有效），但它的产出物现在的角色是**作品集网站的一部分**，不是学生日常
+检索入口——面向的读者假设从"当前在读的学生和家长"变成"浏览作品集的访客"。
 
 ## 目前进度（做到哪一步）
 

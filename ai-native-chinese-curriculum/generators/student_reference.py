@@ -400,7 +400,7 @@ def render(unit_dir, course_title="Mandarin 1.2"):
     )
 
 
-TEMPLATE = """<title>{course} · {unit_label} Student Reference 学生检索页面</title>
+TEMPLATE = """<title>{course} · {unit_label} Curriculum Archive 课程归档</title>
 <style>
 :root {{
   --bg: #F3EFE3; --surface: #FFFFFF; --ink: #221F1A; --muted: #6E6656; --line: #221F1A;
@@ -494,7 +494,7 @@ footer {{ font-family: var(--font-latin); color: var(--muted); font-size: 0.78re
 
 <div class="page">
   <div class="hero" id="top">
-    <div class="eyebrow">{course} · {unit_label} · Student Reference 学生检索页面</div>
+    <div class="eyebrow">{course} · {unit_label} · Curriculum Archive 课程归档</div>
     <h1>{big_idea_zh}</h1>
     <p class="en-title">{big_idea_en}</p>
     <p class="subtitle">A searchable reference for this unit — vocabulary, story text, the real Cycle-by-cycle

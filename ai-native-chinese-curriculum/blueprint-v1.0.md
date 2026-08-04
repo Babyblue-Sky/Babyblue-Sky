@@ -3,6 +3,11 @@
 > 视角：World Language Department Chair
 > 目标：设计一套 5–10 年内不需要推倒重来的课程架构，先在 Middle School Mandarin（1.2 / 2.1 / 2.2）验证，再无痛扩展到整个 World Language Department（Spanish / French / 未来可能新增的语言）。
 > 本文只讨论**架构（Architecture）**，不讨论具体文件/资料夹模板 —— 那是 Step 2（Unit Template v1.0）的任务。
+>
+> **2026-08-04 更新**：这份架构设计的实际落地场景，从"Department 级共享系统"收窄成了
+> "教师个人的 curriculum 归档 + 求职作品集"（见 `PROJECT_STATUS.md`）。下面的架构讨论
+> 原样保留，不是因为规模假设仍然成立，而是因为"内容与呈现解耦、结构与语言解耦"这些设计
+> 公理对单人使用一样成立，甚至更重要——个人作品集也需要"5-10 年不用推倒重来"。
 
 ---
 
