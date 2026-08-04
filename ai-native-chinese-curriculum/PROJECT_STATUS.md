@@ -19,21 +19,26 @@ Slides、Assessment 等）的唯一数据源。详见 [`blueprint-v1.0.md`](./bl
 
 1. **Blueprint v1.0** — 完成。架构层设计：九条公理、四层模型、Department 级泛化。
 2. **Pilot Unit** — 进行中。`mandarin-1.2/unit-01-a-day-in-my-life/` 已经有
-   Cycle 1/2 教学内容、Diagnostic Test、Student Survey、生词表、Culture 模块
+   Cycle 1-7 全部教学内容、Diagnostic Test、Student Survey、生词表、Culture 模块
    （中秋节的故事 + 笔画书法）。**2026-08-04 教师上传了一大批材料，已经整理进 Content
    Layer**：中秋节的故事正文（16 行，Cold Character Reading）、熊猫的故事正文（9 行，
    完整标题「很饿的熊猫的故事」）、我的一天太累了正文（书信体，6 段）+ 专属生词表、
    `05-resources/vocabulary-my-day.md` 的拼音（用两份 ArchChinese 练字表确认）、
    Final Project 完整细节（`daily-routine-final-project.md`：Driving Question/
-   Instructions/Rubric/Resources，教师明确说这份可以直接引用）、四份真实 quiz/考试
-   （熊猫的故事、我太累了、Diagnostic、Listening & Writing Assessment——教师明确说
-   不要在学生页面暴露真实内容，已确认 `assessment_card()` 本来就不渲染非 Project 类
-   assessment 的正文，所以这四份文件放心存了完整真实内容）。
-   **还缺**：Cycle 3-6 的教学内容整理进 Markdown（`.notebook` 源文件已经转过 Slides，
-   但那条路径不喂 Content Layer，见下面第 6 条）、笔画书法的真实 YouTube 视频链接、
-   中秋节的故事的教师朗读音频链接（熊猫的故事和我太累了两个已经拿到 Drive 链接并补进对应
-   Markdown 的 Text/Media，中秋节的故事这个还没有）、Final Project 的学生范例
-   （`Final_Draft_graded.docx` 只是空白评分表模板，没有已完成范文）。
+   Instructions/Rubric/Resources/教师范文，教师明确说这份可以直接引用）、四份真实
+   quiz/考试（熊猫的故事、我太累了、Diagnostic、Listening & Writing Assessment——教师
+   明确说不要在学生页面暴露真实内容，已确认 `assessment_card()` 本来就不渲染非 Project
+   类 assessment 的正文，所以这四份文件放心存了完整真实内容）、**Cycle 3-7 教学内容**
+   （用 `.notebook` 源文件重新抽取文字，见下面第 6 条——这条路径之前只喂了 Slides pptx，
+   没喂 Content Layer，这次补上了）。**Cycle 1-7 的格式也全部按教师反馈重做**：每节课只
+   保留 Do-Now / Objective / Main Activities 三项，删掉了课堂常规模板说明、逐条语法点、
+   Cycle 级生词汇总、备注段落——教师原话"太长了，学生们不会看的，太多信息等于无效信息"，
+   这条格式规则以后编辑任何 Cycle 文件都要延续，见 08-curriculum-intelligence.md
+   2026-08-04 的记录。
+   **还缺**：笔画书法的真实 YouTube 视频链接、中秋节的故事的教师朗读音频链接（熊猫的故事
+   和我太累了两个已经拿到 Drive 链接并补进对应 Markdown 的 Text/Media，中秋节的故事这个
+   还没有）、Cycle 6 教的"可怕的故事/女人的故事"（鬼故事）还没有对应的 03-content 正文
+   文件（源材料不完整，只有零散练习句，需要教师上传更完整的材料）。
    **教师明确说她会在一个新对话里上传更多 Unit 1 材料**——接手的 Claude 应该按
    Blueprint 的 Import Pipeline（Extractor 抽取 → AI Classifier 归类 → Human Review）
    把新材料整理进对应模块的 Markdown，然后重新跑 `generators/student_reference.py`

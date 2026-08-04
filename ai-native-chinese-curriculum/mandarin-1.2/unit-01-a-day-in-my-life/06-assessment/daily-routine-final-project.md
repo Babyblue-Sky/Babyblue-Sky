@@ -80,7 +80,22 @@ Scored EE (Exceeding) / ME (Meeting) / AE (Approaching) / BE (Below) on:
 - Sample work from previous years is shown in class (not included in this Content Layer file — physical/in-class samples, not a shareable link)
 
 ## Examples
-> 待补充：`Final_Draft_graded.docx` 上传的是空白评分表格模板，没有附带已完成的学生范例文本。
+Ms. Liao's own model text ("聊老师的一天" / "Ms. Liao's Day"), used in class as a reading model
+before students draft their own (see [Cycle 7](../02-teaching/cycle-7.md)):
+
+> 我每天早上六点起床，刷牙，然后我在家吃早饭。我早饭喜欢吃鸡蛋🥚和牛奶🥛。我早上七点去学校。
+> 上午八点半，我上课。中午十一点五十分，我在学校吃饭。我喜欢吃学校的午饭，因为 Chef 做的饭很
+> 健康。然后下午我上课。我下午四点下班，然后我回家。我喜欢下午五点跑步，然后我洗澡，吃晚饭。
+> 我喜欢吃健康的晚饭。晚上七点我工作，然后晚上十点我去睡觉。
+
+("Every day I get up at 6am, brush my teeth, then eat breakfast at home. I like eggs and milk for
+breakfast. I leave for school at 7am, class starts at 8:30, and I eat lunch at school at 11:50 —
+I like the school lunch because the chef's food is healthy. I have afternoon classes, get off
+work at 4pm, then go home. I like to run at 5pm, then shower and eat dinner — I like to eat a
+healthy dinner. I work at 7pm, then go to sleep at 10pm.")
+
+No completed student example is available yet — `Final_Draft_graded.docx` is a blank rubric/grading
+grid template, not a filled sample.
 
 ## Reflection
 > 待补充

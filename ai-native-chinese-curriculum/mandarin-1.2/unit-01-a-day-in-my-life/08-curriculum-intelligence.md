@@ -300,6 +300,52 @@ Final Project 的两份 docx，四份真实 quiz/考试 docx，两份教师朗�
    上传的材料，不是校对教师的教案；真发现明显错字/矛盾，在旁边加一句 note 说明即可，不要
    擅自改写正文本身。
 
+## 2026-08-04 — Cycle 页面太长，改成 Do-Now / Objective / Main Activities 三项定式
+
+**发现**：教师反馈现有 Cycle 1/2 的教学内容太长太细（逐条语法点、课堂常规模板文字说明、
+Cycle 级生词汇总、备注段落全都写进去了），"学生们不会看的，太多信息等于无效信息"。同一次
+反馈里也指出 Cycle 3-7 一直没有整理进 Content Layer——之前只是把对应 `.notebook` 转成了
+课堂 Slides（`import-pipeline/notebook_to_pptx.py`），但那条路径不喂 Content Layer，
+需要另外走 Extractor → 人工整理这条路。
+
+**回应/结论**：
+1. **新的 Cycle 文件格式**：每节课只保留三项——**Do-Now**（开场问答/热身）、
+   **Objective**（"我会..."句型改写成"I can..."）、**Main Activities**（当天主要课堂活动，
+   来自 slides 里"我们今天会做..."后面用"·"分隔的清单）。不再写课堂常规模板的文字说明
+   （开场问答→今天的报告→新内容→休息一下→收尾这个结构本身已经在 Cycle 1 最早的版本里
+   记录过一次，不需要每个 Cycle 重复解释）、不逐条记录语法点深挖、不放 Cycle 级生词汇总
+   （核心词汇已经在对应故事/文化卡片自己的 Vocabulary 表里，重复放会violate"生词不重复"
+   的既有原则）、**不写"备注"段落**——这条格式规则以后新增/编辑任何 Cycle 文件都要延续。
+2. **SMART Notebook 源文件本身有一个很规整、可直接复用的三段式结构**：每天的第一页永远是
+   "Please open your notebook, answer the questions"（=Do-Now），中间夹一页"今天的报告"
+   （=课堂口语报告环节，属于课堂常规模板，不需要每次抄），然后一页"我(今天)会...
+   我们今天会做..."（前半句=Objective，后半句"·"分隔清单=Main Activities）。以后再收到
+   新的 `.notebook` 或对应的 pptx，直接按这三个锚点抽取，不需要通读全部 slides 逐句判断。
+3. **quiz/小考的阅读理解原文不要抄进 Cycle 的 Do-Now/Activities 里**——沿用这次对话确立的
+   "quiz 类内容不暴露具体题目"原则，Cycle 3 的 10/16 那天源 slides 里有一段完整的阅读理解
+   短文（"后羿杀了十个太阳..."），只在 Main Activities 里写"短测验（阅读理解）"这样的活动
+   标签，不把原文誊抄进 Cycle 文件。
+4. **不同 `.notebook` 文件之间发现了重复的"模板尾页"**——Cycle 4 和 Cycle 5 两份文件末尾
+   都有一组几乎完全相同的 slides（同样的日期"10/17"或"10/18"、同样的"我今天读一读我太累了"
+   内容），推测是教师复制上一个 Cycle 文件当模板时忘记清掉的遗留页面，不是真的教了两遍。
+   处理方式：只在 Cycle 4 保留一次，Cycle 5 里跳过这组重复内容，不再重复记录。以后遇到
+   两个 Cycle 文件出现几乎相同的整组 slides，先怀疑是复制模板的遗留，不要当成真实的两次
+   独立教学内容都抄进去。
+5. **Cycle 6（一个可怕的故事/女人的故事，鬼故事）目前没有对应的 03-content 故事文件**——
+   和熊猫的故事/中秋节的故事/我太累了不一样，这个故事还没有走"整理成独立故事正文"这一步，
+   只在 Cycle 6 的 Main Activities 里提了一下、带了一个真实 YouTube 链接
+   （https://www.youtube.com/watch?v=mU3vsjvP10w）。如果教师后续确认要把这个故事正式收进
+   Content Layer，可以按熊猫的故事/中秋节的故事同样的 Cold Character Reading 格式补一个
+   `03-content` 文件——但目前源 slides 里没有抽出完整的故事正文（只有零散的对话式练习句），
+   需要教师上传更完整的材料才能补。
+6. **意外收获**：Cycle 7（Final Project 准备周）的 slides 里带了教师自己写的范文
+   "聊老师的一天"（Ms. Liao's Day），完整正文已经补进
+   `06-assessment/daily-routine-final-project.md` 的 Examples 小节——这填上了之前
+   "Final Project 没有范例"的缺口，虽然不是学生作品，但是教师自己示范用的模板范文，同样
+   有参考价值。以后处理 Cycle 的 slides 时，除了 Do-Now/Objective/Activities 三个锚点，
+   如果中间夹着一整段可复用的范文/正文（不是零散练习句），值得顺手补进对应的
+   Content/Assessment 文件，不用等教师专门再传一次。
+
 ## 待补充的观察类型（模板，供未来使用）
 - 哪些活动最成功
 - 学生最容易犯的错误 / Vocabulary 难点
