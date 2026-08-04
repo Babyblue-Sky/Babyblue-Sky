@@ -26,13 +26,15 @@ Curriculum Intelligence 笔记）不会出现在这份面向家长的输出里�
 **面向学生的静态检索页面**——不做登录、设备同步、进度追踪，定位是纯参考工具，**不是实时
 系统**（教师上完新课后要先把内容整理进 Markdown，再重新跑一次脚本，页面才会更新）。
 比家长版内容丰富得多：故事/文化正文（数据里有多少就显示多少，缺失的明确标注"内容整理中"
-而不是留空或瞎编）、每个 Cycle 的真实教学时间线、全页可搜索（含一条滚动时始终可见的
+而不是留空或瞎编）、每个 Cycle 的大致教学顺序、全页可搜索（含一条滚动时始终可见的
 sticky 导航+搜索条）。Diagnostic/Summative 这类测验只显示标题和类型，不暴露考题内容
 （考题本身不适合公开当复习资料）；Performance Task/Project 类评量则完整显示 Driving
-Question/Instructions/Rubric，因为这些本来就是要给学生看的任务说明。日期类信息（Cycle
-的具体教学日期）保留展示（比家长版更细，因为要体现真实教学顺序），但明确标注"去年参考日期"，
-避免学生把它当成本学年的实际进度。经教师第一轮反馈后删除了和 Content/Culture 卡片重复的
-顶部整表生词表（生词仍保留在各卡片内，且仍可搜索），并换了区别于家长版的暖棕色配色。
+Question/Instructions/Rubric，因为这些本来就是要给学生看的任务说明。经教师反馈后删除了
+和 Content/Culture 卡片重复的顶部整表生词表（生词仍保留在各卡片内，且仍可搜索），并换了
+区别于家长版的暖棕色配色。**Teaching Flow 板块不展示具体日期/星期**——只按原顺序呈现
+每个 Cycle 大致教了什么，因为教师反馈逐日同步实际教学进度的维护成本不现实；这一点和
+背后"渲染器颗粒度要服务于维护成本，不能只服务于内容丰富度"的教训记在
+[08-curriculum-intelligence.md](./mandarin-1.2/unit-01-a-day-in-my-life/08-curriculum-intelligence.md)。
 
 ```
 python3 generators/student_reference.py mandarin-1.2/unit-01-a-day-in-my-life <输出路径>.html

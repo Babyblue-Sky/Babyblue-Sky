@@ -263,19 +263,25 @@ _DAY_BLOCK = re.compile(r"(?m)^### (.+?)\n(.*?)(?=^### |\Z)", re.S)
 
 
 def cycle_card(fm, body):
+    """Renders a Cycle as its general flow and order, not a day-by-day log.
+    Per teacher feedback (2026-08-03 round 2): keeping exact per-day dates
+    and activities in sync with her live teaching isn't realistic, and that
+    granularity belongs to Schoology anyway. So this deliberately drops the
+    source data's '### 9/10（Day F）' date/day headers — it only keeps their
+    content, concatenated in original order — rather than parsing them into
+    a dated timeline. Each day's original bullets stay lightly separated
+    (a thin rule) purely for scannability, with no date or session number
+    attached, so nothing here goes stale as her day-to-day teaching shifts."""
     timeline = body_section(body, "教学内容时间线")
-    days_html = "".join(
-        f'<div class="day"><div class="day-label">{esc(h.strip())}</div>{render_blocks(b)}</div>'
-        for h, b in _DAY_BLOCK.findall(timeline)
-    )
+    day_bodies = [b for _, b in _DAY_BLOCK.findall(timeline)]
+    flow_html = "".join(f'<div class="flow-block">{render_blocks(b)}</div>' for b in day_bodies)
     vocab_note = body_section(body, "涉及的核心词汇")
     notes = body_section(body, "备注")
     return f"""
     <article class="card">
-      <div class="bar"><span class="zh">{esc(fm.get('cycle'))}</span>
-        <span class="en date-ref">{esc(fm.get('date_range'))} · 去年参考日期 last year's reference dates</span></div>
+      <div class="bar"><span class="zh">{esc(fm.get('cycle'))}</span></div>
       <div class="card-body">
-        <div class="timeline">{days_html}</div>
+        <div class="flow">{flow_html}</div>
         {f"<h4>本 Cycle 涉及的核心词汇/句型</h4>{render_blocks(vocab_note)}" if vocab_note.strip() else ""}
         {f"<h4>备注 Notes</h4>{render_blocks(notes)}" if notes.strip() else ""}
       </div>
@@ -423,7 +429,6 @@ section > h2 .en {{ font-family: var(--font-latin); font-weight: 700; font-size:
 .card {{ background: var(--surface); border: 2px solid var(--line); border-radius: 10px; margin-bottom: 1.1rem; overflow: hidden; }}
 .card .bar {{ display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem; padding: 0.65rem 1.1rem; background: var(--bar); color: var(--bar-ink); font-weight: 800; font-size: 1.15rem; }}
 .card .bar .en {{ font-family: var(--font-latin); font-weight: 700; font-size: 0.68em; opacity: 0.92; color: var(--bar-ink); }}
-.card .bar .date-ref {{ opacity: 0.85; }}
 .card-body {{ padding: 1.1rem 1.3rem 1.3rem; }}
 .card-body h4 {{ font-family: var(--font-latin); text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.78rem; color: var(--muted); margin: 1.1rem 0 0.4rem; }}
 .card-body h4:first-of-type {{ margin-top: 0.2rem; }}
@@ -442,9 +447,10 @@ table th, table td {{ text-align: left; padding: 0.35rem 0.5rem; border-bottom: 
 table th {{ color: var(--muted); font-weight: 700; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; font-family: var(--font-latin); }}
 table td.zh {{ font-weight: 700; }}
 table td.src {{ font-family: var(--font-latin); color: var(--muted); font-size: 0.82rem; }}
-.timeline {{ display: flex; flex-direction: column; gap: 0.9rem; }}
-.day {{ border-left: 3px solid var(--bar); padding-left: 0.9rem; }}
-.day-label {{ font-family: var(--font-latin); font-weight: 800; font-size: 0.82rem; color: var(--bar); margin-bottom: 0.25rem; }}
+.flow-block {{ padding: 0.6rem 0; }}
+.flow-block:not(:first-child) {{ border-top: 1px solid var(--bg); }}
+.flow-block:first-child {{ padding-top: 0; }}
+.flow-block:last-child {{ padding-bottom: 0; }}
 ol.objectives {{ margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }}
 ol.objectives li {{ font-size: 0.98rem; }}
 ol.objectives .en {{ display: block; font-family: var(--font-latin); color: var(--bar-ink); opacity: 0.85; font-size: 0.8em; margin-top: 0.1rem; }}
@@ -497,8 +503,8 @@ footer {{ font-family: var(--font-latin); color: var(--muted); font-size: 0.78re
 
   <section id="teaching-flow">
     <h2>课堂进度 <span class="en">Teaching Flow</span></h2>
-    <p class="section-note">Cycle dates are the reference dates from when this unit was last taught — this
-      year's actual calendar will differ. Check Schoology for this year's schedule.</p>
+    <p class="section-note">The general order and content of each Cycle — not a day-by-day log of exact
+      dates or activities. Check Schoology for today's schedule and any last-minute changes.</p>
     {cycle_html}
   </section>
 

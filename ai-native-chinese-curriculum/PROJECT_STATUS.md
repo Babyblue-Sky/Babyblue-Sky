@@ -29,8 +29,8 @@ Markdown+YAML 的 **AI Native Curriculum Database**，作为所有教学产出�
    `01-overview / 02-teaching / 03-content / 04-culture / 05-resources / 06-assessment / 07-ai-workspace / 08-curriculum-intelligence`
 5. **Generation Layer（渲染器）**：
    - `generators/family_overview.py` — 面向家长的 Unit 概览页面，**已经做了 4 轮设计迭代，教师确认"目前够用"**。关键设计原则都写在脚本开头的 docstring 里。
-   - `generators/student_reference.py` — 面向学生的"Unit 检索页面"，**已完成第一轮教师反馈修订**。定位是纯静态检索/参考工具，不做设备同步、进度追踪、登录；**不是实时系统**，是"当前 Content Layer 数据的一次快照"，教师上完新课后要先把内容整理进 Markdown，再重新跑脚本才会更新。比家长版丰富：故事/文化正文（数据里有多少显示多少，缺失的标注"内容整理中"）、每个 Cycle 的真实教学时间线（标注"去年参考日期"）、页面全程可搜索（sticky 导航条里也有一份同步的搜索框）。测验类 Assessment 不暴露考题内容，Performance Task/Project 类完整显示任务说明。已删除顶部的整表生词表（和 Content/Culture 卡片重复，教师反馈页面太长）——生词现在只在各自卡片里，但仍可搜索。配色用暖棕色（`--bar: #8A5A3B`）区别于家长版的蓝绿色。Quizlet/YouTube 等链接目前渲染不出来——不是渲染器的问题，是 Content Layer 里还没有真实 URL，等数据补上会自动出现。设计取舍详见 [08-curriculum-intelligence.md](./mandarin-1.2/unit-01-a-day-in-my-life/08-curriculum-intelligence.md) 最新两条记录。
-   - **下一步**：继续跟教师确认这一轮修订是否满意，视反馈决定是否需要第二轮迭代。
+   - `generators/student_reference.py` — 面向学生的"Unit 检索页面"，**已完成两轮教师反馈修订**。定位是纯静态检索/参考工具，不做设备同步、进度追踪、登录；**不是实时系统**，是"当前 Content Layer 数据的一次快照"，教师上完新课后要先把内容整理进 Markdown，再重新跑脚本才会更新——这一点已经跟教师明确同步过。比家长版丰富：故事/文化正文（数据里有多少显示多少，缺失的标注"内容整理中"）、页面全程可搜索（sticky 导航条里也有一份同步的搜索框）。测验类 Assessment 不暴露考题内容，Performance Task/Project 类完整显示任务说明。顶部的整表生词表已删除（和 Content/Culture 卡片重复）——生词现在只在各自卡片里，但仍可搜索。配色用暖棕色（`--bar: #8A5A3B`）区别于家长版的蓝绿色。**Teaching Flow 板块已从"逐日期+活动"降级为"Cycle 级别的大致顺序"**（不再展示具体日期/星期），因为教师明确说逐日同步维护成本不现实——这是本项目目前为止最重要的一条"渲染器颗粒度要服务于维护成本"的经验，详见 [08-curriculum-intelligence.md](./mandarin-1.2/unit-01-a-day-in-my-life/08-curriculum-intelligence.md) 最新几条记录。Quizlet/YouTube 等链接目前渲染不出来——不是渲染器的问题，是 Content Layer 里还没有真实 URL。
+   - **下一步**：把这版发给教师看，确认 Teaching Flow 颗粒度调整后是否满意；同时家长概览页面（`family_overview.py`）目前也没有类似的"维护成本"讨论，值得回头确认一下它有没有同样的问题。
 
 ## 关键设计决策 + 为什么（不要重新踩一遍坑）
 
