@@ -52,9 +52,7 @@ Chinese with an English gloss on each line so family readers can follow along:
 - 快到十二月了，真希望我可以早点儿回中国！— December is almost here — I really hope I can go back to China soon!
 - 祝好！您的学生：王朋 — Best wishes! Your student, Wang Peng
 
-> Ms. Liao has also recorded her own read-aloud of this story, for student shadowing/listening
-> practice. Not linked here yet — needs to be uploaded somewhere public (e.g. Drive/YouTube)
-> first; see the same gap noted for the calligraphy videos in shufa-calligraphy.md.
+[Ms. Liao's read-aloud recording](https://drive.google.com/file/d/197uFnuDuSBORQ74q-5dIKgkrQVlCNZF8/view?usp=sharing) — for student shadowing/listening practice.
 
 ## Activities
 - Writing: reply to the letter in Chinese, or write your own "太累了" letter describing a tiring day

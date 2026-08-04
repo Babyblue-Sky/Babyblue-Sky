@@ -55,9 +55,7 @@ can follow along:
 - 所以他吃了钱，他非常饿，他觉得他吃了很多很多竹子🎋。可是，他吃了很多很多的钱。— So he ate the money — he was so hungry he thought he was eating lots of bamboo, but really he ate lots of money.
 - 聊老师发现以后很生气。熊猫不可以住在聊老师家了。他很难过。— When Ms. Liao found out, she was angry. The panda could no longer live at her house. He was sad.
 
-> Ms. Liao has also recorded her own read-aloud of this story, for student shadowing/listening
-> practice. Not linked here yet — needs to be uploaded somewhere public (e.g. Drive/YouTube)
-> first; see the same gap noted for the calligraphy videos in shufa-calligraphy.md.
+[Ms. Liao's read-aloud recording](https://drive.google.com/file/d/1jK27p9ImpDknKbgHblqyzSMPqGu5okry/view?usp=sharing) — for student shadowing/listening practice.
 
 ## Activities
 - Sketch key details of the story（画出故事关键情节）

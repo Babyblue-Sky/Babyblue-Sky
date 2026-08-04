@@ -31,9 +31,9 @@ Slides、Assessment 等）的唯一数据源。详见 [`blueprint-v1.0.md`](./bl
    assessment 的正文，所以这四份文件放心存了完整真实内容）。
    **还缺**：Cycle 3-6 的教学内容整理进 Markdown（`.notebook` 源文件已经转过 Slides，
    但那条路径不喂 Content Layer，见下面第 6 条）、笔画书法的真实 YouTube 视频链接、
-   三个故事的教师朗读音频链接（mp4 已收到，但音视频不进 git，需要教师上传到公开可访问
-   的地方后把链接补进对应 Markdown）、Final Project 的学生范例（`Final_Draft_graded.docx`
-   只是空白评分表模板，没有已完成范文）。
+   中秋节的故事的教师朗读音频链接（熊猫的故事和我太累了两个已经拿到 Drive 链接并补进对应
+   Markdown 的 Text/Media，中秋节的故事这个还没有）、Final Project 的学生范例
+   （`Final_Draft_graded.docx` 只是空白评分表模板，没有已完成范文）。
    **教师明确说她会在一个新对话里上传更多 Unit 1 材料**——接手的 Claude 应该按
    Blueprint 的 Import Pipeline（Extractor 抽取 → AI Classifier 归类 → Human Review）
    把新材料整理进对应模块的 Markdown，然后重新跑 `generators/student_reference.py`
