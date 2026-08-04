@@ -12,8 +12,8 @@ branch: claude/ai-native-chinese-curriculum-vlnr10
 ## 项目是什么
 
 把 Tian（Mandarin 老师）的 Middle School Mandarin 课程从 SMART Notebook 迁移到一套
-Markdown+YAML 的 **AI Native Curriculum Database**，作为所有教学产出（家长概览页面、
-学生检索页面、Slides、Assessment 等）的唯一数据源。详见 [`blueprint-v1.0.md`](./blueprint-v1.0.md)。
+Markdown+YAML 的 **AI Native Curriculum Database**，作为所有教学产出（学生检索页面、
+Slides、Assessment 等）的唯一数据源。详见 [`blueprint-v1.0.md`](./blueprint-v1.0.md)。
 
 ## 目前进度（做到哪一步）
 
@@ -28,14 +28,9 @@ Markdown+YAML 的 **AI Native Curriculum Database**，作为所有教学产出�
    文字描述会一直准确）**：
    `01-overview / 02-teaching / 03-content / 04-culture / 05-resources / 06-assessment / 07-ai-workspace / 08-curriculum-intelligence`
 5. **Generation Layer（渲染器）**：
-   - `generators/family_overview.py` — 面向家长的 Unit 概览页面，**已经做了 4 轮设计迭代，教师确认"目前够用"**。关键设计原则都写在脚本开头的 docstring 里。
-   - `generators/student_reference.py` — 面向学生的"Unit 检索页面"，**已完成两轮教师反馈修订**。定位是纯静态检索/参考工具，不做设备同步、进度追踪、登录；**不是实时系统**，是"当前 Content Layer 数据的一次快照"，教师上完新课后要先把内容整理进 Markdown，再重新跑脚本才会更新——这一点已经跟教师明确同步过。比家长版丰富：故事/文化正文（数据里有多少显示多少，缺失的标注"内容整理中"）、页面全程可搜索（sticky 导航条里也有一份同步的搜索框）。测验类 Assessment 不暴露考题内容，Performance Task/Project 类完整显示任务说明。顶部的整表生词表已删除（和 Content/Culture 卡片重复）——生词现在只在各自卡片里，但仍可搜索。配色用暖棕色（`--bar: #8A5A3B`）区别于家长版的蓝绿色。**Teaching Flow 板块已从"逐日期+活动"降级为"Cycle 级别的大致顺序"**（不再展示具体日期/星期），因为教师明确说逐日同步维护成本不现实——这是本项目目前为止最重要的一条"渲染器颗粒度要服务于维护成本"的经验，详见 [08-curriculum-intelligence.md](./mandarin-1.2/unit-01-a-day-in-my-life/08-curriculum-intelligence.md) 最新几条记录。Quizlet/YouTube 等链接目前渲染不出来——不是渲染器的问题，是 Content Layer 里还没有真实 URL。
-   - **2026-08-04 更新**：核对过 `family_overview.py` 的源码——它压根不读 `02-teaching/`
-     目录，从没展示过逐日期的 Teaching Flow，所以不存在"同样的维护成本问题"，这一条
-     可以不用再回头确认了。已重新跑了两个渲染器（数据没变化，输出内容和上一版一致），
-     把最新的 `student_reference.html`（Teaching Flow 已是 Cycle 级别颗粒度）和
-     `family_overview.html` 发给教师看，等她确认 Teaching Flow 这版颗粒度是否满意。
-   - **下一步**：等教师对这版学生检索页面的反馈；没有新反馈之前不用再改这两个渲染器。
+   - `generators/student_reference.py` — 面向学生的"Unit 检索页面"，**已完成多轮教师反馈修订，2026-08-04 起同时作为发给家长的版本**。定位是纯静态检索/参考工具，不做设备同步、进度追踪、登录；**不是实时系统**，是"当前 Content Layer 数据的一次快照"，教师上完新课后要先把内容整理进 Markdown，再重新跑脚本才会更新——这一点已经跟教师明确同步过。内容包括：故事/文化正文（数据里有多少显示多少，缺失的标注"内容整理中"）、页面全程可搜索（sticky 导航条里也有一份同步的搜索框）。测验类 Assessment 不暴露考题内容，Performance Task/Project 类完整显示任务说明。顶部的整表生词表已删除（和 Content/Culture 卡片重复）——生词现在只在各自卡片里，但仍可搜索。**Teaching Flow 板块已从"逐日期+活动"降级为"Cycle 级别的大致顺序"**（不再展示具体日期/星期），因为教师明确说逐日同步维护成本不现实——这是本项目目前为止最重要的一条"渲染器颗粒度要服务于维护成本"的经验，详见 [08-curriculum-intelligence.md](./mandarin-1.2/unit-01-a-day-in-my-life/08-curriculum-intelligence.md) 最新几条记录。Quizlet/YouTube 等链接目前渲染不出来——不是渲染器的问题，是 Content Layer 里还没有真实 URL。**Culture 与 Teaching Flow 板块的正文（除生词表和语法/句型列表外）已全部译成英文**——学生是非母语者，纯中文说明用不上，这条规则以后每次往这两个板块加新内容时都要遵守。Culture 板块的 Overview 正文里也不应该再出现具体日期（教师 2026-08-04 反馈发现两处漏网的日期，已清掉）。
+   - **`generators/family_overview.py`（面向家长的独立渲染器）已于 2026-08-04 停用并从仓库删除**——教师明确说这项工程量太大，没法为每个 Unit 同时维护两份渲染器、过两轮教师 review，决定只用学生检索页面这一份，同时发给学生和家长看。**不要重新创建这个文件或建议"要不要恢复家长版"**——这是教师明确做过的取舍，原因是工作量，不是渲染效果问题。它当年 4 轮设计迭代的教训（配色、日期颗粒度、双语原则等）仍然记在 08-curriculum-intelligence.md 里，不因为文件删除而失效，往学生页面加东西时仍可参考。
+   - **下一步**：等教师对这版学生检索页面（内容已全英文化、无日期）的反馈；没有新反馈之前不用再改这个渲染器。
 6. **课堂 presentation 决定和 Content Layer 彻底解耦** — 教师原本以为课堂上播放的 slides 也会是这套系统生成的 HTML，讨论后确认这是个坏主意（现场需要秒改，HTML 生成流程做不到）。教师决定停用 SMART Notebook，改用 Google Slides 作为课堂工具，和这个 git 项目的更新节奏没有关系。为了把旧 SMART 内容迁过去，新增了 `import-pipeline/notebook_to_pptx.py`（Extractor 的一个具体实现，但走的是"直接产出 pptx"这条路，不经过 AI Classifier/Human Review 那条喂 Content Layer 的路）。已经用 Unit 1 Cycle 1 的 42 页 `.notebook` 文件验证过整个流程，教师确认横版布局/透明背景/楷体字体的效果可以接受。**下一步**：如果教师认可这份完整版，继续处理 Cycle 2 及后续；教师手上其他 Unit/Cycle 的 `.notebook` 文件需要她上传到对话里才能处理（这个仓库里没有存任何原始 `.notebook`/`.docx` 文件，也不应该存——这些是几十 MB 的二进制文件，不适合进 git）。
 
    **Google Slides 里把中文字体调对的实际操作流程**（教师已经走通一遍，细节踩过的坑都在这）：
@@ -58,8 +53,12 @@ Markdown+YAML 的 **AI Native Curriculum Database**，作为所有教学产出�
 
 - 存储载体：git 里的 Markdown+YAML，已定案，不用再讨论
 - 多语言泛化（Spanish/French）：teacher 明确说了现在不需要，等真的加第二语言再说
-- 家长页面的字体/配色/翻译：已经定稿（见 `generators/family_overview.py` 的
-  docstring 和历史 commit message），除非教师主动要求再改，不要自己重新设计一遍
+- 家长概览渲染器（`family_overview.py`）已经**删除**，不是"待改进"——教师 2026-08-04
+  明确说单人维护两份渲染器工作量不现实，改成学生检索页面身兼两职。不要建议恢复、
+  重建或"顺便"再造一个家长专属版本，除非教师自己重新提出
+- Culture / Teaching Flow 板块的正文用英文，只有生词表和语法/句型列表可以留中文——
+  这条规则已经落实到 `student_reference.py` 读取的 Content Layer 文件里，以后往这两个
+  模块加新内容（新 Cycle、新 Culture 条目）时要延续，不要又写一长串中文叙述回去
 - 课堂上实际播放的 presentation 和这个 git 项目（Content Layer / Generation Layer）**故意解耦**，
   不要提议把它做成"从数据库生成的 HTML"——这条已经讨论过，会重新引入"现场没法秒改"的问题
 - 生成的文件（.pptx 等）**没法通过 Google Drive API 直接上传**——试过，编码后的体积让单次

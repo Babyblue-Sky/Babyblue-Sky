@@ -8,33 +8,27 @@
 - [`blueprint-v1.0.md`](./blueprint-v1.0.md) — 架构层设计：九条设计公理、四层架构模型（Structural / Content / Generation / Intelligence）、Department 级泛化设计、Import Pipeline、治理与版本管理。
 - [`mandarin-1.2/`](./mandarin-1.2/) — Pilot：Mandarin 1.2 课程数据，Markdown + YAML frontmatter 存储，Course 层共享内容（Standards、Syllabus 大纲）在 `00-course-overview.md`，各 Unit 单独建目录。
 
-## Generation Layer（原型）
+## Generation Layer
 
-`generators/family_overview.py` 是第一个渲染器原型：读取 `mandarin-1.2/unit-01-a-day-in-my-life/`
-下的 Markdown + YAML（01 Overview、03 Content、04 Culture、05 Resources、06 Assessment），
-自动生成一份**家长可读的 Unit 概览 HTML 页面**——不手写，完全从 Content Layer 数据渲染出来，
-数据改了重新跑一次脚本就会同步更新。
-
-```
-python3 generators/family_overview.py mandarin-1.2/unit-01-a-day-in-my-life <输出路径>.html
-```
-
-这一步验证了 Blueprint 里"一份数据、多种产出"的承诺：内部字段（TODO、status、教师
-Curriculum Intelligence 笔记）不会出现在这份面向家长的输出里，渲染器只挑家长需要看到的字段。
-
-`generators/student_reference.py` 是第二个渲染器：同一份 Content Layer 数据，渲染成一份
-**面向学生的静态检索页面**——不做登录、设备同步、进度追踪，定位是纯参考工具，**不是实时
-系统**（教师上完新课后要先把内容整理进 Markdown，再重新跑一次脚本，页面才会更新）。
-比家长版内容丰富得多：故事/文化正文（数据里有多少就显示多少，缺失的明确标注"内容整理中"
-而不是留空或瞎编）、每个 Cycle 的大致教学顺序、全页可搜索（含一条滚动时始终可见的
-sticky 导航+搜索条）。Diagnostic/Summative 这类测验只显示标题和类型，不暴露考题内容
-（考题本身不适合公开当复习资料）；Performance Task/Project 类评量则完整显示 Driving
-Question/Instructions/Rubric，因为这些本来就是要给学生看的任务说明。经教师反馈后删除了
-和 Content/Culture 卡片重复的顶部整表生词表（生词仍保留在各卡片内，且仍可搜索），并换了
-区别于家长版的暖棕色配色。**Teaching Flow 板块不展示具体日期/星期**——只按原顺序呈现
-每个 Cycle 大致教了什么，因为教师反馈逐日同步实际教学进度的维护成本不现实；这一点和
-背后"渲染器颗粒度要服务于维护成本，不能只服务于内容丰富度"的教训记在
+`generators/student_reference.py` 是目前唯一在用的渲染器：读取 `mandarin-1.2/unit-01-a-day-in-my-life/`
+下的 Markdown + YAML，生成一份**面向学生（同时也发给家长看）的静态检索页面**——不做登录、
+设备同步、进度追踪，定位是纯参考工具，**不是实时系统**（教师上完新课后要先把内容整理进
+Markdown，再重新跑一次脚本，页面才会更新）。内容包括：故事/文化正文（数据里有多少就显示
+多少，缺失的明确标注"内容整理中"而不是留空或瞎编）、每个 Cycle 的大致教学顺序、全页可搜索
+（含一条滚动时始终可见的 sticky 导航+搜索条）。Diagnostic/Summative 这类测验只显示标题和
+类型，不暴露考题内容（考题本身不适合公开当复习资料）；Performance Task/Project 类评量则
+完整显示 Driving Question/Instructions/Rubric，因为这些本来就是要给学生看的任务说明。
+**Teaching Flow 板块不展示具体日期/星期**——只按原顺序呈现每个 Cycle 大致教了什么，因为
+教师反馈逐日同步实际教学进度的维护成本不现实；这一点和背后"渲染器颗粒度要服务于维护成本，
+不能只服务于内容丰富度"的教训记在
 [08-curriculum-intelligence.md](./mandarin-1.2/unit-01-a-day-in-my-life/08-curriculum-intelligence.md)。
+除生词表和语法/句型列表外，Culture 与 Teaching Flow 板块的正文一律使用英文，因为学生是
+非母语者，纯中文说明用不上。
+
+（原本还有一个面向家长的独立渲染器 `family_overview.py`，2026-08-04 教师决定停用并删除
+——同时维护两份渲染器、每个 Unit 要过两轮教师 review，工作量对单人维护不现实。现在学生
+检索页面身兼两职，直接发给家长看。设计教训仍留在 08-curriculum-intelligence.md 里，
+不因为文件删除而抹掉。）
 
 ```
 python3 generators/student_reference.py mandarin-1.2/unit-01-a-day-in-my-life <输出路径>.html
@@ -85,4 +79,4 @@ Content Layer 落地为 **git 仓库里的 Markdown + YAML**（不是 Notion/Air
 3. **SMART Import（喂 Content Layer 那条路径）**（已验证可行）— `.notebook` 文件是 zip 包，内含逐页 SVG（文字可用脚本抓取）+ `imsmanifest.xml`（记录真实页面顺序，不等于文件名数字顺序）；docx 用同样方式解压 `word/document.xml` 抓文字。目前是半自动：AI 抽取 + 人工审核映射到 Module，符合 Blueprint 里"AI 永不直接写入 canonical"的原则
 3b. **SMART → Google Slides（喂课堂 presentation 那条路径，和 Content Layer 无关）**（已实现，见 `import-pipeline/notebook_to_pptx.py`）— 教师停用 SMART Notebook、改用 Google Slides 上课后新增的独立工具，用同一套 SVG 抽取技术，但直接产出可编辑的 `.pptx`，不经过 AI Classifier/Human Review 那条 Content Layer 的路
 4. **Pilot Unit**（进行中）— Mandarin 1.2 Unit 1「我的一天」，已完成 Cycle 1/2 内容整理 + Diagnostic Test + Student Survey + 生词表 + Course-level Syllabus 归档；仍缺：「我的一天太累了」「中秋节的故事」正文、Final Project 细节、Cycle 3+
-5. **Generation Layer**（进行中）— 家长概览渲染器（`family_overview.py`）已定稿；学生检索页面渲染器（`student_reference.py`）已完成第一版，等教师review
+5. **Generation Layer**（进行中）— 学生检索页面渲染器（`student_reference.py`）已经过多轮教师反馈修订，同时发给学生和家长；原本独立的家长概览渲染器（`family_overview.py`）已于 2026-08-04 停用删除，理由见 08-curriculum-intelligence.md
