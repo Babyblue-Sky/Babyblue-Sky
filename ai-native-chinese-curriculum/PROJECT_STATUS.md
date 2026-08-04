@@ -30,7 +30,12 @@ Markdown+YAML 的 **AI Native Curriculum Database**，作为所有教学产出�
 5. **Generation Layer（渲染器）**：
    - `generators/family_overview.py` — 面向家长的 Unit 概览页面，**已经做了 4 轮设计迭代，教师确认"目前够用"**。关键设计原则都写在脚本开头的 docstring 里。
    - `generators/student_reference.py` — 面向学生的"Unit 检索页面"，**已完成两轮教师反馈修订**。定位是纯静态检索/参考工具，不做设备同步、进度追踪、登录；**不是实时系统**，是"当前 Content Layer 数据的一次快照"，教师上完新课后要先把内容整理进 Markdown，再重新跑脚本才会更新——这一点已经跟教师明确同步过。比家长版丰富：故事/文化正文（数据里有多少显示多少，缺失的标注"内容整理中"）、页面全程可搜索（sticky 导航条里也有一份同步的搜索框）。测验类 Assessment 不暴露考题内容，Performance Task/Project 类完整显示任务说明。顶部的整表生词表已删除（和 Content/Culture 卡片重复）——生词现在只在各自卡片里，但仍可搜索。配色用暖棕色（`--bar: #8A5A3B`）区别于家长版的蓝绿色。**Teaching Flow 板块已从"逐日期+活动"降级为"Cycle 级别的大致顺序"**（不再展示具体日期/星期），因为教师明确说逐日同步维护成本不现实——这是本项目目前为止最重要的一条"渲染器颗粒度要服务于维护成本"的经验，详见 [08-curriculum-intelligence.md](./mandarin-1.2/unit-01-a-day-in-my-life/08-curriculum-intelligence.md) 最新几条记录。Quizlet/YouTube 等链接目前渲染不出来——不是渲染器的问题，是 Content Layer 里还没有真实 URL。
-   - **下一步**：把这版发给教师看，确认 Teaching Flow 颗粒度调整后是否满意；同时家长概览页面（`family_overview.py`）目前也没有类似的"维护成本"讨论，值得回头确认一下它有没有同样的问题。
+   - **2026-08-04 更新**：核对过 `family_overview.py` 的源码——它压根不读 `02-teaching/`
+     目录，从没展示过逐日期的 Teaching Flow，所以不存在"同样的维护成本问题"，这一条
+     可以不用再回头确认了。已重新跑了两个渲染器（数据没变化，输出内容和上一版一致），
+     把最新的 `student_reference.html`（Teaching Flow 已是 Cycle 级别颗粒度）和
+     `family_overview.html` 发给教师看，等她确认 Teaching Flow 这版颗粒度是否满意。
+   - **下一步**：等教师对这版学生检索页面的反馈；没有新反馈之前不用再改这两个渲染器。
 6. **课堂 presentation 决定和 Content Layer 彻底解耦** — 教师原本以为课堂上播放的 slides 也会是这套系统生成的 HTML，讨论后确认这是个坏主意（现场需要秒改，HTML 生成流程做不到）。教师决定停用 SMART Notebook，改用 Google Slides 作为课堂工具，和这个 git 项目的更新节奏没有关系。为了把旧 SMART 内容迁过去，新增了 `import-pipeline/notebook_to_pptx.py`（Extractor 的一个具体实现，但走的是"直接产出 pptx"这条路，不经过 AI Classifier/Human Review 那条喂 Content Layer 的路）。已经用 Unit 1 Cycle 1 的 42 页 `.notebook` 文件验证过整个流程，教师确认横版布局/透明背景/楷体字体的效果可以接受。**下一步**：如果教师认可这份完整版，继续处理 Cycle 2 及后续；教师手上其他 Unit/Cycle 的 `.notebook` 文件需要她上传到对话里才能处理（这个仓库里没有存任何原始 `.notebook`/`.docx` 文件，也不应该存——这些是几十 MB 的二进制文件，不适合进 git）。
 
    **Google Slides 里把中文字体调对的实际操作流程**（教师已经走通一遍，细节踩过的坑都在这）：
