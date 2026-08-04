@@ -1,5 +1,5 @@
 ---
-last_updated: 2026-08-03
+last_updated: 2026-08-04
 branch: claude/ai-native-chinese-curriculum-vlnr10
 ---
 
@@ -31,6 +31,7 @@ Markdown+YAML 的 **AI Native Curriculum Database**，作为所有教学产出�
    - `generators/family_overview.py` — 面向家长的 Unit 概览页面，**已经做了 4 轮设计迭代，教师确认"目前够用"**。关键设计原则都写在脚本开头的 docstring 里。
    - `generators/student_reference.py` — 面向学生的"Unit 检索页面"，**已完成两轮教师反馈修订**。定位是纯静态检索/参考工具，不做设备同步、进度追踪、登录；**不是实时系统**，是"当前 Content Layer 数据的一次快照"，教师上完新课后要先把内容整理进 Markdown，再重新跑脚本才会更新——这一点已经跟教师明确同步过。比家长版丰富：故事/文化正文（数据里有多少显示多少，缺失的标注"内容整理中"）、页面全程可搜索（sticky 导航条里也有一份同步的搜索框）。测验类 Assessment 不暴露考题内容，Performance Task/Project 类完整显示任务说明。顶部的整表生词表已删除（和 Content/Culture 卡片重复）——生词现在只在各自卡片里，但仍可搜索。配色用暖棕色（`--bar: #8A5A3B`）区别于家长版的蓝绿色。**Teaching Flow 板块已从"逐日期+活动"降级为"Cycle 级别的大致顺序"**（不再展示具体日期/星期），因为教师明确说逐日同步维护成本不现实——这是本项目目前为止最重要的一条"渲染器颗粒度要服务于维护成本"的经验，详见 [08-curriculum-intelligence.md](./mandarin-1.2/unit-01-a-day-in-my-life/08-curriculum-intelligence.md) 最新几条记录。Quizlet/YouTube 等链接目前渲染不出来——不是渲染器的问题，是 Content Layer 里还没有真实 URL。
    - **下一步**：把这版发给教师看，确认 Teaching Flow 颗粒度调整后是否满意；同时家长概览页面（`family_overview.py`）目前也没有类似的"维护成本"讨论，值得回头确认一下它有没有同样的问题。
+6. **课堂 presentation 决定和 Content Layer 彻底解耦** — 教师原本以为课堂上播放的 slides 也会是这套系统生成的 HTML，讨论后确认这是个坏主意（现场需要秒改，HTML 生成流程做不到）。教师决定停用 SMART Notebook，改用 Google Slides 作为课堂工具，和这个 git 项目的更新节奏没有关系。为了把旧 SMART 内容迁过去，新增了 `import-pipeline/notebook_to_pptx.py`（Extractor 的一个具体实现，但走的是"直接产出 pptx"这条路，不经过 AI Classifier/Human Review 那条喂 Content Layer 的路）。已经用 Unit 1 Cycle 1 的 42 页 `.notebook` 文件验证过整个流程，教师确认横版布局/透明背景/楷体字体的效果可以接受。**下一步**：如果教师认可这份完整版，继续处理 Cycle 2 及后续；教师手上其他 Unit/Cycle 的 `.notebook` 文件需要她上传到对话里才能处理（这个仓库里没有存任何原始 `.notebook`/`.docx` 文件，也不应该存——这些是几十 MB 的二进制文件，不适合进 git）。
 
 ## 关键设计决策 + 为什么（不要重新踩一遍坑）
 
@@ -48,6 +49,15 @@ Markdown+YAML 的 **AI Native Curriculum Database**，作为所有教学产出�
 - 多语言泛化（Spanish/French）：teacher 明确说了现在不需要，等真的加第二语言再说
 - 家长页面的字体/配色/翻译：已经定稿（见 `generators/family_overview.py` 的
   docstring 和历史 commit message），除非教师主动要求再改，不要自己重新设计一遍
+- 课堂上实际播放的 presentation 和这个 git 项目（Content Layer / Generation Layer）**故意解耦**，
+  不要提议把它做成"从数据库生成的 HTML"——这条已经讨论过，会重新引入"现场没法秒改"的问题
+- 生成的文件（.pptx 等）**没法通过 Google Drive API 直接上传**——试过，编码后的体积让单次
+  工具调用不现实，哪怕文件本身只有一两百 KB。正确流程是生成后用 SendUserFile 直接发给教师，
+  由她自己上传 Drive、用 "Open with Google Slides" 转换，不要重新尝试 API 直传
+- pptx 里的中文字体统一用 `"Kaiti SC"`，教师已经确认接受"转到 Slides 后手动整体调一次字体"
+  这个额外步骤，不需要为了找 Slides 能自动识别的字体名而改生成逻辑
+- 原始 `.notebook`/`.docx` 等源文件不进这个 git 仓库——都是几十 MB 的二进制文件，教师需要时
+  会直接上传到对话里，处理完不必也不应该把原始文件存进仓库
 
 ## 我（未来的 Claude）应该怎么"更新记忆"
 
