@@ -20,14 +20,26 @@ Slides、Assessment 等）的唯一数据源。详见 [`blueprint-v1.0.md`](./bl
 1. **Blueprint v1.0** — 完成。架构层设计：九条公理、四层模型、Department 级泛化。
 2. **Pilot Unit** — 进行中。`mandarin-1.2/unit-01-a-day-in-my-life/` 已经有
    Cycle 1/2 教学内容、Diagnostic Test、Student Survey、生词表、Culture 模块
-   （中秋节的故事 + 笔画书法）。**还缺**：Cycle 3-6、「我的一天太累了」和
-   「中秋节的故事」的正文、Final Project 细节、笔画书法的真实 YouTube 视频链接、
-   「我的一天太累了」生词表的英文释义（详见下面"下次对话，别再问一遍的事"）。
+   （中秋节的故事 + 笔画书法）。**2026-08-04 教师上传了一大批材料，已经整理进 Content
+   Layer**：中秋节的故事正文（16 行，Cold Character Reading）、熊猫的故事正文（9 行，
+   完整标题「很饿的熊猫的故事」）、我的一天太累了正文（书信体，6 段）+ 专属生词表、
+   `05-resources/vocabulary-my-day.md` 的拼音（用两份 ArchChinese 练字表确认）、
+   Final Project 完整细节（`daily-routine-final-project.md`：Driving Question/
+   Instructions/Rubric/Resources，教师明确说这份可以直接引用）、四份真实 quiz/考试
+   （熊猫的故事、我太累了、Diagnostic、Listening & Writing Assessment——教师明确说
+   不要在学生页面暴露真实内容，已确认 `assessment_card()` 本来就不渲染非 Project 类
+   assessment 的正文，所以这四份文件放心存了完整真实内容）。
+   **还缺**：Cycle 3-6 的教学内容整理进 Markdown（`.notebook` 源文件已经转过 Slides，
+   但那条路径不喂 Content Layer，见下面第 6 条）、笔画书法的真实 YouTube 视频链接、
+   三个故事的教师朗读音频链接（mp4 已收到，但音视频不进 git，需要教师上传到公开可访问
+   的地方后把链接补进对应 Markdown）、Final Project 的学生范例（`Final_Draft_graded.docx`
+   只是空白评分表模板，没有已完成范文）。
    **教师明确说她会在一个新对话里上传更多 Unit 1 材料**——接手的 Claude 应该按
    Blueprint 的 Import Pipeline（Extractor 抽取 → AI Classifier 归类 → Human Review）
    把新材料整理进对应模块的 Markdown，然后重新跑 `generators/student_reference.py`
    生成新版页面。整理新内容时要延续这次对话定下的规则（见下面"别再问一遍的事"
-   和"关键设计决策"两节），不要每次都重新讨论一遍。
+   和"关键设计决策"两节，以及 08-curriculum-intelligence.md 2026-08-04 的最新记录），
+   不要每次都重新讨论一遍。
 3. **存储载体已定案** — git 里的 Markdown + YAML，不用 Notion/Airtable/Sheets。
 4. **Unit Template 结构（当前 7 个模块，随时可能因为新发现再调整，以
    `mandarin-1.2/unit-01-a-day-in-my-life/` 里实际的资料夹为准，不要相信这里的

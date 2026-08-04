@@ -231,6 +231,8 @@ def classify_assessment(assessment_type):
         return "项目 Project", "jade", True
     if "summative" in t:
         return "阶段测验 Summative", "vermilion", False
+    if "quiz" in t:
+        return "随堂测验 Quiz", "teal", False
     return esc(assessment_type), "plum", False
 
 

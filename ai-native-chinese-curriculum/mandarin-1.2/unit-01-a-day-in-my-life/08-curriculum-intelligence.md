@@ -261,6 +261,45 @@ field trip 这类内容，应该主动往 04 Culture 归类检查，而不是默
 每次数据变化要不要跟着重新过一轮 review，这个频率乘以受众数量，教师实际投入得起吗——如果
 答案含糊，默认先做一份通用的，不要预先拆分受众。
 
+## 2026-08-04 — 教师上传大批 Unit 1 材料，补齐三个故事正文 + Final Project + 四份 assessment
+
+**发现**：教师在同一次对话里陆续上传了十几个文件（中秋节故事的 summary worksheet/Cold
+Character Reading pptx/插图 PDF，熊猫的故事 pptx，我太累了故事 PDF，多份练字表 PDF，
+Final Project 的两份 docx，四份真实 quiz/考试 docx，两份教师朗读录音 mp4），并且明确区分了
+两类材料的处理规则：
+1. **quiz/考试类**（我太累了 考试+复习、熊猫的故事 考试+复习、Diagnostic Test、
+   T1 Writing Assessment）——教师原话"不要在学生概览中直接使用考试真实内容"。
+2. **Project 类**（Final Project 的两份 docx）——教师原话"可以直接引用"。
+
+**回应/结论**：
+1. 这正好对应 `generators/student_reference.py` 里 `assessment_card()` 已有的行为：
+   非 Project 类（Diagnostic/Quiz/Summative）从来不渲染 body 正文，只显示
+   "具体安排与提交方式请在 Schoology 查看"；只有 `assessment_type` 含 "project" 或
+   "performance task" 的条目才会把 Driving Question/Instructions/Rubric/Resources/Examples
+   完整渲染出来。**所以四份 quiz/考试文件可以放心把真实题目原文存进 Markdown**（供教师内部
+   查阅、以后调整时对照），不违反"不暴露"的要求——约束在渲染器这一层，不需要在 Content
+   Layer 这一层自我阉割内容。以后再收到"这是真实考试，别直接用"的材料，判断标准就是这条：
+   只要 `assessment_type` 不是 project/performance task，正文本身想存多详细都可以。
+2. **故事类正文（Culture/Content 的 Text / Media）采用"中文原文逐行 + em dash + 英文翻译"的
+   格式**，不是这两个模块"正文一律英文"规则的例外，而是对那条规则的正确应用方式——学生要读
+   的是中文（这是语言课的教学内容本身），但家长/非母语读者需要能看懂发生了什么，所以每行
+   中文后面直接跟一句英文翻译，而不是整段替换成英文叙述、也不是整段保留纯中文不给翻译。
+   中秋节的故事（16 行）、熊猫的故事（9 行）、我太累了（6 行书信）三处都用了这个格式，
+   以后新故事正文进来时延续。
+3. **ArchChinese Worksheet Maker 生成的练字表 PDF（daily_routine.pdf、时间.pdf 这类）是可靠的
+   拼音/英文释义来源**——这类 PDF 每个字都标了拼音和英文意思，比 docx 里"意思"栏留白等学生
+   填写的练习表格更适合拿来做数据源。以后遇到同一批"生词表格空白"的 docx，先问教师是否有配套
+   的 ArchChinese 练字表，而不是直接假设没有别的数据来源、只能空着或瞎翻。
+4. **教师本人朗读故事的录音（mp4）暂时不能直接放进渲染页面**——和书法视频/Quizlet 链接是
+   同一个已知的老问题（见"目前进度"第 5 条）：这个仓库不存二进制媒体文件，音频/视频要等教师
+   把文件传到公开可访问的地方（Drive/YouTube 等）拿到真实 URL 后，再补进对应 Markdown 的
+   Text/Media 小节，渲染器会自动识别链接，不需要改代码。目前只在两个故事文件里留了一句
+   "有录音，但还没有可用链接" 的记录，避免以后重复问一遍"有没有录音"。
+5. **原故事文件里前后署名不一致（我太累了这封信"发送人：李朋"，落款"您的学生：王朋"）
+   照抄原文，不要"纠正"**——这是原始教学材料本身的小瑕疵，Content Layer 的角色是忠实转录
+   上传的材料，不是校对教师的教案；真发现明显错字/矛盾，在旁边加一句 note 说明即可，不要
+   擅自改写正文本身。
+
 ## 待补充的观察类型（模板，供未来使用）
 - 哪些活动最成功
 - 学生最容易犯的错误 / Vocabulary 难点
