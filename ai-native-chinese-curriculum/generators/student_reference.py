@@ -465,8 +465,7 @@ footer {{ font-family: var(--font-latin); color: var(--muted); font-size: 0.78re
     <h1>{big_idea_zh}</h1>
     <p class="en-title">{big_idea_en}</p>
     <p class="subtitle">A searchable reference for this unit — vocabulary, story text, the real Cycle-by-cycle
-      flow, and assessment info. Not a portal: no login, no progress tracking. For due dates and submitting
-      work, use Schoology.</p>
+      flow, and assessment info.</p>
     <div class="search-wrap">
       <input id="search" type="text" placeholder="搜索生词、故事、Cycle… Search vocabulary, stories, cycles…" autocomplete="off">
       <p class="search-hint">Searches vocabulary (中文/拼音/English), stories, and culture content on this page.</p>
