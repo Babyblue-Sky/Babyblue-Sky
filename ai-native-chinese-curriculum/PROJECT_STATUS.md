@@ -60,16 +60,38 @@ Content Layer（Markdown+YAML）本身的价值——恰恰相反，教案设计
    和"关键设计决策"两节，以及 08-curriculum-intelligence.md 2026-08-04 的最新记录），
    不要每次都重新讨论一遍。
 3. **存储载体已定案** — git 里的 Markdown + YAML，不用 Notion/Airtable/Sheets。
-4. **Unit Template 结构（当前 7 个模块，随时可能因为新发现再调整，以
+4. **Unit Template 结构（当前 8 个模块，随时可能因为新发现再调整，以
    `mandarin-1.2/unit-01-a-day-in-my-life/` 里实际的资料夹为准，不要相信这里的
    文字描述会一直准确）**：
-   `01-overview / 02-teaching / 03-content / 04-culture / 05-resources / 06-assessment / 07-ai-workspace / 08-curriculum-intelligence`
-5. **Generation Layer（渲染器）**：
-   - `generators/student_reference.py` — 面向学生的"Unit 检索页面"，**已完成多轮教师反馈修订，2026-08-04 起同时作为发给家长的版本**。定位是纯静态检索/参考工具，不做设备同步、进度追踪、登录；**不是实时系统**，是"当前 Content Layer 数据的一次快照"，教师上完新课后要先把内容整理进 Markdown，再重新跑脚本才会更新——这一点已经跟教师明确同步过。内容包括：故事/文化正文（数据里有多少显示多少，缺失的标注"内容整理中"）、页面全程可搜索（sticky 导航条里也有一份同步的搜索框）。测验类 Assessment 不暴露考题内容，Performance Task/Project 类完整显示任务说明。顶部的整表生词表已删除（和 Content/Culture 卡片重复）——生词现在只在各自卡片里，但仍可搜索。**Teaching Flow 板块已从"逐日期+活动"降级为"Cycle 级别的大致顺序"**（不再展示具体日期/星期），因为教师明确说逐日同步维护成本不现实——这是本项目目前为止最重要的一条"渲染器颗粒度要服务于维护成本"的经验，详见 [08-curriculum-intelligence.md](./mandarin-1.2/unit-01-a-day-in-my-life/08-curriculum-intelligence.md) 最新几条记录。Quizlet/YouTube 等链接目前渲染不出来——不是渲染器的问题，是 Content Layer 里还没有真实 URL。**Culture 与 Teaching Flow 板块的正文（除生词表和语法/句型列表外）已全部译成英文**——学生是非母语者，纯中文说明用不上，这条规则以后每次往这两个板块加新内容时都要遵守。Culture 板块的 Overview 正文里也不应该再出现具体日期（教师 2026-08-04 反馈发现两处漏网的日期，已清掉）。**站内交叉引用链接（`[...](../06-assessment/xxx.md)` 这种指向仓库里另一个 Markdown 文件的链接）已经改成指向同页面内对应卡片的锚点**（每张卡片现在都有 `id="item-<文件名去掉扩展名>"`，`inline_md()` 里的链接改写逻辑会自动把认得的 `.md` 链接换成 `#item-...`，认不出来的直接退化成纯文字，不留死链接）——原来这类链接会原样渲染成指向仓库里 `.md` 源文件的相对路径，页面本身是单个静态 HTML，不管在哪里打开都点不开，这是教师 2026-08-04 反馈发现的。以后往 Content Layer 里写"见 XXX.md"这种交叉引用时，不用改渲染器逻辑，脚本会自动处理。
-   - **`generators/family_overview.py`（面向家长的独立渲染器）已于 2026-08-04 停用并从仓库删除**——教师明确说这项工程量太大，没法为每个 Unit 同时维护两份渲染器、过两轮教师 review，决定只用学生检索页面这一份，同时发给学生和家长看。**不要重新创建这个文件或建议"要不要恢复家长版"**——这是教师明确做过的取舍，原因是工作量，不是渲染效果问题。它当年 4 轮设计迭代的教训（配色、日期颗粒度、双语原则等）仍然记在 08-curriculum-intelligence.md 里，不因为文件删除而失效，往学生页面加东西时仍可参考。
-   - **下一步**：教师会在新对话里上传更多 Unit 1 材料——把新材料整理进 Content Layer 后
-     重新跑这个脚本、重新发页面即可，渲染器本身（英文化、无日期、锚点链接这几条规则）
-     暂时不需要再改，除非教师明确提出新的板块级别反馈。
+   `01-overview / 02-teaching / 03-content / 04-culture / 05-resources / 06-assessment / 07-ai-workspace / 08-curriculum-intelligence / 09-student-work`
+   （**09-student-work 是 2026-08-04 项目定位调整后新增的**，展示往年学生作品，schema 里
+   刻意没有"学生姓名"字段，见该模块的 README.md）
+5. **Generation Layer（渲染器）** — 2026-08-04 跟着定位调整做了一轮大改，历史设计教训
+   （英文化、锚点链接、日期颗粒度等规则）详见
+   [08-curriculum-intelligence.md](./mandarin-1.2/unit-01-a-day-in-my-life/08-curriculum-intelligence.md)，
+   这里只记当前状态：
+   - `generators/student_reference.py` — 单个 Unit 的"Curriculum Archive 课程归档"页面
+     （标题/eyebrow 已从"Student Reference 学生检索页面"改名，见 2026-08-04 定位调整）。
+     **Teaching Flow 板块现在是"一段 Overview 摘要 + 嵌入的真实课堂 Slides"**，不再是
+     Do-Now/Objective/Main Activities 逐日列表——那份逐日细节没删，挪进每个
+     `cycle-N.md` 里渲染器不读的"逐日细节"小节，源码里还在。Slides 嵌入读 Cycle
+     frontmatter 的 `slides_embed_url`（Google Slides "Publish to web" 生成的嵌入链接，
+     不是普通分享链接），没填的 Cycle 显示占位提示，不是报错。**新增"学生作品 Student
+     Work"板块**，读 `09-student-work/*.md`，目前是空的（教师还没上传作品）。
+     **配色改用教师指定的莫兰迪色板**：pill 徽章从描边文字改成柔和色块+深色文字，
+     每个 Unit 用 `UNIT_HERO_COLORS` 数组里不同但相近的一个色号做主视觉色（轮换机制，
+     不是写死一个）。测验类 Assessment 仍然不暴露考题内容（`assessment_card()` 对
+     Diagnostic/Quiz/Summative 只显示"See Schoology"）。
+   - `generators/build_site.py`（**新增**）——把 `student_reference.py` 的单 Unit 页面
+     包一层完整 HTML5 文档壳，加一个作品集首页（index.html，列出所有已发布的 Unit，
+     每个 Unit 卡片左边框用它自己的主视觉色），输出到 `site/`，供 GitHub Pages 部署。
+     以后加新 Unit 页面，在这个文件的 `UNITS` 列表里加一条即可。
+   - `.github/workflows/deploy-mandarin-portfolio.yml`（**新增**）——push 到 `main` 时
+     自动跑 `build_site.py` 并部署到 GitHub Pages。**目前还没真正上线**：①这次的改动都在
+     `claude/ai-native-chinese-curriculum-vlnr10` 分支，没合并到 main；②GitHub 仓库
+     Settings → Pages 的 Source 需要教师手动选一次"GitHub Actions"（这一步 Claude 做不了）；
+     ③**教师 2026-08-04 明确说先不公开，等她想清楚再开**，不要主动建议开启或去改这个决定。
+   - **`generators/family_overview.py`（面向家长的独立渲染器）已于 2026-08-04 停用并从仓库删除**——不要重新创建这个文件。它当年 4 轮设计迭代的教训仍然记在 08-curriculum-intelligence.md 里。
 6. **课堂 presentation 决定和 Content Layer 彻底解耦** — 教师原本以为课堂上播放的 slides 也会是这套系统生成的 HTML，讨论后确认这是个坏主意（现场需要秒改，HTML 生成流程做不到）。教师决定停用 SMART Notebook，改用 Google Slides 作为课堂工具，和这个 git 项目的更新节奏没有关系。为了把旧 SMART 内容迁过去，新增了 `import-pipeline/notebook_to_pptx.py`（Extractor 的一个具体实现，但走的是"直接产出 pptx"这条路，不经过 AI Classifier/Human Review 那条喂 Content Layer 的路）。已经用 Unit 1 Cycle 1 的 42 页 `.notebook` 文件验证过整个流程，教师确认横版布局/透明背景/楷体字体的效果可以接受。**2026-08-04 又处理了 Cycle 2-7**（教师上传了 5 个 + 中途追加 1 个 `.notebook` 文件：Cycle 2/24 页、Cycle 3/24 页、Cycle 4/45 页、Cycle 5/69 页、Cycle 6/18 页、Cycle 7/23 页，全部转换无报错，已通过 SendUserFile 发给教师），加上之前的 Cycle 1，Unit 1 全部 7 个 Cycle 的课堂 Slides 现在都已产出。字体决定已定案见下一段。**下一步**：等教师这一轮 review 反馈（横版布局/字体/图片清晰度是否都还满意）；如果教师手上还有其他 Unit 的 `.notebook` 文件，需要她上传到对话里才能处理（这个仓库里没有存任何原始 `.notebook`/`.docx` 文件，也不应该存——这些是几十 MB 的二进制文件，不适合进 git）。
 
    **Google Slides 里把中文字体调对的实际操作流程**（教师已经走通一遍，细节踩过的坑都在这）：

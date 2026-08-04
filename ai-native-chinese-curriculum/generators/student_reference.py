@@ -286,6 +286,29 @@ def content_card(fm, body, stem, type_map, type_key, extra_sections=()):
     </article>"""
 
 
+def student_work_card(fm, body, stem):
+    """Deliberately has no student-name field anywhere in its schema — not
+    just "don't fill it in," there's structurally nowhere to put one, so a
+    future entry can't leak a name by accident. Teacher confirmed (2026-08-04)
+    these are past students' work with identifying info already stripped
+    before upload, no photos; this function still shouldn't grow a name
+    field even so, since the point is the work is the artifact, not who
+    made it."""
+    search_key = esc(f"{fm.get('title')} {fm.get('medium')}".lower())
+    return f"""
+    <article class="card" id="item-{esc(stem)}" data-search="{search_key}">
+      <div class="bar"><span class="zh">{esc(fm.get('title'))}</span></div>
+      <div class="card-body">
+        <div class="badges">{pill(esc(fm.get('medium') or 'Student Work'), 'jade')}{status_pill(fm.get('status'))}</div>
+        {f"<p class='pinyin'>{esc(fm.get('responds_to'))}</p>" if fm.get('responds_to') else ""}
+        <h4>说明 Description</h4>
+        {section_html(body, "Description")}
+        <h4>亮点 Highlights</h4>
+        {section_html(body, "Highlights")}
+      </div>
+    </article>"""
+
+
 def slides_embed_html(embed_url):
     """A Cycle's real classroom deck, embedded — the deck itself is now the
     detail; this page only needs to orient a visitor, not restate it. Needs
@@ -384,6 +407,7 @@ def render(unit_dir, course_title="Mandarin 1.2", hero=UNIT_HERO_COLORS[0]):
     culture_entries = entries(f"{unit_dir}/04-culture/*.md")
     assessment_entries = entries(f"{unit_dir}/06-assessment/*.md")
     cycle_entries = entries(f"{unit_dir}/02-teaching/cycle-*.md")
+    student_work_entries = entries(f"{unit_dir}/09-student-work/*.md")
 
     # Populate before rendering any card, so links in Teaching Flow (rendered
     # last) can resolve to cards that appear earlier on the page too.
@@ -393,6 +417,10 @@ def render(unit_dir, course_title="Mandarin 1.2", hero=UNIT_HERO_COLORS[0]):
     culture_html = "\n".join(content_card(fm, body, stem, CULTURE_TYPE, "culture_type") for fm, body, stem in culture_entries)
     cycle_html = "\n".join(cycle_card(fm, body) for fm, body, _ in cycle_entries)
     assessment_html = "\n".join(assessment_card(fm, body, stem) for fm, body, stem in assessment_entries)
+    student_work_html = (
+        "\n".join(student_work_card(fm, body, stem) for fm, body, stem in student_work_entries)
+        or '<p class="pending">内容整理中 · Student work coming soon</p>'
+    )
 
     objectives_html = "\n".join(
         f"<li><span class='zh'>{esc(zh)}</span>" + (f"<span class='en'>{esc(en)}</span>" if en else "") + "</li>"
@@ -415,6 +443,7 @@ def render(unit_dir, course_title="Mandarin 1.2", hero=UNIT_HERO_COLORS[0]):
         culture_html=culture_html,
         cycle_html=cycle_html,
         assessment_html=assessment_html,
+        student_work_html=student_work_html,
         generated_date=today,
     )
 
@@ -526,6 +555,7 @@ footer {{ font-family: var(--font-latin); color: var(--muted); font-size: 0.78re
     <a href="#culture">文化 Culture</a>
     <a href="#teaching-flow">课堂进度 Teaching Flow</a>
     <a href="#assessments">单元考核 Assessments</a>
+    <a href="#student-work">学生作品 Student Work</a>
   </nav>
 
   <section id="objectives">
@@ -557,6 +587,13 @@ footer {{ font-family: var(--font-latin); color: var(--muted); font-size: 0.78re
   <section id="assessments">
     <h2>单元考核 <span class="en">Assessments</span></h2>
     {assessment_html}
+  </section>
+
+  <section id="student-work">
+    <h2>学生作品 <span class="en">Student Work</span></h2>
+    <p class="section-note">Past students' project work, shared with identifying information
+      removed — no names, no photos.</p>
+    {student_work_html}
   </section>
 
   <footer>Generated from the curriculum database · {generated_date} · re-run the generator after the database
