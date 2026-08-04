@@ -19,28 +19,31 @@ last_updated: 2026-08-03
 本 Unit 的 Culture 模块下还有另一个内容：[书法 (Calligraphy)](./shufa-calligraphy.md)。
 
 ## Overview
-在 Cycle 2 末尾（10/4 起）开始铺垫，正式故事内容预计在后续 Cycle（尚未上传）中展开。
+Lead-in begins toward the end of Cycle 2; the full story content is expected to unfold in a
+later Cycle (not yet uploaded).
 
-暖场文化提问：
-- 你知道中秋节是哪天吗？
-- 你觉得中秋节的故事有谁？
+Warm-up cultural questions:
+- Do you know what day the Mid-Autumn Festival falls on?
+- Who do you think appears in the story of the Mid-Autumn Festival?
 
-学习目标：我会说一说中秋节的故事
+Learning goal: I can talk about the story of the Mid-Autumn Festival
 
 ## Vocabulary
-> TODO：正文词汇尚未出现在已上传的 slides 中，待后续 Cycle 补充。
+> TODO: story vocabulary hasn't appeared in the uploaded slides yet, to be filled in from a
+> later Cycle.
 
 ## Text / Media（正文或媒体内容：故事、新闻、音频、歌曲、视频均可）
-> TODO：故事正文待补充。
+> TODO: story text to be filled in.
 
 ## Activities
-- 听一听：role play
-- 说一说：movie talk
-- 听一听：拿铅笔 (pencil grab) 听力判断游戏（对/不对，答对+1 答错-1）
-- 作业：复习新词（Quizlet 链接）
+- Listening: role play
+- Speaking: movie talk
+- Listening: "Pencil Grab" (拿铅笔) listening/judgment game (true/false; +1 point for a correct answer, minus 1 for incorrect)
+- Homework: review new vocabulary (Quizlet link)
 
 ## Extensions
-> 待补充（例如：与春节、端午节的比较；中秋节习俗介绍等）
+> To be filled in (e.g., comparison with Chinese New Year and the Dragon Boat Festival, an
+> introduction to Mid-Autumn Festival customs, etc.)
 
 ## Teacher Notes
 > 待补充

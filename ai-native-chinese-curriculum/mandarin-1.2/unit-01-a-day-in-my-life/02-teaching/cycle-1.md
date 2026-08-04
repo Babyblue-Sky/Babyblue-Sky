@@ -24,34 +24,34 @@ Cycle 1 主要是**开学破冰 + 课堂常规建立 + 摸底测试**，还未�
 
 ## 教学内容时间线
 
-### 9/10（Day F）—— Day 1
-- 老师自我介绍、Ms. Liao's Introduction & Self Introduction
-- Classroom Norms：be prepared / respect each other / participate and make efforts
-- 语言学习理念：immerse yourself in the language；课堂参与是语言学习的核心
-- 暖场：你今天高兴吗？为什么？/ 新学期开始了 (紧张 vs 兴奋 的情绪词汇)
-- 破冰活动：介绍老师背景（哥伦比亚大学、安徽、七月四号生日等）
-- 找相同 / This or that 游戏、比较同学间的相似点
+### 9/10 — Day 1
+- Teacher self-introduction: Ms. Liao's introduction & self-introduction
+- Classroom Norms: be prepared / respect each other / participate and make efforts
+- Language-learning philosophy: immerse yourself in the language; class participation is central to language learning
+- Warm-up: Are you happy today? Why? (你今天高兴吗？为什么？) — start of the new semester (emotion vocabulary: nervous vs. excited, 紧张 vs 兴奋)
+- Icebreaker: introducing the teacher's background (Columbia University, Anhui, July 4th birthday, etc.)
+- "Find someone who" / This-or-that game comparing similarities among classmates
 - Exit ticket: "What is one thing you learned in class?"
 
-### 9/12（Day H）
-- 语法点：是 vs 很 的区别
-- 今天的报告句型：他叫___，他是___（nationality）。他会___。他很___。
-- Syllabus 介绍、Classroom language + Super Eight 课堂高频用语
-- 这个/那个（zhè gè / nà gè）句型练习
+### 9/12
+- Grammar point: the difference between 是 (shì, "to be") and 很 (hěn, "very")
+- Today's report sentence pattern: His name is ___, he is ___ (nationality). He can ___. He is very ___. (他叫___，他是___（nationality）。他会___。他很___。)
+- Syllabus introduction, classroom language + Super Eight high-frequency classroom phrases
+- Practice with 这个/那个 (zhè gè / nà gè, "this one" / "that one")
 
-### 9/16（Day B）
-- 复习 Super 8 用语
-- 今天的报告句型：她叫___，她是___。她会___。她很___。
-- **Diagnostic Test** 当天进行（见 [06-assessment/diagnostic-test.md](../06-assessment/diagnostic-test.md)）
-- 游戏：这个 还是 那个
+### 9/16
+- Review of Super 8 classroom phrases
+- Today's report sentence pattern: Her name is ___, she is ___. She can ___. She is very ___. (她叫___，她是___。她会___。她很___。)
+- **Diagnostic Test** given this day (see [06-assessment/diagnostic-test.md](../06-assessment/diagnostic-test.md))
+- Game: 这个 vs 那个 ("this one" or "that one")
 
-### 9/18（Day D）
-- 写一写：你的中文名字
-- 今天的报告：介绍同学（阿根廷等国籍词汇拓展）
-- **笔画 / 书法 (bǐ huà / shū fǎ)** 教学：毛笔书法概念，配 YouTube 教学视频（Culture 模块内容，见 [04-culture/shufa-calligraphy.md](../04-culture/shufa-calligraphy.md)）
-- 说时间入门：我很好 / 我还好 / 我非常好 / 你好吗？（问候句型，为后续时间表达做铺垫）
-- 课堂请求用语：我可以...吗？（去卫生间 / 去看护士 / 喝水）
-- 分享评论句型：我喜欢你的___。我也有___。我很想要知道___。
+### 9/18
+- Writing practice: your Chinese name
+- Today's report: introducing a classmate (expanding nationality vocabulary, e.g. Argentina)
+- **Strokes / calligraphy (笔画 / 书法, bǐ huà / shū fǎ)**: introducing the concept of brush calligraphy, with a YouTube teaching video (Culture module content, see [04-culture/shufa-calligraphy.md](../04-culture/shufa-calligraphy.md))
+- Introduction to telling time: greetings that set up later time expressions — I'm very good / I'm okay / I'm great / How are you? (我很好 / 我还好 / 我非常好 / 你好吗？)
+- Classroom request language: May I ___? (我可以...吗？— go to the bathroom / see the nurse / get water)
+- Sharing/commenting sentence pattern: I like your ___. I also have ___. I'd really like to know ___. (我喜欢你的___。我也有___。我很想要知道___。)
 
 ## 涉及的核心词汇/句型（本 Cycle）
 - Super Eight 课堂高频用语：喜欢、去、没(有)、(想)要、想、是、在、可以
@@ -60,5 +60,5 @@ Cycle 1 主要是**开学破冰 + 课堂常规建立 + 摸底测试**，还未�
 - 笔画、书法（毛笔）
 
 ## 备注
-- 本 Cycle 尚未出现「我的一天」核心作息词汇（起床、刷牙、吃饭等），这些预计在后续 Cycle（或未上传的 Cycle）中出现。
-- Student Survey 问卷推测在本 Cycle 早期（9/10 前后）发放，内容见 [05-resources/student-survey.md](../05-resources/student-survey.md)。
+- This Cycle does not yet include the core daily-routine vocabulary from "A Day in My Life" (起床 get up, 刷牙 brush teeth, 吃饭 eat, etc.) — those are expected to appear in a later Cycle (or one not yet uploaded).
+- The Student Survey was most likely distributed early in this Cycle (around 9/10); see [05-resources/student-survey.md](../05-resources/student-survey.md).

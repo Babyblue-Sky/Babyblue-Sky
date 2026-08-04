@@ -18,8 +18,8 @@ last_updated: 2026-08-03
 [中秋节的故事](./zhongqiujie-de-gushi.md)。
 
 ## Overview
-在 Cycle 1（9/18，Day D）与「说时间」内容穿插教学，介绍汉字笔画 (bǐ huà) 与
-毛笔书法 (máo bǐ / shū fǎ) 的概念。
+Taught interwoven with the "telling time" content, introducing the concept of Chinese
+character strokes (笔画, bǐ huà) and brush calligraphy (毛笔书法, máo bǐ / shū fǎ).
 
 ## Vocabulary
 | 中文 | 拼音 | 意思 |
@@ -29,17 +29,20 @@ last_updated: 2026-08-03
 | 毛笔 | máo bǐ | writing/calligraphy brush |
 
 ## Text / Media
-教学素材为动图与教学视频：
-- 笔画动图：`stroke-gif.gif`、`stroke-gif-2.gif`
-- 毛笔书法教学 YouTube 视频（3 个链接，见原 slides）
+Teaching materials are animated GIFs and a teaching video:
+- Stroke-order GIFs: `stroke-gif.gif`, `stroke-gif-2.gif`
+- Brush-calligraphy teaching YouTube video (3 links, see original slides)
 
-> TODO：具体 YouTube 链接和图片需要从原始资料夹核对补充（当时提取时只记录了文件名/占位符）。
+> TODO: the actual YouTube links and images still need to be checked against the original
+> folder (only filenames/placeholders were recorded during extraction).
 
 ## Activities
-> TODO：待补充——slides 中未明确写出配套的书写练习活动，需要教师补充实际课堂操作方式。
+> TODO: to be filled in — the slides don't explicitly show a matching handwriting practice
+> activity, the teacher needs to fill in the actual in-class approach.
 
 ## Extensions
-> 待补充（例如：书法工具介绍、名家书法欣赏等）
+> To be filled in (e.g., an introduction to calligraphy tools, appreciation of famous
+> calligraphers' work, etc.)
 
 ## Teacher Notes
 > 待补充
