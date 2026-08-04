@@ -61,4 +61,4 @@ Cycle 1 主要是**开学破冰 + 课堂常规建立 + 摸底测试**，还未�
 
 ## 备注
 - This Cycle does not yet include the core daily-routine vocabulary from "A Day in My Life" (起床 get up, 刷牙 brush teeth, 吃饭 eat, etc.) — those are expected to appear in a later Cycle (or one not yet uploaded).
-- The Student Survey was most likely distributed early in this Cycle (around 9/10); see [05-resources/student-survey.md](../05-resources/student-survey.md).
+- The Student Survey was most likely distributed early in this Cycle; see [05-resources/student-survey.md](../05-resources/student-survey.md).

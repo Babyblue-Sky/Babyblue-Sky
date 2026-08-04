@@ -48,5 +48,5 @@ last_updated: 2026-08-03
 想要、有、是、去、可以、在、吃、饿、竹子、钱、中国城、熊猫、问题 (wèn tí)、怎么办 (zěn me bàn)
 
 ## 备注
-- The end of this Cycle (slides 20–24) is the opening lead-in to "The Mid-Autumn Festival Story" — the main story content is presumed to appear in a later Cycle not yet uploaded.
+- The end of this Cycle is the opening lead-in to "The Mid-Autumn Festival Story" — the main story content is presumed to appear in a later Cycle not yet uploaded.
 - "Pencil Grab" is a recurring in-class listening game that may belong in a cross-Unit shared activity library — worth adding to the Department Shared Library in the future.

@@ -503,7 +503,7 @@ footer {{ font-family: var(--font-latin); color: var(--muted); font-size: 0.78re
   <section id="teaching-flow">
     <h2>课堂进度 <span class="en">Teaching Flow</span></h2>
     <p class="section-note">The general order and content of each Cycle — not a day-by-day log of exact
-      dates or activities. Check Schoology for today's schedule and any last-minute changes.</p>
+      dates or activities.</p>
     {cycle_html}
   </section>
 
