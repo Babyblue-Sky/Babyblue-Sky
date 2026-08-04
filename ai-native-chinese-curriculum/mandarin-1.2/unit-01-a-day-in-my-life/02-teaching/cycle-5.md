@@ -5,12 +5,16 @@ date_range: "2024-10-21 to 2024-11-20"
 status: draft
 source_file: "1.2 Unit 1 Cyle 5 Routine.notebook"
 slide_count: 69
+slides_embed_url: null
 last_updated: 2026-08-04
 ---
 
 # Cycle 5: Daily Routine Deep Dive → A Scary Story (10/21 – 11/20)
 
-## 教学内容时间线
+## Overview
+The longest cycle: daily-routine vocabulary, telling time, and re-assessment, transitioning near the end into "A Scary Story" and a comparison with a Chinese student's daily routine (Liu Lulin).
+
+## 逐日细节（内部记录，不渲染到页面，见上面的 Slides 嵌入）
 
 ### 10/21
 **Do-Now:** Grammar review with 竟然 (unexpectedly): "I guessed this year's Spring Festival would be in February, but it's actually in January."

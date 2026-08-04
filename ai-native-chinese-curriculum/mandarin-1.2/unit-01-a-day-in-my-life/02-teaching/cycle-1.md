@@ -5,17 +5,25 @@ date_range: "2024-09-10 to 2024-09-18"
 status: draft
 source_file: "1.2 Unit 1 Cyle 1 New SY .notebook"
 slide_count: 42
+slides_embed_url: null
 last_updated: 2026-08-04
 note: >
-  2026-08-04 教师反馈：Cycle 内容太长，学生不会看，删掉了。现在每节课只保留 Do-Now /
-  Objective / Main Activities 三项，其余（课堂常规模板说明、逐条语法点、涉及的核心词汇
-  汇总、备注）全部去掉——历史决策和踩过的坑仍然记在 08-curriculum-intelligence.md，
-  不是丢失了，只是不放在这个面向学生/家长的文件里重复。
+  2026-08-04 教师反馈第三轮：连 Do-Now/Objective/Main Activities 这个精简版都还是太长。
+  现在页面上只保留一段 Overview 摘要 + 嵌入的真实课堂 Slides（slides_embed_url，教师在
+  Google Slides 里 File > Share > Publish to web 拿到嵌入链接后填进来，渲染器会自动嵌入
+  iframe；没有链接时显示占位提示，不是报错）。之前整理的逐日 Do-Now/Objective/Activities
+  没有删，挪到下面"逐日细节"这节——渲染器只读"## Overview"，这节不会显示在页面上，但
+  内容还在，以后想恢复或者查具体某天教了什么可以直接看。
 ---
 
 # Cycle 1: 开学 / Unit 启动 (9/10 – 9/18)
 
-## 教学内容时间线
+## Overview
+Opening two weeks of the year: icebreakers, classroom norms, and the language-learning
+philosophy, building up to the Diagnostic Test and a first taste of strokes/calligraphy —
+before the core "A Day in My Life" vocabulary begins in Cycle 2.
+
+## 逐日细节（内部记录，不渲染到页面，见上面的 Slides 嵌入）
 
 ### 9/10
 **Do-Now:** Are you happy today, and why? (emotion vocabulary: nervous vs. excited)

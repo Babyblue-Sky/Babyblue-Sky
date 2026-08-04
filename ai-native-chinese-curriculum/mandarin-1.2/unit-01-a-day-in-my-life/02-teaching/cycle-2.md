@@ -5,12 +5,16 @@ date_range: "2024-09-22 to 2024-10-04"
 status: draft
 source_file: "1.2 Unit1 Cyle 2.notebook"
 slide_count: 24
+slides_embed_url: null
 last_updated: 2026-08-04
 ---
 
 # Cycle 2: 熊猫的故事 → 中秋节的故事 (9/22 – 10/4)
 
-## 教学内容时间线
+## Overview
+Transitions from wrapping up daily-routine time-telling vocabulary into "the Panda's Story" — reading, sketching key details, and a Summative Test — then opens "the Mid-Autumn Festival Story" at the very end of the cycle.
+
+## 逐日细节（内部记录，不渲染到页面，见上面的 Slides 嵌入）
 
 ### 9/22
 **Do-Now:** What time is it now? (review of telling time)

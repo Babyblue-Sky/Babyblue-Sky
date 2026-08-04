@@ -5,12 +5,16 @@ date_range: "2024-10-10 to 2024-10-16"
 status: draft
 source_file: "1.2 Unit 1 Cyle 3.notebook"
 slide_count: 24
+slides_embed_url: null
 last_updated: 2026-08-04
 ---
 
 # Cycle 3: 中秋节的故事 (10/10 – 10/16)
 
-## 教学内容时间线
+## Overview
+A full cycle on the Mid-Autumn Festival Story: reading the Cold Character Reading text, retelling it with a classmate, and a short reading-comprehension quiz.
+
+## 逐日细节（内部记录，不渲染到页面，见上面的 Slides 嵌入）
 
 ### 10/10
 **Do-Now:** Speaking warm-up on [the Panda's Story](../03-content/xiongmao-de-gushi.md): 1. baby panda 2. he is hungry 3. he stole Ms. Liao's money

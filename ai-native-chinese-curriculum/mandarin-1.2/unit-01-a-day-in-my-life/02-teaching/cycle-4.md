@@ -5,12 +5,16 @@ date_range: "2024-10-21 to 2024-10-29"
 status: draft
 source_file: "1.2 Unit 1 Cyle 4.notebook"
 slide_count: 45
+slides_embed_url: null
 last_updated: 2026-08-04
 ---
 
 # Cycle 4: 我的一天太累了 (10/21 – 10/29)
 
-## 教学内容时间线
+## Overview
+Introduces "My Day Is So Tiring," a first-person letter about an overwhelming month at school, through repeated reading, listening dictation, and Quizlet review.
+
+## 逐日细节（内部记录，不渲染到页面，见上面的 Slides 嵌入）
 
 ### 10/21
 **Do-Now:** Reading warm-up: 吃早饭 (eat breakfast) / 睡觉 (sleep) / 上学 (go to school)

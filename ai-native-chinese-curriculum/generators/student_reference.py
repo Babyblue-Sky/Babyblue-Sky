@@ -286,31 +286,35 @@ def content_card(fm, body, stem, type_map, type_key, extra_sections=()):
     </article>"""
 
 
-_DAY_BLOCK = re.compile(r"(?m)^### (.+?)\n(.*?)(?=^### |\Z)", re.S)
+def slides_embed_html(embed_url):
+    """A Cycle's real classroom deck, embedded — the deck itself is now the
+    detail; this page only needs to orient a visitor, not restate it. Needs
+    the deck's Google Slides "Publish to web" embed URL (Slides docstring:
+    File > Share > Publish to web), not a plain sharing link — those don't
+    embed. No URL yet -> a quiet placeholder, not a missing-content warning,
+    since not every Cycle will have one immediately."""
+    if not embed_url:
+        return ('<div class="slides-placeholder">Slides preview coming soon '
+                '· 课堂 Slides 预览待补</div>')
+    return (f'<div class="slides-embed"><iframe src="{esc(embed_url)}" '
+            f'loading="lazy" allowfullscreen></iframe></div>')
 
 
 def cycle_card(fm, body):
-    """Renders a Cycle as its general flow and order, not a day-by-day log.
-    Per teacher feedback (2026-08-03 round 2): keeping exact per-day dates
-    and activities in sync with her live teaching isn't realistic, and that
-    granularity belongs to Schoology anyway. So this deliberately drops the
-    source data's '### 9/10（Day F）' date/day headers — it only keeps their
-    content, concatenated in original order — rather than parsing them into
-    a dated timeline. Each day's original bullets stay lightly separated
-    (a thin rule) purely for scannability, with no date or session number
-    attached, so nothing here goes stale as her day-to-day teaching shifts."""
-    timeline = body_section(body, "教学内容时间线")
-    day_bodies = [b for _, b in _DAY_BLOCK.findall(timeline)]
-    flow_html = "".join(f'<div class="flow-block">{render_blocks(b)}</div>' for b in day_bodies)
-    vocab_note = body_section(body, "涉及的核心词汇")
-    notes = body_section(body, "备注")
+    """One short overview paragraph plus the real classroom Slides embedded
+    below it, not a day-by-day log. Per teacher feedback (2026-08-04, third
+    round): even the trimmed Do-Now/Objective/Main-Activities-per-lesson
+    format still read as too long, and since the actual deck is now
+    embedded directly (see slides_embed_html), restating its contents in
+    prose is redundant — the summary's only job is to orient a visitor
+    before they look at the deck."""
+    overview = body_section(body, "Overview")
     return f"""
     <article class="card">
       <div class="bar"><span class="zh">{esc(fm.get('cycle'))}</span></div>
       <div class="card-body">
-        <div class="flow">{flow_html}</div>
-        {f"<h4>本 Cycle 涉及的核心词汇/句型</h4>{render_blocks(vocab_note)}" if vocab_note.strip() else ""}
-        {f"<h4>备注 Notes</h4>{render_blocks(notes)}" if notes.strip() else ""}
+        {render_blocks(overview)}
+        {slides_embed_html(fm.get('slides_embed_url'))}
       </div>
     </article>"""
 
@@ -347,7 +351,20 @@ def assessment_card(fm, body, stem):
     </article>"""
 
 
-def render(unit_dir, course_title="Mandarin 1.2"):
+# Per-unit accent rotation (Blueprint Layer 3 styling concern, not Content
+# Layer data): analogous Morandi tones so units read as one family, not a
+# rainbow. Each pair is (fill, ink-on-fill) — most fills are light enough for
+# dark ink text; the two darker ones (陈酒红/暮光绿) get cream text instead.
+UNIT_HERO_COLORS = [
+    ("#E38C7A", "#2E2924"),  # 伯爵橙
+    ("#A77979", "#F8F1E0"),  # 陈酒红
+    ("#9C9E89", "#F8F1E0"),  # 暮光绿
+    ("#99A4BC", "#2E2924"),  # 梦幻蓝
+    ("#B3B3A3", "#2E2924"),  # 青城灰
+]
+
+
+def render(unit_dir, course_title="Mandarin 1.2", hero=UNIT_HERO_COLORS[0]):
     overview_fm, overview_body = load_frontmatter(f"{unit_dir}/01-overview.md")
     objectives = bullet_list(body_section(overview_body, "Learning Objectives"))
     objectives_en = bullet_list(body_section(overview_body, "Learning Objectives (English)"))
@@ -386,6 +403,8 @@ def render(unit_dir, course_title="Mandarin 1.2"):
     today = datetime.date.today().isoformat()
 
     return TEMPLATE.format(
+        bar=hero[0],
+        bar_ink=hero[1],
         course=esc(course_title),
         unit_label=esc(overview_fm.get("unit")),
         big_idea_zh=esc((overview_fm.get("big_idea") or "").split("(")[0].strip()),
@@ -403,30 +422,23 @@ def render(unit_dir, course_title="Mandarin 1.2"):
 TEMPLATE = """<title>{course} · {unit_label} Curriculum Archive 课程归档</title>
 <style>
 :root {{
-  --bg: #F3EFE3; --surface: #FFFFFF; --ink: #221F1A; --muted: #6E6656; --line: #221F1A;
-  --bar: #8A5A3B; --bar-ink: #FBF6EA;
-  --c-plum: #6A4E9E; --c-jade: #2F7A56; --c-gold: #B4791C; --c-vermilion: #B0402F; --c-teal: #1E7A88; --c-muted: #8A8272;
+  /* Morandi palette (teacher-specified) — bg/surface/ink/muted/line shift between
+     light/dark below; --bar (per-unit accent) and the pill fills stay the same
+     pastel Morandi hex in both themes on purpose, since a light swatch with dark
+     ink text reads fine as a self-contained chip regardless of the page around it. */
+  --bg: #F8F1E0; --surface: #FCF9F3; --ink: #2E2924; --muted: #8C8272; --line: #2E2924;
+  --bar: {bar}; --bar-ink: {bar_ink};
+  --c-plum: #DCCFCB; --c-jade: #BCCBB2; --c-gold: #F1E1D0; --c-vermilion: #E2CECE; --c-teal: #BCC2D4; --c-muted: #D8D6D9;
+  --pill-ink: #2E2924;
   --font-latin: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --font-kai: "Kaiti SC", "STKaiti", "KaiTi", "AR PL KaitiM GB", "BiauKai", serif;
   --font-mono: ui-monospace, "SFMono-Regular", "Liberation Mono", monospace;
 }}
 @media (prefers-color-scheme: dark) {{
-  :root {{
-    --bg: #171913; --surface: #1F2219; --ink: #EDE7DC; --muted: #A9A28F; --line: #E9E3D4;
-    --bar: #C08A57; --bar-ink: #2A1B10;
-    --c-plum: #B7A0EC; --c-jade: #7FCBA6; --c-gold: #E5B75E; --c-vermilion: #E38271; --c-teal: #6FC7D6; --c-muted: #B5AC98;
-  }}
+  :root {{ --bg: #201B17; --surface: #2B2521; --ink: #ECE4D8; --muted: #C7BCA8; --line: #ECE4D8; }}
 }}
-:root[data-theme="dark"] {{
-  --bg: #171913; --surface: #1F2219; --ink: #EDE7DC; --muted: #A9A28F; --line: #E9E3D4;
-  --bar: #C08A57; --bar-ink: #2A1B10;
-  --c-plum: #B7A0EC; --c-jade: #7FCBA6; --c-gold: #E5B75E; --c-vermilion: #E38271; --c-teal: #6FC7D6; --c-muted: #B5AC98;
-}}
-:root[data-theme="light"] {{
-  --bg: #F3EFE3; --surface: #FFFFFF; --ink: #221F1A; --muted: #6E6656; --line: #221F1A;
-  --bar: #8A5A3B; --bar-ink: #FBF6EA;
-  --c-plum: #6A4E9E; --c-jade: #2F7A56; --c-gold: #B4791C; --c-vermilion: #B0402F; --c-teal: #1E7A88; --c-muted: #8A8272;
-}}
+:root[data-theme="dark"] {{ --bg: #201B17; --surface: #2B2521; --ink: #ECE4D8; --muted: #C7BCA8; --line: #ECE4D8; }}
+:root[data-theme="light"] {{ --bg: #F8F1E0; --surface: #FCF9F3; --ink: #2E2924; --muted: #8C8272; --line: #2E2924; }}
 * {{ box-sizing: border-box; }}
 body {{ margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-latin), var(--font-kai); line-height: 1.6; }}
 .page {{ max-width: 860px; margin: 0 auto; padding: 2.4rem 1.4rem 5rem; }}
@@ -467,9 +479,9 @@ section > h2 .en {{ font-family: var(--font-latin); font-weight: 700; font-size:
 .card-body h4:first-of-type {{ margin-top: 0.2rem; }}
 .badges {{ display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.3rem; }}
 .pinyin {{ font-family: var(--font-latin); color: var(--muted); font-size: 0.88rem; margin: 0.2rem 0 0.6rem; }}
-.pill {{ font-family: var(--font-mono), var(--font-kai); font-size: 0.68rem; letter-spacing: 0.02em; border-radius: 4px; padding: 0.15rem 0.5rem; white-space: nowrap; border: 1.5px solid currentColor; }}
-.pill-plum {{ color: var(--c-plum); }} .pill-jade {{ color: var(--c-jade); }} .pill-gold {{ color: var(--c-gold); }}
-.pill-vermilion {{ color: var(--c-vermilion); }} .pill-teal {{ color: var(--c-teal); }} .pill-muted {{ color: var(--c-muted); }}
+.pill {{ font-family: var(--font-mono), var(--font-kai); font-size: 0.68rem; letter-spacing: 0.02em; border-radius: 4px; padding: 0.2rem 0.55rem; white-space: nowrap; color: var(--pill-ink); font-weight: 700; }}
+.pill-plum {{ background: var(--c-plum); }} .pill-jade {{ background: var(--c-jade); }} .pill-gold {{ background: var(--c-gold); }}
+.pill-vermilion {{ background: var(--c-vermilion); }} .pill-teal {{ background: var(--c-teal); }} .pill-muted {{ background: var(--c-muted); }}
 .pending {{ font-family: var(--font-latin); color: var(--muted); font-style: italic; font-size: 0.9rem; margin: 0; }}
 .md-quote {{ font-family: var(--font-latin); color: var(--muted); font-size: 0.92rem; margin: 0; }}
 ul.md-list {{ margin: 0; padding-left: 1.2rem; font-size: 0.95rem; }}
@@ -480,10 +492,12 @@ table th, table td {{ text-align: left; padding: 0.35rem 0.5rem; border-bottom: 
 table th {{ color: var(--muted); font-weight: 700; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; font-family: var(--font-latin); }}
 table td.zh {{ font-weight: 700; }}
 table td.src {{ font-family: var(--font-latin); color: var(--muted); font-size: 0.82rem; }}
-.flow-block {{ padding: 0.6rem 0; }}
-.flow-block:not(:first-child) {{ border-top: 1px solid var(--bg); }}
-.flow-block:first-child {{ padding-top: 0; }}
-.flow-block:last-child {{ padding-bottom: 0; }}
+.slides-embed {{ position: relative; width: 100%; padding-top: 56.25%; margin-top: 0.9rem; border-radius: 8px; overflow: hidden; border: 2px solid var(--line); background: var(--surface); }}
+.slides-embed iframe {{ position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }}
+.slides-placeholder {{
+  margin-top: 0.9rem; padding: 1.6rem 1rem; border: 1.5px dashed var(--muted); border-radius: 8px;
+  text-align: center; color: var(--muted); font-family: var(--font-latin); font-size: 0.85rem;
+}}
 ol.objectives {{ margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }}
 ol.objectives li {{ font-size: 0.98rem; }}
 ol.objectives .en {{ display: block; font-family: var(--font-latin); color: var(--muted); font-size: 0.8em; margin-top: 0.1rem; }}

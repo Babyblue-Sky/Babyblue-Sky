@@ -5,12 +5,16 @@ date_range: "2024-12-02 to 2024-12-12"
 status: draft
 source_file: "1.2 Unit 1 Cyle 7.notebook"
 slide_count: 23
+slides_embed_url: null
 last_updated: 2026-08-04
 ---
 
 # Cycle 7: Final Project Prep (12/2 – 12/12)
 
-## 教学内容时间线
+## Overview
+Final Project prep: drafting, feedback, and typing the "Healthy or Unhealthy?" daily-routine e-book, using Ms. Liao's own model text as a reading example.
+
+## 逐日细节（内部记录，不渲染到页面，见上面的 Slides 嵌入）
 
 ### 12/2
 **Do-Now:** What did you do for Thanksgiving? Ate.../Went.../Watched.../Bought...

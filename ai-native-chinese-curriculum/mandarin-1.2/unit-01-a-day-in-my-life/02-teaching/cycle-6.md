@@ -5,6 +5,7 @@ date_range: "2024-11-10 to 2024-11-17"
 status: draft
 source_file: "1.2 Unit 1 Cyle 6.notebook"
 slide_count: 18
+slides_embed_url: null
 last_updated: 2026-08-04
 note: >
   这个 Cycle 教的"可怕的故事/女人的故事"（一个鬼故事）目前没有对应的 03-content 故事文件——
@@ -15,7 +16,10 @@ note: >
 
 # Cycle 6: 一个可怕的故事 (11/10 – 11/17)
 
-## 教学内容时间线
+## Overview
+A ghost story ("the woman's story") for the Halloween season — watching a short video, retelling, drawing, and a quiz.
+
+## 逐日细节（内部记录，不渲染到页面，见上面的 Slides 嵌入）
 
 ### 11/10
 **Do-Now:** When is Halloween? What's your favorite candy?

@@ -20,7 +20,12 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(__file__))
-from student_reference import render  # noqa: E402
+from student_reference import render, UNIT_HERO_COLORS  # noqa: E402
+
+# Landing-page identity color, deliberately distinct from any single Unit's
+# rotation slot (see UNIT_HERO_COLORS in student_reference.py) so the index
+# reads as "the collection," not "Unit 1 wearing a hat."
+SITE_HERO = ("#A77979", "#F8F1E0")  # 陈酒红
 
 UNITS = [
     {
@@ -54,12 +59,16 @@ def wrap_fragment(fragment, extra_head=""):
 LANDING_PAGE = """<title>Tian Liao · Mandarin Curriculum Portfolio</title>
 <style>
   :root {{
-    --bg: #F3EFE3; --surface: #FFFFFF; --ink: #221F1A; --muted: #6E6656;
-    --bar: #8A5A3B; --bar-ink: #FBF6EA; --line: #221F1A;
+    /* Same Morandi base tokens as the Unit pages (student_reference.py) —
+       --bar here is the site's own identity color, not a Unit's. */
+    --bg: #F8F1E0; --surface: #FCF9F3; --ink: #2E2924; --muted: #8C8272; --line: #2E2924;
+    --bar: {site_bar}; --bar-ink: {site_bar_ink};
   }}
   @media (prefers-color-scheme: dark) {{
-    :root {{ --bg: #171913; --surface: #1F2219; --ink: #EDE7DC; --muted: #A9A28F; --bar: #C08A57; --bar-ink: #2A1B10; --line: #E9E3D4; }}
+    :root {{ --bg: #201B17; --surface: #2B2521; --ink: #ECE4D8; --muted: #C7BCA8; --line: #ECE4D8; }}
   }}
+  :root[data-theme="dark"] {{ --bg: #201B17; --surface: #2B2521; --ink: #ECE4D8; --muted: #C7BCA8; --line: #ECE4D8; }}
+  :root[data-theme="light"] {{ --bg: #F8F1E0; --surface: #FCF9F3; --ink: #2E2924; --muted: #8C8272; --line: #2E2924; }}
   * {{ box-sizing: border-box; }}
   body {{
     margin: 0; background: var(--bg); color: var(--ink);
@@ -71,12 +80,15 @@ LANDING_PAGE = """<title>Tian Liao · Mandarin Curriculum Portfolio</title>
   .eyebrow {{ font-family: ui-monospace, monospace; text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.72rem; opacity: 0.9; }}
   h1 {{ margin: 0.5rem 0 0.3rem; font-size: clamp(1.9rem, 5vw, 2.5rem); font-weight: 400; }}
   .hero p {{ margin: 0; font-size: 1rem; max-width: 56ch; opacity: 0.95; }}
-  .card {{ background: var(--surface); border: 2px solid var(--line); border-radius: 10px; padding: 1.3rem 1.5rem; margin-bottom: 1.1rem; }}
+  .card {{
+    background: var(--surface); border: 2px solid var(--line); border-radius: 10px;
+    padding: 1.3rem 1.5rem; margin-bottom: 1.1rem; border-left-width: 8px; border-left-color: var(--unit-accent, var(--line));
+  }}
   .card h2 {{ margin: 0 0 0.4rem; font-size: 1.1rem; }}
   .card p {{ margin: 0 0 0.8rem; color: var(--muted); font-size: 0.95rem; }}
   .card a.btn {{
-    display: inline-block; font-weight: 700; text-decoration: none; color: var(--bar-ink);
-    background: var(--bar); border-radius: 999px; padding: 0.45rem 1.1rem; font-size: 0.9rem;
+    display: inline-block; font-weight: 700; text-decoration: none; color: var(--unit-accent-ink, var(--bar-ink));
+    background: var(--unit-accent, var(--bar)); border-radius: 999px; padding: 0.45rem 1.1rem; font-size: 0.9rem;
   }}
   footer {{ color: var(--muted); font-size: 0.82rem; margin-top: 2.5rem; }}
 </style>
@@ -97,7 +109,7 @@ LANDING_PAGE = """<title>Tian Liao · Mandarin Curriculum Portfolio</title>
 </div>
 """
 
-UNIT_CARD = """  <div class="card">
+UNIT_CARD = """  <div class="card" style="--unit-accent: {accent}; --unit-accent-ink: {accent_ink};">
     <h2>{title}</h2>
     <p>Vocabulary, story texts, culture content, the real Cycle-by-cycle teaching flow, and
       assessment info for this Unit.</p>
@@ -109,16 +121,21 @@ UNIT_CARD = """  <div class="card">
 def build(out_dir):
     os.makedirs(out_dir, exist_ok=True)
     unit_cards = []
-    for u in UNITS:
-        fragment = render(u["unit_dir"])
+    for i, u in enumerate(UNITS):
+        hero = UNIT_HERO_COLORS[i % len(UNIT_HERO_COLORS)]
+        fragment = render(u["unit_dir"], hero=hero)
         html = wrap_fragment(fragment)
         out_path = os.path.join(out_dir, f"{u['slug']}.html")
         with open(out_path, "w", encoding="utf-8") as f:
             f.write(html)
         print(f"wrote {out_path}")
-        unit_cards.append(UNIT_CARD.format(title=u["title"], href=f"{u['slug']}.html"))
+        unit_cards.append(UNIT_CARD.format(
+            title=u["title"], href=f"{u['slug']}.html", accent=hero[0], accent_ink=hero[1],
+        ))
 
-    index_html = wrap_fragment(LANDING_PAGE.format(unit_cards="\n".join(unit_cards)))
+    index_html = wrap_fragment(LANDING_PAGE.format(
+        unit_cards="\n".join(unit_cards), site_bar=SITE_HERO[0], site_bar_ink=SITE_HERO[1],
+    ))
     index_path = os.path.join(out_dir, "index.html")
     with open(index_path, "w", encoding="utf-8") as f:
         f.write(index_html)
