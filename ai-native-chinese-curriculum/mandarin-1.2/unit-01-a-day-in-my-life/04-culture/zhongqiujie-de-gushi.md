@@ -19,11 +19,9 @@ last_updated: 2026-08-04
 本 Unit 的 Culture 模块下还有另一个内容：[书法 (Calligraphy)](./shufa-calligraphy.md)。
 
 ## Overview
-Lead-in begins toward the end of Cycle 2. The full "Cold Character Reading" version of the
-story (a simplified retelling using vocabulary students already know) has now been uploaded —
-see Text / Media below. An illustrated picture-book version (image-only, no embedded text) is
-also available as supplementary classroom material but isn't reproduced here since it carries
-no text to extract.
+A simplified "Cold Character Reading" retelling of the Mid-Autumn Festival legend, using
+vocabulary students already know (see Text / Media below). An illustrated picture-book version
+is also used in class as supplementary material.
 
 Warm-up cultural questions:
 - Do you know what day the Mid-Autumn Festival falls on?

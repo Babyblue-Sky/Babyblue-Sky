@@ -22,6 +22,7 @@ last_updated: 2026-08-04
 Resources/Examples 完整渲染出来，这类文件放真实内容前要教师明确同意（2026-08-04 教师已确认
 Final Project 的内容可以直接引用）。
 
-目前共六份文件：`diagnostic-test.md`、`summative-test.md`（熊猫的故事）、
-`wo-tai-lei-le-quiz.md`（我太累了）、`listening-writing-assessment.md`（听一听和写一写）、
-`daily-routine-final-project.md`（Project 类，内容对学生/家长可见）。
+目前共五份文件：`diagnostic-test.md`、`summative-test.md`（熊猫的故事）、
+`wo-tai-lei-le-quiz.md`（我太累了）、`daily-routine-final-project.md`（Project 类，
+内容对学生/家长可见）。（`listening-writing-assessment.md` 曾经存在过，2026-08-04
+教师要求删除，不要重新创建。）
