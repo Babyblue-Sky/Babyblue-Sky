@@ -453,7 +453,7 @@ table td.src {{ font-family: var(--font-latin); color: var(--muted); font-size: 
 .flow-block:last-child {{ padding-bottom: 0; }}
 ol.objectives {{ margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }}
 ol.objectives li {{ font-size: 0.98rem; }}
-ol.objectives .en {{ display: block; font-family: var(--font-latin); color: var(--bar-ink); opacity: 0.85; font-size: 0.8em; margin-top: 0.1rem; }}
+ol.objectives .en {{ display: block; font-family: var(--font-latin); color: var(--muted); font-size: 0.8em; margin-top: 0.1rem; }}
 ul.grammar {{ margin: 0; padding-left: 1.2rem; font-family: var(--font-latin); font-size: 0.92rem; }}
 footer {{ font-family: var(--font-latin); color: var(--muted); font-size: 0.78rem; text-align: center; margin-top: 2.5rem; }}
 [data-search].is-hidden {{ display: none !important; }}
