@@ -16,18 +16,18 @@ last_updated: 2026-08-03
 ## 教学内容时间线
 
 ### 9/22
-- Warm-up: What time is it now — ___:___ ? (review of telling time) (今天的钟是___点___分)
-- New vocabulary introduced: 报告 (bào gào, "report"), 钟 (zhōng, "clock"), clock
+- Warm-up: what time is it now? (review of telling time)
+- New vocabulary introduced: 报告 (bào gào, "report"), 钟 (zhōng, "clock")
 
 ### 9/26
 - Homework review, reading practice: get up, eat, sleep (起床、吃饭、睡觉 — daily-routine core verbs appear for the first time)
-- Today's report sentence pattern: In the morning they (time) (activity). (他们早上（time）（activity）。)
+- Today's report sentence pattern: describing someone's morning routine with a time and an activity
 
 ### 9/30 — officially starting "The Panda's Story"
 - Reading-comprehension warm-up: The panda wants to eat bamboo, but the bamboo is in Chinatown, New York.
 - **Vocabulary from "The Panda's Story"**: 想要 want, 有 have, 是 to be, 去 to go, 可以 can/may, 在 at/to be located, 吃 (chī) eat, 饿 (è) hungry, 竹子 (zhú zi) bamboo, 钱 (qián) money, 中国城 (zhōng guó chéng) Chinatown, 熊猫 (xióng māo) panda
 - Teaching activity: sketch key details of the story; write key words in Pinyin
-- Today's report sentence pattern: In the evening he (time) (activity). (他晚上（time）（activity）。)
+- Today's report sentence pattern: describing someone's evening routine with a time and an activity
 
 ### 10/3 — Summative Test
 - See [06-assessment/summative-test.md](../06-assessment/summative-test.md)

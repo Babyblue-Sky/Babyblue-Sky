@@ -29,12 +29,9 @@ character strokes (笔画, bǐ huà) and brush calligraphy (毛笔书法, máo b
 | 毛笔 | máo bǐ | writing/calligraphy brush |
 
 ## Text / Media
-Teaching materials are animated GIFs and a teaching video:
-- Stroke-order GIFs: `stroke-gif.gif`, `stroke-gif-2.gif`
-- Brush-calligraphy teaching YouTube video (3 links, see original slides)
-
-> TODO: the actual YouTube links and images still need to be checked against the original
-> folder (only filenames/placeholders were recorded during extraction).
+> TODO: video links to be added — the teacher's original stroke-order GIFs and brush-calligraphy
+> YouTube video need to be re-uploaded or re-linked here as working, clickable links (students
+> can't reach the teacher's own slides to find these).
 
 ## Activities
 > TODO: to be filled in — the slides don't explicitly show a matching handwriting practice

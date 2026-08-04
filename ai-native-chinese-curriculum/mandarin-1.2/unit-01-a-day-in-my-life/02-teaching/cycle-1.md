@@ -28,30 +28,30 @@ Cycle 1 主要是**开学破冰 + 课堂常规建立 + 摸底测试**，还未�
 - Teacher self-introduction: Ms. Liao's introduction & self-introduction
 - Classroom Norms: be prepared / respect each other / participate and make efforts
 - Language-learning philosophy: immerse yourself in the language; class participation is central to language learning
-- Warm-up: Are you happy today? Why? (你今天高兴吗？为什么？) — start of the new semester (emotion vocabulary: nervous vs. excited, 紧张 vs 兴奋)
+- Warm-up: are you happy today, and why? — start of the new semester (emotion vocabulary: nervous vs. excited)
 - Icebreaker: introducing the teacher's background (Columbia University, Anhui, July 4th birthday, etc.)
 - "Find someone who" / This-or-that game comparing similarities among classmates
 - Exit ticket: "What is one thing you learned in class?"
 
 ### 9/12
-- Grammar point: the difference between 是 (shì, "to be") and 很 (hěn, "very")
-- Today's report sentence pattern: His name is ___, he is ___ (nationality). He can ___. He is very ___. (他叫___，他是___（nationality）。他会___。他很___。)
+- Grammar point: the difference between 是 (shì) and 很 (hěn)
+- Today's report sentence pattern: introducing someone — name, nationality, one ability, one personality trait
 - Syllabus introduction, classroom language + Super Eight high-frequency classroom phrases
-- Practice with 这个/那个 (zhè gè / nà gè, "this one" / "that one")
+- Practice with "this one" vs. "that one" (这个 / 那个)
 
 ### 9/16
 - Review of Super 8 classroom phrases
-- Today's report sentence pattern: Her name is ___, she is ___. She can ___. She is very ___. (她叫___，她是___。她会___。她很___。)
+- Today's report sentence pattern: same pattern as before, introducing a classmate
 - **Diagnostic Test** given this day (see [06-assessment/diagnostic-test.md](../06-assessment/diagnostic-test.md))
-- Game: 这个 vs 那个 ("this one" or "that one")
+- Game: "this one" vs. "that one"
 
 ### 9/18
 - Writing practice: your Chinese name
 - Today's report: introducing a classmate (expanding nationality vocabulary, e.g. Argentina)
-- **Strokes / calligraphy (笔画 / 书法, bǐ huà / shū fǎ)**: introducing the concept of brush calligraphy, with a YouTube teaching video (Culture module content, see [04-culture/shufa-calligraphy.md](../04-culture/shufa-calligraphy.md))
-- Introduction to telling time: greetings that set up later time expressions — I'm very good / I'm okay / I'm great / How are you? (我很好 / 我还好 / 我非常好 / 你好吗？)
-- Classroom request language: May I ___? (我可以...吗？— go to the bathroom / see the nurse / get water)
-- Sharing/commenting sentence pattern: I like your ___. I also have ___. I'd really like to know ___. (我喜欢你的___。我也有___。我很想要知道___。)
+- **Strokes / calligraphy (笔画 / 书法)**: introducing the concept of brush calligraphy, with a YouTube teaching video (Culture module content, see [04-culture/shufa-calligraphy.md](../04-culture/shufa-calligraphy.md))
+- Introduction to telling time: a set of greeting expressions (I'm very good / I'm okay / I'm great / How are you?) that sets up later time expressions
+- Classroom request language: asking permission for something (e.g. to go to the bathroom, see the nurse, get water)
+- Sharing/commenting sentence pattern: saying you like something of a classmate's, that you have one too, or that you'd like to know more about it
 
 ## 涉及的核心词汇/句型（本 Cycle）
 - Super Eight 课堂高频用语：喜欢、去、没(有)、(想)要、想、是、在、可以
