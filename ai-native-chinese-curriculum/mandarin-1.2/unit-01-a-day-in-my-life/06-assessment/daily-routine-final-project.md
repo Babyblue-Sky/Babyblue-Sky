@@ -4,16 +4,16 @@ title: "健康还是不健康？(Healthy or Unhealthy?) — Daily Routine Final 
 unit: Unit 1
 status: canonical
 standards:
-  - MS.WL.3 (Presentational Communication)
-  - HAL.3 (Ownership and Independence)
-  - HAL.4 (Work Habits)
-  - HAL.5 (Perseverance)
+  - Presentational Communication
 grading_scale: "EE (Exceeding) / ME (Meeting) / AE (Approaching) / BE (Below)"
 source: "2026-08-04 uploaded: Final_Project_Daily_Routine.docx (instructions/vocab/rubric),
   Final_Draft_graded.docx (blank rubric/grading grid, teacher confirmed OK to reference directly
   since this is Project-type — see 08-curriculum-intelligence.md on quiz vs. project content
-  exposure)"
-last_updated: 2026-08-04
+  exposure). 2026-08-05: dropped the three HAL.N (Habits of Learning) standards and the
+  MS.WL.3 code — HAL is a school-specific rubric axis unrelated to language proficiency, and
+  the WL numbering won't apply once the teacher is elsewhere; also dropped the specific due
+  dates from Instructions (no calendar dates on the page)."
+last_updated: 2026-08-05
 ---
 
 # 健康还是不健康？(Healthy or Unhealthy?) — Daily Routine Final Project
@@ -37,8 +37,6 @@ Process:
 5. Make sure the finished book has: a title, your name as author, all sentences from your final draft, and a picture on every page (or every other page).
 6. Record yourself reading every page aloud.
 7. Publish.
-
-Due dates: final (handwritten) draft due Dec. 8 in class; finished E-book due and presented in class Dec. 18.
 
 ## Vocabulary
 | 中文 | 拼音 | 意思 |
@@ -70,10 +68,7 @@ Due dates: final (handwritten) draft due Dec. 8 in class; finished E-book due an
 
 ## Rubric
 Scored EE (Exceeding) / ME (Meeting) / AE (Approaching) / BE (Below) on:
-- **MS.WL.3** (Presentational Communication) — presents information/ideas on a variety of topics, adapted to the audience, to describe/inform/narrate/explain/persuade
-- **HAL.3** (Ownership and Independence) — self-management skills
-- **HAL.4** (Work Habits) — organizational self-management skills
-- **HAL.5** (Perseverance) — affective self-management skills
+- **Presentational Communication** — presents information/ideas on a variety of topics, adapted to the audience, to describe/inform/narrate/explain/persuade
 
 ## Resources
 - E-book builder: bookcreator.com (sign in with school Google account, join class library via class code)

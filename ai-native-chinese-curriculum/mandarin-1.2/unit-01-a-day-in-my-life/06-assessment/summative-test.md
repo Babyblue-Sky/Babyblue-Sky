@@ -2,12 +2,12 @@
 assessment_type: Summative
 title: "熊猫的故事 Summative Test"
 unit: Unit 1
-administered: "10/3 (星期五), Cycle 2"
 status: canonical
 source: "Unit 1 Cycle 2 slide 19 + 2026-08-04 uploaded: 熊猫的故事 考试.docx / 熊猫的故事 复习.docx
   (quiz + matching review sheet, same structure). 2026-08-05: page is a personal portfolio,
   not student-facing, so assessment_card() now renders this full content directly instead of
-  pointing to Schoology — see generators/student_reference.py."
+  pointing to Schoology — see generators/student_reference.py. `administered` date dropped
+  same day (teacher: no calendar dates on the page)."
 last_updated: 2026-08-05
 ---
 

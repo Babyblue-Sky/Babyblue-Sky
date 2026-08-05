@@ -2,23 +2,26 @@
 assessment_type: Diagnostic
 title: "Mandarin 1.2 Diagnostic Test"
 unit: Unit 1
-administered: "Cycle 1, 9/16 (Day B)"
 status: canonical
 standards:
-  - MS.WL.1 (Interpretive Communication)
-  - MS.WL.2 (Interpersonal Communication)
-  - MS.WL.3 (Presentational Communication)
+  - Interpretive Communication
+  - Interpersonal Communication
+  - Presentational Communication
 grading_scale: "EE (Exceeding) / ME (Meeting) / AE (Approaching) / BE (Below)"
-source: "1.2 Diagnostic Test 21-22.docx"
-last_updated: 2026-08-03
+source: "1.2 Diagnostic Test 21-22.docx. administered date and MS.WL.N /
+  school-specific standard codes intentionally dropped 2026-08-05 (teacher:
+  no calendar dates on the page, and these codes are this school's own
+  numbering — won't apply once she's elsewhere; the WL Interpretive/
+  Interpersonal/Presentational mode names are the portable part)."
+last_updated: 2026-08-05
 ---
 
 # Mandarin 1.2 Diagnostic Test
 
 评分对应的三条 Course Standard（每条按 EE/ME/AE/BE 四级评定）：
-- **MS.WL.1**（Interpretive）Learners understand, interpret, and analyze what is heard, read, received or viewed on a variety of topics, using a range of diverse texts, including authentic resources.
-- **MS.WL.2**（Interpersonal）Learners interact and negotiate meaning in spontaneous, spoken, visual, or written communication to exchange information and express feelings, preferences, and opinions.
-- **MS.WL.3**（Presentational）Learners present information and ideas on a variety of topics adapted to various audiences of listeners, readers, or viewers to describe, inform, narrate, explain, or persuade.
+- **Interpretive Communication** — Learners understand, interpret, and analyze what is heard, read, received or viewed on a variety of topics, using a range of diverse texts, including authentic resources.
+- **Interpersonal Communication** — Learners interact and negotiate meaning in spontaneous, spoken, visual, or written communication to exchange information and express feelings, preferences, and opinions.
+- **Presentational Communication** — Learners present information and ideas on a variety of topics adapted to various audiences of listeners, readers, or viewers to describe, inform, narrate, explain, or persuade.
 
 ## Listening
 Please listen to Ms. Liao carefully and mark the Pinyin for each character.

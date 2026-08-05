@@ -406,8 +406,9 @@ Diagnostic/Quiz/Summative 类"只显示 See Schoology，不渲染 Markdown 正�
 
 **落地**：
 - `assessment_card()`（`generators/student_reference.py`）非 Project 分支改成调用新的
-  `render_markdown_body(body)`，同时把 `administered` 日期也显示出来（原来这两者都被
-  刻意隐藏，理由是"不给学生看"，现在理由不存在了）。Project 类分支（Final Project）没变。
+  `render_markdown_body(body)`，把正文内容显示出来。Project 类分支（Final Project）没变。
+  （这条最初还顺手显示了 `administered` 日期，同一天被教师叫停撤销了，见下一条记录，
+  不要重新加回去。）
 - 新增 `render_markdown_body()`：这些测验文件的小节标题各不相同（Listening/Reading/
   Writing/Speaking，或 词/句子/说一说），不像 Content/Culture 卡片那样有固定的
   Overview/Text-Media/Activities/Extensions 几个已知小节名可以按名字查找，所以这个函数
@@ -423,6 +424,38 @@ Diagnostic/Quiz/Summative 类"只显示 See Schoology，不渲染 Markdown 正�
 - `06-assessment/README.md` 和三份测验文件（`diagnostic-test.md` 保持原样，
   `summative-test.md`/`wo-tai-lei-le-quiz.md` 的 `source` 字段）已同步更新，去掉了
   "assessment_card() 不渲染这些内容"的过时说明。
+
+## 2026-08-05（同日，看过页面后）— 撤销 administered 日期显示；标准代码去学校化
+
+教师看了上一条改动生成的页面后提了两条修改意见，都已落地，**都不是"待定"，以后不要
+重新讨论要不要改回去**：
+
+1. **`administered` 日期不显示**——上一条记录里 `assessment_card()` 顺手把 `administered`
+   字段渲染出来了，教师直接指出"所有具体时间可以删除"。理由和这个渲染器一路走来对
+   Cycle 日期的处理原则是一致的（见模块开头 docstring 的"Dates are a known trap"）：
+   任何具体日历日期都是某一届学生的教学节奏，换一届就过时，不属于一份"归档/作品集"
+   该展示的内容。**结论：`administered` 只留在 frontmatter 当内部元数据，assessment_card()
+   永远不渲染它**，这条和 Cycle 日期的处理是同一条原则，不是分别决定的两件事。
+   同时把 `daily-routine-final-project.md` Instructions 里"Due dates: ... Dec. 8 ... Dec. 18"
+   这句具体日期也删了，是同一条原则的另一处应用。
+2. **Standards 去掉学校专属编号，只留 WL 语言标准，且改用可读名称**——教师原话
+   "standards 都是我现在学校的，以后不适用了"。具体规则：
+   - **HAL.N（Habits of Learning：Ownership/Work Habits/Perseverance 等）整条删除**——
+     这是"学习习惯"评估维度，跟语言能力无关，是这所学校自己的评分框架，换学校大概率
+     不存在对应条目。`daily-routine-final-project.md` 的 Rubric 和 frontmatter `standards:`
+     都已删掉三条 HAL。
+   - **WL.N（Interpretive/Interpersonal/Presentational Communication 等语言交流模式）保留
+     内容，但去掉 `MS.WL.1`/`MS.WL.3` 这类学校自定的代码前缀**，label 直接用代码原本括号里
+     的模式名称（Interpretive Communication / Interpersonal Communication / Presentational
+     Communication）——这几个是 ACTFL 世界语言教育通用的交流模式名称，跟具体学校无关，
+     以后到新学校也适用；`MS.WL.N` 这套编号是这所学校自己的课程代码体系，不portable。
+     `diagnostic-test.md` 正文的三条标准、`daily-routine-final-project.md` Rubric 的一条
+     标准，以及两份文件各自的 frontmatter `standards:` 列表都已按这条规则改写。
+   - `grading_scale`（EE/ME/AE/BE 四级）**没有要求改动**，教师这次反馈没提到这个，
+     继续保留，不要顺手也删掉或改成别的评分制。
+   - `summative-test.md` / `wo-tai-lei-le-quiz.md` 里那句"TODO：对应到 Course Standards
+     （WL.1-5）的具体映射尚未标注"**保留原样**——这句本来就只写了通用的 WL.1-5，没有
+     学校专属代码，不在这次要改的范围内。
 
 ## 待补充的观察类型（模板，供未来使用）
 - 哪些活动最成功

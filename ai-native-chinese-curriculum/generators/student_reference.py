@@ -37,9 +37,10 @@ whatever calendar date the *previous* school year's slides happened to fall
 on, and will drift for the current cohort. Unlike the family overview (which
 drops specific dates entirely), this page keeps them because they show the
 real order/pacing a student can study from — but the Teaching Flow section
-opens with an explicit disclaimer. Assessment entries show their
-`administered` date too (2026-08-05: no longer a student-facing page, so
-there's no reason to hide it).
+opens with an explicit disclaimer. Assessment entries never show their
+`administered` date (2026-08-05: teacher explicitly asked for all specific
+calendar dates off the page, portfolio-vs-student-facing is a separate
+question from date-drift) — same trap, same fix as everywhere else here.
 
 Usage: python3 student_reference.py <unit_dir> <output_html_path>
 """
@@ -377,7 +378,12 @@ def assessment_card(fm, body, stem):
     student-facing tool, so there's no one left to accidentally hand an
     answer key to. Teacher confirmed (2026-08-05) real Diagnostic/Quiz/
     Summative content can render directly; PROJECT_STATUS.md 2026-08-04 note
-    calling this out as "quiz content never rendered" is now stale."""
+    calling this out as "quiz content never rendered" is now stale.
+    Deliberately never renders `administered` (or any other specific
+    calendar date) — same date-drift reasoning as everywhere else on this
+    page (see module docstring): a school-year-specific date is stale the
+    moment a new cohort starts, so it's kept in the Content Layer as source
+    metadata only, never displayed."""
     label, color, is_project = classify_assessment(fm.get("assessment_type"))
     search_key = esc(f"{fm.get('title')} {label}".lower())
     if is_project:
@@ -404,7 +410,6 @@ def assessment_card(fm, body, stem):
       <div class="bar"><span class="zh">{esc(fm.get('title'))}</span></div>
       <div class="card-body">
         <div class="badges">{pill(label, color)}{status_pill(fm.get('status'))}</div>
-        {f"<p class='pinyin'>{esc(fm.get('administered'))}</p>" if fm.get('administered') else ""}
         {render_markdown_body(body)}
       </div>
     </article>"""

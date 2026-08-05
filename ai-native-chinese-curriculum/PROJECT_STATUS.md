@@ -85,8 +85,15 @@ Content Layer（Markdown+YAML）本身的价值——恰恰相反，教案设计
      所以 Diagnostic/Quiz/Summative 类 Assessment 不用再只显示"See Schoology"——
      `assessment_card()` 改成通用渲染任意 `## 小节`（新增 `render_markdown_body()`，
      因为这些测验文件的小节标题各不相同，不像 Content/Culture 卡片那样是固定的
-     Overview/Text-Media/Activities/Extensions 几个名字），连 `administered` 日期
-     也一起显示了。Project 类（Final Project）渲染逻辑没变。
+     Overview/Text-Media/Activities/Extensions 几个名字）。**同一天教师看过页面后又
+     提了两条修改**（详见 08-curriculum-intelligence.md 同日期第二条记录）：
+     ① `administered` 日期最终**不显示**（最初这条改动顺手加了，被教师叫停撤销，
+     和 Cycle 日期的"不展示具体日期"是同一条原则）；
+     ② `06-assessment/*.md` 和 `01-overview.md` 之外这几份文件里的 `MS.WL.N`/`HAL.N`
+     这类学校专属标准代码——**HAL（Habits of Learning）整条删除**，**WL（语言交流模式）
+     保留但去掉编号前缀，只留 Interpretive/Interpersonal/Presentational Communication
+     这几个通用名称**（`grading_scale` 的 EE/ME/AE/BE 没有要求改，保留）。
+     Project 类（Final Project）渲染逻辑本身没变，只是同步改了它的 Rubric 内容。
    - `generators/build_site.py`（**新增**）——把 `student_reference.py` 的单 Unit 页面
      包一层完整 HTML5 文档壳，加一个作品集首页（index.html，列出所有已发布的 Unit，
      每个 Unit 卡片左边框用它自己的主视觉色），输出到 `site/`，供 GitHub Pages 部署。
