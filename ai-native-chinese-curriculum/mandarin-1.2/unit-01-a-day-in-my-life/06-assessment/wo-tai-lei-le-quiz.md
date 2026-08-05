@@ -3,10 +3,11 @@ assessment_type: Quiz
 title: "我太累了 Quiz"
 unit: Unit 1
 status: canonical
-source: "2026-08-04 uploaded: 我太累了 quiz.docx / 我太累了 quiz review.docx (same structure —
-  full content kept here since assessment_card() never renders quiz-type body content to the
-  student page, only 'See Schoology', see generators/student_reference.py)"
-last_updated: 2026-08-04
+source: "2026-08-04 uploaded: 我太累了 quiz.docx / 我太累了 quiz review.docx (same structure).
+  2026-08-05: page is a personal portfolio, not student-facing, so assessment_card() now renders
+  this full content directly instead of pointing to Schoology — see
+  generators/student_reference.py."
+last_updated: 2026-08-05
 ---
 
 # 我太累了 Quiz

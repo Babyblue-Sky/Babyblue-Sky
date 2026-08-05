@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-08-04
-branch: claude/ai-native-chinese-curriculum-vlnr10
+last_updated: 2026-08-05
+branch: claude/ai-native-chinese-curriculum-lozz7k
 ---
 
 # Project Status — 给下一次接手这个项目的 Claude 看
@@ -40,9 +40,10 @@ Content Layer（Markdown+YAML）本身的价值——恰恰相反，教案设计
    `05-resources/vocabulary-my-day.md` 的拼音（用两份 ArchChinese 练字表确认）、
    Final Project 完整细节（`daily-routine-final-project.md`：Driving Question/
    Instructions/Rubric/Resources/教师范文，教师明确说这份可以直接引用）、四份真实
-   quiz/考试（熊猫的故事、我太累了、Diagnostic、Listening & Writing Assessment——教师
-   明确说不要在学生页面暴露真实内容，已确认 `assessment_card()` 本来就不渲染非 Project
-   类 assessment 的正文，所以这四份文件放心存了完整真实内容）、**Cycle 3-7 教学内容**
+   quiz/考试（熊猫的故事、我太累了、Diagnostic、Listening & Writing Assessment——这四份
+   文件从一开始就存了完整真实内容；**2026-08-05 教师明确这个页面不再面向学生，`assessment_card()`
+   已改成把 Diagnostic/Quiz/Summative 的正文直接渲染出来，不再只显示 "See Schoology"**，
+   详见下面第 5 条和 `06-assessment/README.md`）、**Cycle 3-7 教学内容**
    （用 `.notebook` 源文件重新抽取文字，见下面第 6 条——这条路径之前只喂了 Slides pptx，
    没喂 Content Layer，这次补上了）。**Cycle 1-7 的格式也全部按教师反馈重做**：每节课只
    保留 Do-Now / Objective / Main Activities 三项，删掉了课堂常规模板说明、逐条语法点、
@@ -80,8 +81,12 @@ Content Layer（Markdown+YAML）本身的价值——恰恰相反，教案设计
      Work"板块**，读 `09-student-work/*.md`，目前是空的（教师还没上传作品）。
      **配色改用教师指定的莫兰迪色板**：pill 徽章从描边文字改成柔和色块+深色文字，
      每个 Unit 用 `UNIT_HERO_COLORS` 数组里不同但相近的一个色号做主视觉色（轮换机制，
-     不是写死一个）。测验类 Assessment 仍然不暴露考题内容（`assessment_card()` 对
-     Diagnostic/Quiz/Summative 只显示"See Schoology"）。
+     不是写死一个）。**2026-08-05**：教师明确这个页面是她的个人作品集，不是学生工具，
+     所以 Diagnostic/Quiz/Summative 类 Assessment 不用再只显示"See Schoology"——
+     `assessment_card()` 改成通用渲染任意 `## 小节`（新增 `render_markdown_body()`，
+     因为这些测验文件的小节标题各不相同，不像 Content/Culture 卡片那样是固定的
+     Overview/Text-Media/Activities/Extensions 几个名字），连 `administered` 日期
+     也一起显示了。Project 类（Final Project）渲染逻辑没变。
    - `generators/build_site.py`（**新增**）——把 `student_reference.py` 的单 Unit 页面
      包一层完整 HTML5 文档壳，加一个作品集首页（index.html，列出所有已发布的 Unit，
      每个 Unit 卡片左边框用它自己的主视觉色），输出到 `site/`，供 GitHub Pages 部署。
@@ -137,6 +142,10 @@ Content Layer（Markdown+YAML）本身的价值——恰恰相反，教案设计
     列表"——除非教师明确要求，不要主动建议恢复 Do-Now/Objective/Main Activities 格式
   - `09-student-work/` 模块的 `student_work_card()` **不要加"学生姓名"字段**——这是
     2026-08-04 刻意的防呆设计，不是疏漏
+  - **2026-08-05**：既然页面不面向学生，`06-assessment/*.md` 里的 Diagnostic/Quiz/
+    Summative 真实考题内容现在会直接渲染到页面上（`assessment_card()` 已改，见上面
+    第 5 条）——不要再假设这些文件只是"内部存档，页面上看不到"，也不要主动把这条
+    显示行为改回"See Schoology"，除非教师自己重新提出
 - **往 `02-teaching/cycle-N.md` 或任何会被 `render_blocks()` 处理的正文加内容时，
   每个列表项（`- `开头）和每个引用块（`> `开头）的整句必须写在同一物理行，不要为了
   编辑器里好看手动换行折成两行**——`render_blocks()` 是按"每一行的行首标记"分组的，

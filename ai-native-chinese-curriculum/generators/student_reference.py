@@ -37,8 +37,9 @@ whatever calendar date the *previous* school year's slides happened to fall
 on, and will drift for the current cohort. Unlike the family overview (which
 drops specific dates entirely), this page keeps them because they show the
 real order/pacing a student can study from — but the Teaching Flow section
-opens with an explicit disclaimer, and Assessment entries never repeat
-`administered` dates; they point to Schoology instead.
+opens with an explicit disclaimer. Assessment entries show their
+`administered` date too (2026-08-05: no longer a student-facing page, so
+there's no reason to hide it).
 
 Usage: python3 student_reference.py <unit_dir> <output_html_path>
 """
@@ -139,10 +140,17 @@ def render_blocks(text):
     """Render a chunk of body Markdown (bullet lists, blockquotes,
     paragraphs) to HTML. Not a general Markdown parser — just what the
     Content Layer's fixed sub-headings (Overview / Text-Media / Activities /
-    Extensions / Teacher Notes) actually contain. Groups run by *line kind*
-    (list / quote / paragraph) rather than by blank-line-separated blocks,
-    since source files often put a lead-in sentence directly above a bullet
-    list with no blank line between them."""
+    Extensions / Teacher Notes) actually contain, plus the free-form section
+    prose that assessment files use (see render_markdown_body). Numbered
+    lines (e.g. assessment questions) are deliberately left as plain
+    paragraphs rather than parsed into an `<ol>`: some source files write a
+    real one-item-per-line list, others cram several "N. ..." items onto one
+    line as flowing enumeration (e.g. "1. 昨天　2. 姐姐　3. 中国..." in
+    diagnostic-test.md) — a single numbered-line heuristic can't tell those
+    apart without mangling one of them, so both just render as text, intact.
+    Groups run by *line kind* (list / quote / paragraph) rather than by
+    blank-line-separated blocks, since source files often put a lead-in
+    sentence directly above a bullet list with no blank line between them."""
     out = []
     buf, buf_kind = [], None
 
@@ -190,6 +198,27 @@ def section_html(body, heading, pending_label="内容整理中 · Content coming
         return f'<p class="pending">{esc(pending_label)}</p>'
     rendered = render_blocks(text)
     return rendered if rendered else f'<p class="pending">{esc(pending_label)}</p>'
+
+
+def render_markdown_body(body):
+    """Render a whole body's worth of '## heading' sections generically —
+    used where, unlike Content/Culture cards, there's no fixed known set of
+    sub-headings to look up by name (each assessment file's sections vary:
+    Listening/Reading/Writing/Speaking, or 词/句子/说一说, etc.). Drops the
+    leading '# Title' line (the card's own <h2> bar already carries the
+    title) and renders every '## heading' found, in source order, plus any
+    preamble text before the first one."""
+    text = re.sub(r"^\s*#\s+.*\n", "", body, count=1)
+    parts = re.split(r"^## (.+)$", text, flags=re.M)
+    out = []
+    preamble = render_blocks(parts[0])
+    if preamble:
+        out.append(preamble)
+    for i in range(1, len(parts), 2):
+        heading = parts[i].strip()
+        content = parts[i + 1] if i + 1 < len(parts) else ""
+        out.append(f"<h4>{esc(heading)}</h4>{render_blocks(content)}")
+    return "\n".join(out)
 
 
 def vocab_rows_from_text(text, source_label):
@@ -343,6 +372,12 @@ def cycle_card(fm, body):
 
 
 def assessment_card(fm, body, stem):
+    """Full test content, not just a Schoology pointer — this page is a
+    personal curriculum-design portfolio (2026-08-04 repositioning), not a
+    student-facing tool, so there's no one left to accidentally hand an
+    answer key to. Teacher confirmed (2026-08-05) real Diagnostic/Quiz/
+    Summative content can render directly; PROJECT_STATUS.md 2026-08-04 note
+    calling this out as "quiz content never rendered" is now stale."""
     label, color, is_project = classify_assessment(fm.get("assessment_type"))
     search_key = esc(f"{fm.get('title')} {label}".lower())
     if is_project:
@@ -365,11 +400,12 @@ def assessment_card(fm, body, stem):
           </div>
         </article>"""
     return f"""
-    <article class="card compact" id="item-{esc(stem)}" data-search="{search_key}">
+    <article class="card" id="item-{esc(stem)}" data-search="{search_key}">
       <div class="bar"><span class="zh">{esc(fm.get('title'))}</span></div>
       <div class="card-body">
         <div class="badges">{pill(label, color)}{status_pill(fm.get('status'))}</div>
-        <p class="pending">具体安排与提交方式请在 Schoology 查看 · See Schoology for schedule and submission.</p>
+        {f"<p class='pinyin'>{esc(fm.get('administered'))}</p>" if fm.get('administered') else ""}
+        {render_markdown_body(body)}
       </div>
     </article>"""
 

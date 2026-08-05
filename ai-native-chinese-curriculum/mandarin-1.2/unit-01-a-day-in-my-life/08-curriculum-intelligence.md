@@ -398,6 +398,32 @@ leadership 职业叙事。这一节记录这次定位讨论之后，同一次对
      合同/学校政策，Claude 没有替她做这个判断的立场。如果教师以后重新提起，直接从这里
      接着聊，不需要重新讨论"能不能做""该怎么做"这两层，教师已经知道结论是"先查合同"。
 
+## 2026-08-05 — Assessment 板块改成直接显示真实考题，不再只指向 Schoology
+
+**决定**：教师看过 Unit 1 页面后确认这个界面不再面向学生，`assessment_card()` 里对
+Diagnostic/Quiz/Summative 类"只显示 See Schoology，不渲染 Markdown 正文"这条 2026-08-04
+定下的规则可以撤销——`06-assessment/*.md` 里存的完整真实考题内容现在直接渲染到页面。
+
+**落地**：
+- `assessment_card()`（`generators/student_reference.py`）非 Project 分支改成调用新的
+  `render_markdown_body(body)`，同时把 `administered` 日期也显示出来（原来这两者都被
+  刻意隐藏，理由是"不给学生看"，现在理由不存在了）。Project 类分支（Final Project）没变。
+- 新增 `render_markdown_body()`：这些测验文件的小节标题各不相同（Listening/Reading/
+  Writing/Speaking，或 词/句子/说一说），不像 Content/Culture 卡片那样有固定的
+  Overview/Text-Media/Activities/Extensions 几个已知小节名可以按名字查找，所以这个函数
+  通用地把 body 里所有 `## 标题` 小节依次渲染出来，不需要预先知道小节叫什么。
+- 踩过的坑：body 开头的 `# 标题` 那一行前面通常还有一个空行（frontmatter 结束的 `---`
+  后面紧跟一个空行再是 `# 标题`），`re.sub(r"^#\s+.*\n", ...)` 不加 `re.M` 且不吃掉前导
+  空白的话匹配不到，标题行会原样露在页面正文里——要用 `r"^\s*#\s+.*\n"` 才行。
+- 另一个坑：本来想把 `1. xxx` 这种数字开头的行也解析成 `<ol>`，但
+  `diagnostic-test.md` 的 Listening 部分是"1. 昨天　2. 姐姐　3. 中国..."这种一行塞好几个
+  编号的flowing enumeration，不是每行一个 item 的真列表，用同一套启发式解析会把编号和
+  内容拆得乱七八糟。**结论：数字编号行不特殊处理，就当普通段落渲染**——两种格式都能
+  完整、正确地显示文字，只是不会被拆成好看的 `<li>`，这个取舍比"解析对一半、拆错一半"好。
+- `06-assessment/README.md` 和三份测验文件（`diagnostic-test.md` 保持原样，
+  `summative-test.md`/`wo-tai-lei-le-quiz.md` 的 `source` 字段）已同步更新，去掉了
+  "assessment_card() 不渲染这些内容"的过时说明。
+
 ## 待补充的观察类型（模板，供未来使用）
 - 哪些活动最成功
 - 学生最容易犯的错误 / Vocabulary 难点
