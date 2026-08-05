@@ -92,7 +92,10 @@ Content Layer（Markdown+YAML）本身的价值——恰恰相反，教案设计
      ② `06-assessment/*.md` 和 `01-overview.md` 之外这几份文件里的 `MS.WL.N`/`HAL.N`
      这类学校专属标准代码——**HAL（Habits of Learning）整条删除**，**WL（语言交流模式）
      保留但去掉编号前缀，只留 Interpretive/Interpersonal/Presentational Communication
-     这几个通用名称**（`grading_scale` 的 EE/ME/AE/BE 没有要求改，保留）。
+     这几个通用名称**；③ 同一天教师又指出 `grading_scale`（EE/ME/AE/BE 四级评定）**也是
+     这所学校的评分制度，同样不通用，已删除**（frontmatter `grading_scale` 字段 + 正文里
+     "按 EE/ME/AE/BE 四级评定"这类句子全部去掉，详见 08-curriculum-intelligence.md
+     同日期第三条记录）——不要理解成"标准代码删了、评分等级保留"，两个都删。
      Project 类（Final Project）渲染逻辑本身没变，只是同步改了它的 Rubric 内容。
    - `generators/build_site.py`（**新增**）——把 `student_reference.py` 的单 Unit 页面
      包一层完整 HTML5 文档壳，加一个作品集首页（index.html，列出所有已发布的 Unit，

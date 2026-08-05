@@ -457,6 +457,24 @@ Diagnostic/Quiz/Summative 类"只显示 See Schoology，不渲染 Markdown 正�
      （WL.1-5）的具体映射尚未标注"**保留原样**——这句本来就只写了通用的 WL.1-5，没有
      学校专属代码，不在这次要改的范围内。
 
+## 2026-08-05（同日，第三轮反馈）— EE/ME/AE/BE 评分等级也是学校规定，一并删除
+
+教师看完上一条改动后，指出连"每条按 EE/ME/AE/BE 四级评定"这句话本身也是这所学校的
+评分制度（Exceeding/Meeting/Approaching/Below 四级评定），不具有普遍性，同一条原则的
+延伸——不是新原则。**结论：`grading_scale` frontmatter 字段和正文里提到 EE/ME/AE/BE 的
+句子全部删除**，不要以后又当"这个是通用的评分标准"加回来：
+- `diagnostic-test.md`：删了 frontmatter `grading_scale:` 字段；正文"评分对应的三条
+  Course Standard（每条按 EE/ME/AE/BE 四级评定）："改成"评分对应的三条 Course Standard："，
+  三条标准列表本身没变。
+- `daily-routine-final-project.md`：删了 frontmatter `grading_scale:` 字段；Rubric 小节
+  "Scored EE (Exceeding) / ME (Meeting) / AE (Approaching) / BE (Below) on:" 改成
+  "Assessed on:"，下面的 Presentational Communication 条目没变。
+- `summative-test.md` / `wo-tai-lei-le-quiz.md` 本来就没有 `grading_scale` 字段或
+  EE/ME/AE/BE 字样，不用改。
+- 以后这个 Content Layer 里再出现任何看起来像"某个具体学校自己定的评分等级/代码体系"的
+  内容（不只是 EE/ME/AE/BE 或 MS.WL.N，泛指任何学校专属编号/等级），默认按这条原则处理：
+  不属于"教师个人可携带的语言教学法"部分，不放进公开渲染的正文，除非教师明确说这次要留。
+
 ## 待补充的观察类型（模板，供未来使用）
 - 哪些活动最成功
 - 学生最容易犯的错误 / Vocabulary 难点

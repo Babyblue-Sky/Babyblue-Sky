@@ -7,18 +7,17 @@ standards:
   - Interpretive Communication
   - Interpersonal Communication
   - Presentational Communication
-grading_scale: "EE (Exceeding) / ME (Meeting) / AE (Approaching) / BE (Below)"
-source: "1.2 Diagnostic Test 21-22.docx. administered date and MS.WL.N /
-  school-specific standard codes intentionally dropped 2026-08-05 (teacher:
-  no calendar dates on the page, and these codes are this school's own
-  numbering — won't apply once she's elsewhere; the WL Interpretive/
-  Interpersonal/Presentational mode names are the portable part)."
+source: "1.2 Diagnostic Test 21-22.docx. administered date, MS.WL.N school-specific
+  standard codes, and the EE/ME/AE/BE grading scale intentionally dropped 2026-08-05
+  (teacher: no calendar dates on the page, and both the codes and this four-level
+  scale are this school's own conventions — won't apply once she's elsewhere; the
+  WL Interpretive/Interpersonal/Presentational mode names are the portable part)."
 last_updated: 2026-08-05
 ---
 
 # Mandarin 1.2 Diagnostic Test
 
-评分对应的三条 Course Standard（每条按 EE/ME/AE/BE 四级评定）：
+评分对应的三条 Course Standard：
 - **Interpretive Communication** — Learners understand, interpret, and analyze what is heard, read, received or viewed on a variety of topics, using a range of diverse texts, including authentic resources.
 - **Interpersonal Communication** — Learners interact and negotiate meaning in spontaneous, spoken, visual, or written communication to exchange information and express feelings, preferences, and opinions.
 - **Presentational Communication** — Learners present information and ideas on a variety of topics adapted to various audiences of listeners, readers, or viewers to describe, inform, narrate, explain, or persuade.

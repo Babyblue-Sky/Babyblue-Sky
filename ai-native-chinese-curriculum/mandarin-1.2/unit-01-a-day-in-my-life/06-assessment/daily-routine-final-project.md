@@ -5,14 +5,14 @@ unit: Unit 1
 status: canonical
 standards:
   - Presentational Communication
-grading_scale: "EE (Exceeding) / ME (Meeting) / AE (Approaching) / BE (Below)"
 source: "2026-08-04 uploaded: Final_Project_Daily_Routine.docx (instructions/vocab/rubric),
   Final_Draft_graded.docx (blank rubric/grading grid, teacher confirmed OK to reference directly
   since this is Project-type — see 08-curriculum-intelligence.md on quiz vs. project content
   exposure). 2026-08-05: dropped the three HAL.N (Habits of Learning) standards and the
   MS.WL.3 code — HAL is a school-specific rubric axis unrelated to language proficiency, and
   the WL numbering won't apply once the teacher is elsewhere; also dropped the specific due
-  dates from Instructions (no calendar dates on the page)."
+  dates from Instructions, and the EE/ME/AE/BE grading scale (all school-specific, no
+  calendar dates or school grading conventions on the page)."
 last_updated: 2026-08-05
 ---
 
@@ -67,7 +67,7 @@ Process:
 | 很晚 | hěn wǎn | very late |
 
 ## Rubric
-Scored EE (Exceeding) / ME (Meeting) / AE (Approaching) / BE (Below) on:
+Assessed on:
 - **Presentational Communication** — presents information/ideas on a variety of topics, adapted to the audience, to describe/inform/narrate/explain/persuade
 
 ## Resources
