@@ -45,12 +45,17 @@ repo's files — not your account.
 
 ### 3. Configure the extension
 
-Open `extension/config.js` and fill in:
+On your computer (not on github.com — this file holds real secrets and must
+never be committed), copy `extension/config.example.js` to
+`extension/config.js` in the same folder, then fill in:
 - `MW_LEARNERS_KEY`, `MW_COLLEGIATE_KEY`
 - `GITHUB_TOKEN` (from step 2)
 - `GITHUB_OWNER`, `GITHUB_REPO`, `GITHUB_BRANCH` (defaults already point at
   this repo's `main` branch — if you're testing before this branch merges,
   temporarily point `GITHUB_BRANCH` at the feature branch instead)
+
+`config.js` is gitignored on purpose, so there's no risk of it accidentally
+ending up in a commit.
 
 Then `chrome://extensions` → Developer mode → **Load unpacked** → select the
 `extension/` folder.
