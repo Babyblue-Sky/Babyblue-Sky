@@ -19,6 +19,7 @@ import sys
 from datetime import datetime, timedelta, timezone
 from email.mime.text import MIMEText
 from pathlib import Path
+from urllib.parse import quote
 from zoneinfo import ZoneInfo
 
 import requests
@@ -27,6 +28,18 @@ AGENT_DIR = Path(__file__).parent
 DATA_FILE = AGENT_DIR / "data" / "words.json"
 REVIEW_LOG_FILE = AGENT_DIR / "data" / "review_log.json"
 PAGE_FILE = AGENT_DIR.parent / "docs" / "vocab-review" / "index.html"
+
+GITHUB_OWNER = "Babyblue-Sky"
+GITHUB_REPO = "Babyblue-Sky"
+
+
+def delete_issue_url(word: str) -> str:
+    # Opens a pre-filled "New issue" form -- .github/workflows/vocab-delete.yml
+    # picks it up from the title and removes the word. No write-scoped token
+    # needed on the public review page/email for this (see delete_word.py).
+    title = quote(f"vocab-delete: {word}")
+    body = quote(f'Requesting removal of "{word}" from the word bank -- saved by mistake.')
+    return f"https://github.com/{GITHUB_OWNER}/{GITHUB_REPO}/issues/new?title={title}&body={body}"
 
 
 def load_words() -> list:
@@ -171,9 +184,13 @@ def build_email_html(session_type: str, due_words: list, page_url: str | None) -
     for w in due_words:
         audio = f' <a href="{html.escape(w["audioUrl"])}">🔊 audio</a>' if w.get("audioUrl") else ""
         example = f'<div style="color:#8A8578;font-style:italic;margin-top:2px;">{html.escape(w["example"])}</div>' if w.get("example") else ""
+        delete_link = f'<a href="{html.escape(delete_issue_url(w["word"]))}" style="font-size:11px;color:#B5AF9E;">✕ not mine, delete</a>'
         rows.append(f"""
           <div style="margin-bottom:18px;">
-            <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.05em;color:#B5AF9E;">{html.escape(w["type"])}</div>
+            <div style="display:flex;justify-content:space-between;align-items:baseline;">
+              <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.05em;color:#B5AF9E;">{html.escape(w["type"])}</div>
+              {delete_link}
+            </div>
             <div style="font-size:18px;font-weight:700;">{html.escape(w["word"])}{audio}</div>
             <div style="margin-top:4px;">{html.escape(w["definition"]) or "(no definition found)"}</div>
             {example}
@@ -206,7 +223,9 @@ def build_review_page_html(session_type: str, due_words: list) -> str:
   .eyebrow {{ font-family: -apple-system, sans-serif; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8578; display: flex; justify-content: space-between; margin-bottom: 10px; }}
   .progress-track {{ height: 5px; background: #E7E3D8; border-radius: 3px; overflow: hidden; margin-bottom: 28px; }}
   .progress-fill {{ height: 100%; background: #3D5A4C; border-radius: 3px; transition: width 0.4s ease; }}
-  .card {{ background: white; border: 1px solid #E7E3D8; border-radius: 16px; padding: 32px; min-height: 200px; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }}
+  .card {{ background: white; border: 1px solid #E7E3D8; border-radius: 16px; padding: 32px; min-height: 200px; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.04); position: relative; }}
+  .btn-delete {{ position: absolute; top: 14px; right: 14px; font-family: -apple-system, sans-serif; font-size: 11px; color: #B5AF9E; text-decoration: none; }}
+  .btn-delete:hover {{ color: #B5484A; }}
   .card h1 {{ font-size: 30px; margin: 0 0 6px 0; }}
   .card h2 {{ font-size: 22px; margin: 0 0 6px 0; }}
   .hint {{ color: #B5AF9E; font-size: 13px; font-style: italic; margin-top: 16px; }}
@@ -229,6 +248,12 @@ def build_review_page_html(session_type: str, due_words: list) -> str:
   const sessionType = "{session_type}";
   let index = 0, flipped = false, known = 0, learning = 0;
 
+  function deleteUrl(word) {{
+    const title = encodeURIComponent('vocab-delete: ' + word);
+    const body = encodeURIComponent('Requesting removal of "' + word + '" from the word bank -- saved by mistake.');
+    return 'https://github.com/{GITHUB_OWNER}/{GITHUB_REPO}/issues/new?title=' + title + '&body=' + body;
+  }}
+
   function render() {{
     const app = document.getElementById('app');
     if (words.length === 0) {{
@@ -245,6 +270,7 @@ def build_review_page_html(session_type: str, due_words: list) -> str:
       '<div class="eyebrow"><span>' + (sessionType === 'monthly' ? 'Monthly Review' : 'Weekly Review') + '</span><span>' + (index + 1) + ' / ' + words.length + '</span></div>' +
       '<div class="progress-track"><div class="progress-fill" style="width:' + pct + '%"></div></div>' +
       '<div class="card" onclick="flip()">' +
+        '<a class="btn-delete" target="_blank" rel="noopener" href="' + deleteUrl(w.word) + '" onclick="event.stopPropagation()">\\u2715 not mine, delete</a>' +
         (!flipped
           ? '<h1>' + w.word + '</h1><div class="hint">Tap to reveal definition</div>'
           : '<div class="type-tag">' + w.type + '</div>' +
