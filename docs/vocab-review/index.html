@@ -11,7 +11,9 @@
   .eyebrow { font-family: -apple-system, sans-serif; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8578; display: flex; justify-content: space-between; margin-bottom: 10px; }
   .progress-track { height: 5px; background: #E7E3D8; border-radius: 3px; overflow: hidden; margin-bottom: 28px; }
   .progress-fill { height: 100%; background: #3D5A4C; border-radius: 3px; transition: width 0.4s ease; }
-  .card { background: white; border: 1px solid #E7E3D8; border-radius: 16px; padding: 32px; min-height: 200px; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+  .card { background: white; border: 1px solid #E7E3D8; border-radius: 16px; padding: 32px; min-height: 200px; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.04); position: relative; }
+  .btn-delete { position: absolute; top: 14px; right: 14px; font-family: -apple-system, sans-serif; font-size: 11px; color: #B5AF9E; text-decoration: none; }
+  .btn-delete:hover { color: #B5484A; }
   .card h1 { font-size: 30px; margin: 0 0 6px 0; }
   .card h2 { font-size: 22px; margin: 0 0 6px 0; }
   .hint { color: #B5AF9E; font-size: 13px; font-style: italic; margin-top: 16px; }
@@ -34,6 +36,12 @@
   const sessionType = "weekly";
   let index = 0, flipped = false, known = 0, learning = 0;
 
+  function deleteUrl(word) {
+    const title = encodeURIComponent('vocab-delete: ' + word);
+    const body = encodeURIComponent('Requesting removal of "' + word + '" from the word bank -- saved by mistake.');
+    return 'https://github.com/Babyblue-Sky/Babyblue-Sky/issues/new?title=' + title + '&body=' + body;
+  }
+
   function render() {
     const app = document.getElementById('app');
     if (words.length === 0) {
@@ -50,6 +58,7 @@
       '<div class="eyebrow"><span>' + (sessionType === 'monthly' ? 'Monthly Review' : 'Weekly Review') + '</span><span>' + (index + 1) + ' / ' + words.length + '</span></div>' +
       '<div class="progress-track"><div class="progress-fill" style="width:' + pct + '%"></div></div>' +
       '<div class="card" onclick="flip()">' +
+        '<a class="btn-delete" target="_blank" rel="noopener" href="' + deleteUrl(w.word) + '" onclick="event.stopPropagation()">\u2715 not mine, delete</a>' +
         (!flipped
           ? '<h1>' + w.word + '</h1><div class="hint">Tap to reveal definition</div>'
           : '<div class="type-tag">' + w.type + '</div>' +
