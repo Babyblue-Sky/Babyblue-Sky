@@ -19,6 +19,7 @@ import sys
 from datetime import datetime, timedelta, timezone
 from email.mime.text import MIMEText
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import requests
 
@@ -268,6 +269,69 @@ def build_review_page_html(session_type: str, due_words: list) -> str:
 """
 
 
+def refresh_calendar_access_token() -> str | None:
+    client_id = os.environ.get("GOOGLE_CALENDAR_CLIENT_ID", "")
+    client_secret = os.environ.get("GOOGLE_CALENDAR_CLIENT_SECRET", "")
+    refresh_token = os.environ.get("GOOGLE_CALENDAR_REFRESH_TOKEN", "")
+    if not (client_id and client_secret and refresh_token):
+        return None
+    res = requests.post(
+        "https://oauth2.googleapis.com/token",
+        data={
+            "client_id": client_id,
+            "client_secret": client_secret,
+            "refresh_token": refresh_token,
+            "grant_type": "refresh_token",
+        },
+        timeout=15,
+    )
+    res.raise_for_status()
+    return res.json()["access_token"]
+
+
+def create_calendar_reminder(session_type: str, due_count: int, page_url: str | None, now: datetime) -> None:
+    try:
+        access_token = refresh_calendar_access_token()
+    except Exception as e:  # noqa: BLE001 - a broken calendar token shouldn't sink an otherwise-successful run
+        print(f"[calendar] couldn't refresh access token: {e}", file=sys.stderr)
+        return
+    if not access_token:
+        print("Google Calendar not configured (missing GOOGLE_CALENDAR_* secrets) — skipping calendar reminder.")
+        return
+
+    # Mirrors the old Apps Script reminder times: 10am for the weekly review,
+    # 6pm for the monthly one, same day the review runs.
+    tz = ZoneInfo("America/New_York")
+    local_now = now.astimezone(tz)
+    hour = 10 if session_type == "weekly" else 18
+    start = local_now.replace(hour=hour, minute=0, second=0, microsecond=0)
+    end = start + timedelta(minutes=30)
+
+    label = "Weekly" if session_type == "weekly" else "Monthly"
+    description = f"{due_count} word{'s' if due_count != 1 else ''} due for review."
+    if page_url:
+        description += f"\n\nOpen the review: {page_url}"
+
+    event = {
+        "summary": f"{label} Vocab Review \U0001F4DA",
+        "description": description,
+        "start": {"dateTime": start.isoformat(), "timeZone": "America/New_York"},
+        "end": {"dateTime": end.isoformat(), "timeZone": "America/New_York"},
+    }
+    try:
+        res = requests.post(
+            "https://www.googleapis.com/calendar/v3/calendars/primary/events",
+            headers={"Authorization": f"Bearer {access_token}", "content-type": "application/json"},
+            json=event,
+            timeout=15,
+        )
+        res.raise_for_status()
+    except Exception as e:  # noqa: BLE001 - same rationale as above
+        print(f"[calendar] couldn't create event: {e}", file=sys.stderr)
+        return
+    print(f"Created calendar reminder for {start.isoformat()}.")
+
+
 def send_email(subject: str, html_body: str) -> None:
     user = os.environ["GMAIL_USER"].strip()
     password = os.environ["GMAIL_APP_PASSWORD"].strip()
@@ -327,6 +391,7 @@ def main() -> None:
 
     subject = f"{'Weekly' if session_type == 'weekly' else 'Monthly'} Vocab Review — {len(due)} word{'s' if len(due) != 1 else ''}"
     send_email(subject, build_email_html(session_type, due, page_url))
+    create_calendar_reminder(session_type, len(due), page_url, now)
 
     log_review(session_type, due, session_id)
     save_words(words)

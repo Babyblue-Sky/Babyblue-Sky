@@ -1,8 +1,9 @@
 # Vocab Review Agent (v2 — GitHub-native)
 
 Same idea as before — double-click a word while browsing, get it back weeks
-later as a spaced-review email — rebuilt on a stack that doesn't depend on
-manually clicking the right dropdown in a web editor to deploy. Everything
+later as a spaced-review reminder on your calendar (plus an email digest) —
+rebuilt on a stack that doesn't depend on manually clicking the right
+dropdown in a web editor to deploy. Everything
 here is either a file in this repo or a GitHub Actions run, both of which are
 directly inspectable (`git log`, Actions run logs) instead of living inside a
 Google Apps Script black box.
@@ -19,9 +20,11 @@ Google Apps Script black box.
   monthly (2nd-to-last day of the month). It backfills any definition the
   extension couldn't fetch client-side (idioms, or words Merriam-Webster
   didn't have — using an optional Claude fallback), emails a digest of the
-  words due for review, and writes a self-contained interactive review page
-  (flip the card, mark known/still learning) to `docs/vocab-review/index.html`
-  for GitHub Pages.
+  words due for review, creates a Google Calendar reminder (same idea as the
+  old Apps Script version — an actual event on your calendar, not just an
+  email), and writes a self-contained interactive review page (flip the
+  card, mark known/still learning) to `docs/vocab-review/index.html` for
+  GitHub Pages.
 - **`.github/workflows/vocab-review.yml`** — the schedule + the email-sending
   job. Reuses the same Gmail secrets as `stock-price-alert-agent`.
 
@@ -72,7 +75,27 @@ Add:
 from `stock-price-alert-agent` — this workflow reuses them, nothing new to
 set up there.
 
-### 5. (Optional) GitHub Pages, for the interactive flip-card review page
+### 5. Google Calendar reminders
+
+This needs a one-time OAuth authorization, done from your own computer (not
+the browser extension, not GitHub) — a script in this folder walks you
+through it:
+
+```
+pip install google-auth-oauthlib
+python get_calendar_refresh_token.py /path/to/downloaded_client.json
+```
+
+Full instructions, including the Google Cloud Console steps to get that
+`client.json` file, are in the docstring at the top of
+`get_calendar_refresh_token.py`. It ends by printing three values — add them
+as repo secrets: `GOOGLE_CALENDAR_CLIENT_ID`, `GOOGLE_CALENDAR_CLIENT_SECRET`,
+`GOOGLE_CALENDAR_REFRESH_TOKEN`.
+
+Skipping this is fine too — the review email still goes out either way, you
+just won't get a calendar event alongside it.
+
+### 6. (Optional) GitHub Pages, for the interactive flip-card review page
 
 Settings → Pages → Source: **Deploy from a branch** → `main` / `/docs`. Then
 add a repo **variable** (not secret) `VOCAB_PAGES_BASE_URL` set to your Pages
@@ -81,7 +104,7 @@ includes a working link to it. Skipping this step is fine — the review email
 already contains the full list of due words with definitions either way, you
 just won't get the tap-to-reveal card interface.
 
-### 6. Test it
+### 7. Test it
 
 Actions tab → **Vocab Review** → **Run workflow** → pick `weekly`, check
 `force`, run. Check the Action's log directly for exactly what happened — no
