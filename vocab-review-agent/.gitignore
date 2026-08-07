@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+
+# Real secrets live only on your machine. Copy config.example.js to
+# config.js locally and fill it in there -- config.js itself is
+# intentionally untracked so it can never end up in a commit.
+extension/config.js

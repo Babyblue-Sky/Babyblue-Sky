@@ -1,0 +1,75 @@
+name: Vocab Review
+
+on:
+  schedule:
+    # Weekly review — Sundays 12:00 UTC (~7-8am US Eastern).
+    - cron: "0 12 * * 0"
+    # Daily check for the monthly review — the script itself no-ops unless
+    # today is the 2nd-to-last day of the month (mirrors the old Apps Script
+    # trigger, since GitHub Actions cron has no "Nth day of month" syntax).
+    - cron: "0 12 * * *"
+  workflow_dispatch:
+    inputs:
+      session:
+        description: "Which review to send"
+        required: true
+        default: weekly
+        type: choice
+        options: [weekly, monthly]
+      force:
+        description: "Send even if it's not the scheduled day (monthly only)"
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r vocab-review-agent/requirements.txt
+
+      - name: Determine session type
+        id: session
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "type=${{ inputs.session }}" >> "$GITHUB_OUTPUT"
+            echo "force=${{ inputs.force }}" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event.schedule }}" = "0 12 * * 0" ]; then
+            echo "type=weekly" >> "$GITHUB_OUTPUT"
+            echo "force=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "type=monthly" >> "$GITHUB_OUTPUT"
+            echo "force=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Generate and send review
+        env:
+          MW_LEARNERS_KEY: ${{ secrets.MW_LEARNERS_KEY }}
+          MW_COLLEGIATE_KEY: ${{ secrets.MW_COLLEGIATE_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          ALERT_TO_EMAIL: ${{ secrets.ALERT_TO_EMAIL }}
+          PAGES_BASE_URL: ${{ vars.VOCAB_PAGES_BASE_URL }}
+        run: |
+          FORCE_FLAG=""
+          if [ "${{ steps.session.outputs.force }}" = "true" ]; then FORCE_FLAG="--force"; fi
+          python vocab-review-agent/generate_review.py "${{ steps.session.outputs.type }}" $FORCE_FLAG
+
+      - name: Commit updated word bank and review page
+        run: |
+          git config user.name "vocab-review-bot"
+          git config user.email "actions@github.com"
+          git add vocab-review-agent/data/words.json vocab-review-agent/data/review_log.json docs/vocab-review/index.html
+          git diff --cached --quiet || git commit -m "Update vocab review state [skip ci]"
+          git push

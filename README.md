@@ -2,11 +2,12 @@
 
 Building small tools to fix my own daily friction.
 
-**Currently:** [Vocab Review Agent](https://github.com/Babyblue-Sky/Vocab-Review-Agent) —
-a Chrome extension + Google Apps Script agent that turns words I look up
-while browsing into an automatic weekly/monthly spaced-review habit. No
-manual flashcards, no forgotten apps — just double-click a word and the
-rest happens on its own.
+**Currently:** [Vocab Review Agent](vocab-review-agent/) — a Chrome extension
+that turns words I look up while browsing into an automatic weekly/monthly
+spaced-review habit. No manual flashcards, no forgotten apps — just
+double-click a word and the rest happens on its own. Runs entirely on GitHub
+(the word bank is a JSON file in this repo, reviews are a GitHub Actions
+job) — no more Google Apps Script deploy dropdown to get wrong.
 
 **Also:** [Stock Price Dip Alert Agent](stock-price-alert-agent/) — a
 GitHub Actions agent that checks my ETFs (VOO, QQQM, VXF, VXUS) hourly
