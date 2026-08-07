@@ -1,0 +1,42 @@
+name: Vocab Delete Word
+
+# Fired by the "not mine, delete" link on the review page / email, which
+# opens a pre-filled "New issue" form (title: "vocab-delete: <word>") --
+# no write-scoped token has to live in the public review page for this.
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  delete-word:
+    if: startsWith(github.event.issue.title, 'vocab-delete:')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r vocab-review-agent/requirements.txt
+
+      - name: Remove the word and close the issue
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+        run: python vocab-review-agent/delete_word.py
+
+      - name: Commit updated word bank
+        run: |
+          git config user.name "vocab-review-bot"
+          git config user.email "actions@github.com"
+          git add vocab-review-agent/data/words.json
+          git diff --cached --quiet || git commit -m "Delete word via issue #${{ github.event.issue.number }} [skip ci]"
+          git push
