@@ -55,14 +55,14 @@ def send_email(subject: str, body: str) -> None:
     msg["From"] = user
     msg["To"] = to_addr
 
-    with smtplib.SMTP("smtp.gmail.com", 587) as server:
+    with smtplib.SMTP("smtp.gmail.com", 587, timeout=30) as server:
         server.starttls()
         server.login(user, password)
         server.sendmail(user, [to_addr], msg.as_string())
 
 
 def check_ticker(ticker: str):
-    hist = yf.Ticker(ticker).history(period="1y")
+    hist = yf.Ticker(ticker).history(period="1y", timeout=30)
     if hist.empty:
         print(f"[{ticker}] no data returned, skipping", file=sys.stderr)
         return None
