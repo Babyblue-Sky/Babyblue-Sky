@@ -1,5 +1,99 @@
 [
   {
+    "word": "regurgitate",
+    "type": "word",
+    "definition": "to bring food that has been swallowed back to and out of the mouth",
+    "example": "The bird regurgitates to feed its young.",
+    "audioUrl": "https://media.merriam-webster.com/audio/prons/en/us/mp3/r/regurg01.mp3",
+    "dateSaved": "2026-07-26T09:17:05Z",
+    "firstSaved": "2026-07-26T09:17:05Z",
+    "reviewedIn": [
+      "2026-W31"
+    ]
+  },
+  {
+    "word": "ephemeral",
+    "type": "word",
+    "definition": "lasting a very short time",
+    "example": "His fame turned out to be ephemeral. [=short-lived]",
+    "audioUrl": "https://media.merriam-webster.com/audio/prons/en/us/mp3/e/epheme04.mp3",
+    "dateSaved": "2026-07-26T09:21:59Z",
+    "firstSaved": "2026-07-26T09:21:59Z",
+    "reviewedIn": [
+      "2026-W31"
+    ]
+  },
+  {
+    "word": "accrue",
+    "type": "word",
+    "definition": "to increase in value or amount gradually as time passes : to grow or build up slowly —often + to",
+    "example": "I'll get back all the money I invested, plus any interest and dividends that have accrued.",
+    "audioUrl": "https://media.merriam-webster.com/audio/prons/en/us/mp3/a/accrue01.mp3",
+    "dateSaved": "2026-07-26T09:31:42Z",
+    "firstSaved": "2026-07-26T09:31:42Z",
+    "reviewedIn": [
+      "2026-W31"
+    ]
+  },
+  {
+    "word": "Compartmentalization",
+    "type": "word",
+    "definition": "to separate (something) into sections or categories",
+    "example": "He compartmentalizes his life by keeping his job and his personal life separate.",
+    "audioUrl": "",
+    "dateSaved": "2026-07-26T09:32:22Z",
+    "firstSaved": "2026-07-26T09:32:22Z",
+    "reviewedIn": [
+      "2026-W31"
+    ]
+  },
+  {
+    "word": "Bravado",
+    "type": "word",
+    "definition": "confident or brave talk or behavior that is intended to impress other people",
+    "example": "His stories are always told with bravado.",
+    "audioUrl": "https://media.merriam-webster.com/audio/prons/en/us/mp3/b/bravad01.mp3",
+    "dateSaved": "2026-07-26T09:34:44Z",
+    "firstSaved": "2026-07-26T09:34:44Z",
+    "reviewedIn": [
+      "2026-W31"
+    ]
+  },
+  {
+    "word": "compartmentalize",
+    "type": "word",
+    "definition": "to separate (something) into sections or categories",
+    "example": "He compartmentalizes his life by keeping his job and his personal life separate.",
+    "audioUrl": "https://media.merriam-webster.com/audio/prons/en/us/mp3/c/compar15.mp3",
+    "dateSaved": "2026-07-26T10:04:29Z",
+    "firstSaved": "2026-07-26T10:04:29Z",
+    "reviewedIn": [
+      "2026-W31"
+    ]
+  },
+  {
+    "word": "triangulate",
+    "type": "word",
+    "definition": "a method of finding a distance or location by measuring the distance between two points whose exact location is known and then measuring the angles between each point and a third unknown point",
+    "example": "",
+    "audioUrl": "https://media.merriam-webster.com/audio/prons/en/us/mp3/t/triang07.mp3",
+    "dateSaved": "2026-07-28T07:13:26Z",
+    "firstSaved": "2026-07-28T07:13:26Z",
+    "reviewedIn": [
+      "2026-W31"
+    ]
+  },
+  {
+    "word": "orphaning",
+    "type": "word",
+    "definition": "to cause (a child) to become an orphan—usually used as (be) orphaned —sometimes used of animals —sometimes used figuratively",
+    "example": "",
+    "audioUrl": "",
+    "dateSaved": "2026-08-02T18:29:18Z",
+    "firstSaved": "2026-08-02T18:29:18Z",
+    "reviewedIn": []
+  },
+  {
     "word": "sleuth",
     "type": "word",
     "definition": "someone who looks for information to solve crimes : detective",
@@ -8,8 +102,57 @@
     "dateSaved": "2026-08-07T21:16:44.639Z",
     "firstSaved": "2026-08-07T21:15:15.782Z",
     "reviewedIn": [
-      "2026-W32",
       "2026-W32"
     ]
+  },
+  {
+    "word": "smoking gun",
+    "type": "idiom",
+    "definition": "A smoking gun is a piece of evidence that proves someone is guilty or that something is true beyond doubt.",
+    "example": "The deleted emails were the smoking gun that proved the CEO had known about the fraud all along.",
+    "audioUrl": "",
+    "dateSaved": "2026-08-02T20:08:23Z",
+    "firstSaved": "2026-08-02T20:08:23Z",
+    "reviewedIn": []
+  },
+  {
+    "word": "tranche",
+    "type": "word",
+    "definition": "a division or portion of a pool or whole; specifically : an issue of bonds derived from a pooling of like obligations (such as securitized mortgage debt) that is differentiated from other issues especially by maturity or rate of return",
+    "example": "",
+    "audioUrl": "https://media.merriam-webster.com/audio/prons/en/us/mp3/t/tranch01.mp3",
+    "dateSaved": "2026-08-02T21:35:28Z",
+    "firstSaved": "2026-08-02T21:33:36Z",
+    "reviewedIn": []
+  },
+  {
+    "word": "Survivorship bias",
+    "type": "idiom",
+    "definition": "Survivorship bias is the tendency to focus on successful cases while overlooking failures, leading to a distorted view of reality.",
+    "example": "When people say 'anyone can make it in Hollywood' they're falling for survivorship bias, ignoring the thousands of actors who never got their big break.",
+    "audioUrl": "",
+    "dateSaved": "2026-08-03T08:33:34Z",
+    "firstSaved": "2026-08-03T08:33:34Z",
+    "reviewedIn": []
+  },
+  {
+    "word": "volatility",
+    "type": "word",
+    "definition": "likely to change in a very sudden or extreme way",
+    "example": "The stock market can be very volatile.",
+    "audioUrl": "https://media.merriam-webster.com/audio/prons/en/us/mp3/v/volati01.mp3",
+    "dateSaved": "2026-08-03T08:34:32Z",
+    "firstSaved": "2026-08-03T08:34:32Z",
+    "reviewedIn": []
+  },
+  {
+    "word": "discretionary",
+    "type": "word",
+    "definition": "available to be used when and how you decide",
+    "example": "She has enough discretionary income [=income that is left after paying for things that are essential, such as food and housing] to pay for a nice vacation each year.",
+    "audioUrl": "https://media.merriam-webster.com/audio/prons/en/us/mp3/d/discre09.mp3",
+    "dateSaved": "2026-08-03T12:58:08Z",
+    "firstSaved": "2026-08-03T12:58:08Z",
+    "reviewedIn": []
   }
 ]
