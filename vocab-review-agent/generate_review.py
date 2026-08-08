@@ -16,6 +16,7 @@ import os
 import re
 import smtplib
 import sys
+import time
 from datetime import datetime, timedelta, timezone
 from email.mime.text import MIMEText
 from pathlib import Path
@@ -137,11 +138,20 @@ def lookup_via_claude(term: str, is_idiom: bool) -> dict | None:
     return {"definition": parsed["definition"], "example": parsed.get("example", ""), "audioUrl": ""}
 
 
+MAX_BACKFILL_PER_RUN = 300  # keeps a big batch import under MW's free daily quota, spread across days
+BACKFILL_PAUSE_SECONDS = 0.3  # be a polite API citizen -- no need to hammer MW/Anthropic back-to-back
+
+
 def backfill_missing_definitions(words: list) -> bool:
     changed = False
+    attempted = 0
     for w in words:
         if w.get("definition"):
             continue
+        if attempted >= MAX_BACKFILL_PER_RUN:
+            print(f"[backfill] hit the {MAX_BACKFILL_PER_RUN}/run cap -- picking up the rest next run.")
+            break
+        attempted += 1
         try:
             result = None if w["type"] == "idiom" else lookup_merriam_webster(w["word"])
             if result is None:
@@ -153,6 +163,7 @@ def backfill_missing_definitions(words: list) -> bool:
                 changed = True
         except Exception as e:  # noqa: BLE001 - one bad lookup shouldn't sink the whole run
             print(f"[backfill] {w['word']}: {e}", file=sys.stderr)
+        time.sleep(BACKFILL_PAUSE_SECONDS)
     return changed
 
 
@@ -390,16 +401,20 @@ def main() -> None:
     force = "--force" in sys.argv[2:]
     now = datetime.now(timezone.utc)
 
+    # Backfill runs on every trigger of this script -- including the daily
+    # monthly-check no-op day -- so a big batch of newly-added words gets
+    # worked through gradually across days instead of blowing MW's daily
+    # quota (and this script's runtime) in one shot.
+    words = load_words()
+    if backfill_missing_definitions(words):
+        save_words(words)
+
     # The monthly job is scheduled to run daily and no-ops until the right day
     # (mirrors the old "check every day, fire once" trigger) -- --force skips
     # this for manual/workflow_dispatch runs.
     if session_type == "monthly" and not force and not is_second_to_last_day_of_month(now):
         print(f"Not the monthly review day yet ({now.date().isoformat()}), skipping.")
         return
-
-    words = load_words()
-    if backfill_missing_definitions(words):
-        save_words(words)
 
     due = words_for_session(words, session_type, now)
     if not due:
