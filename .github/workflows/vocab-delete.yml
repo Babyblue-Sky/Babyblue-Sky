@@ -38,5 +38,14 @@ jobs:
           git config user.name "vocab-review-bot"
           git config user.email "actions@github.com"
           git add vocab-review-agent/data/words.json
-          git diff --cached --quiet || git commit -m "Delete word via issue #${{ github.event.issue.number }} [skip ci]"
+          git diff --cached --quiet && exit 0
+          git commit -m "Delete word via issue #${{ github.event.issue.number }} [skip ci]"
+          # Same race as vocab-review.yml: the extension can push to main
+          # between checkout and here, so retry against a fresh rebase.
+          for i in 1 2 3 4 5; do
+            git push && exit 0
+            git fetch origin "${GITHUB_REF_NAME}"
+            git rebase "origin/${GITHUB_REF_NAME}" || exit 1
+            sleep $((i * 3))
+          done
           git push

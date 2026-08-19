@@ -74,5 +74,16 @@ jobs:
           git config user.name "vocab-review-bot"
           git config user.email "actions@github.com"
           git add vocab-review-agent/data/words.json vocab-review-agent/data/review_log.json docs/vocab-review/index.html
-          git diff --cached --quiet || git commit -m "Update vocab review state [skip ci]"
+          git diff --cached --quiet && exit 0
+          git commit -m "Update vocab review state [skip ci]"
+          # The Chrome extension writes to data/words.json directly via the
+          # GitHub API, so main can move between checkout and push here.
+          # Retry a few times against a fresh rebase instead of failing the
+          # whole run over a race that has nothing to do with this review.
+          for i in 1 2 3 4 5; do
+            git push && exit 0
+            git fetch origin "${GITHUB_REF_NAME}"
+            git rebase "origin/${GITHUB_REF_NAME}" || exit 1
+            sleep $((i * 3))
+          done
           git push
