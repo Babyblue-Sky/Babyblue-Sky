@@ -13723,7 +13723,9 @@
     "audioUrl": "https://media.merriam-webster.com/audio/prons/en/us/mp3/f/forfei03.mp3",
     "dateSaved": "2026-08-19T20:15:16.983Z",
     "firstSaved": "2026-08-19T20:15:16.983Z",
-    "reviewedIn": []
+    "reviewedIn": [
+      "2026-W34"
+    ]
   },
   {
     "word": "Cyclically",
@@ -13733,7 +13735,9 @@
     "audioUrl": "https://media.merriam-webster.com/audio/prons/en/us/mp3/c/cyclic01.mp3",
     "dateSaved": "2026-08-20T16:31:30.332Z",
     "firstSaved": "2026-08-20T16:31:30.332Z",
-    "reviewedIn": []
+    "reviewedIn": [
+      "2026-W34"
+    ]
   },
   {
     "word": "md",
@@ -13743,6 +13747,8 @@
     "audioUrl": "",
     "dateSaved": "2026-08-20T18:24:27.013Z",
     "firstSaved": "2026-08-20T18:24:27.013Z",
-    "reviewedIn": []
+    "reviewedIn": [
+      "2026-W34"
+    ]
   }
 ]
